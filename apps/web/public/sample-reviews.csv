@@ -1,0 +1,6 @@
+review_id,review_text,rating,date,reviewer,platform,business
+S-001,"Booked online but still waited 40 minutes past my appointment. Staff were friendly though.",3,2026-10-02,Sample Reviewer A,Google,Your Business
+S-002,"Excellent results and the clinic was spotless. Highly recommend.",5,2026-10-05,Sample Reviewer B,Google,Your Business
+S-003,"The final bill was higher than the price I was quoted on the phone.",2,2026-10-11,Sample Reviewer C,Website,Your Business
+S-004,"Nobody called me back about my follow-up results.",1,2026-10-15,Sample Reviewer D,Google,Your Business
+S-005,"I wish they offered evening appointments.",4,2026-10-20,Sample Reviewer E,Google,Your Business

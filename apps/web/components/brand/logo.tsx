@@ -1,0 +1,29 @@
+import Link from "next/link"
+import { cn } from "@/lib/utils"
+
+export function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden className={cn("size-7", className)}>
+      <defs>
+        <linearGradient id="cs-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#4F46E5" />
+          <stop offset="1" stopColor="#7C3AED" />
+        </linearGradient>
+      </defs>
+      <rect width="32" height="32" rx="9" fill="url(#cs-g)" />
+      <path d="M8 18.5c2.2 0 2.2-6 4.4-6s2.2 9 4.4 9 2.2-12 4.4-12 2.2 9 2.8 9" fill="none" stroke="#fff"
+        strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function Logo({ href = "/", className, inverted }: { href?: string; className?: string; inverted?: boolean }) {
+  return (
+    <Link href={href} className={cn("flex items-center gap-2 font-semibold tracking-tight", className)} aria-label="CustomerSignal AI home">
+      <LogoMark />
+      <span className={cn("text-[15px]", inverted ? "text-white" : "text-foreground")}>
+        CustomerSignal<span className="text-primary"> AI</span>
+      </span>
+    </Link>
+  )
+}

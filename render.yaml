@@ -1,0 +1,97 @@
+# Render Blueprint — full CustomerSignal AI stack on Render's free tier.
+#   web (Next.js) ──/api/v1/*──► api (FastAPI + in-process arq worker) ──► Postgres (pgvector) + Key Value (Redis)
+#
+# Free-tier notes: services sleep after ~15 min idle (first request wakes them, ~30-60s); free Postgres expires
+# after 30 days unless upgraded; files (uploads, PDFs) are stored in Postgres because free disks are ephemeral.
+# To upgrade: change `plan` values, set RUN_WORKER_IN_PROCESS=false and add a `worker` service running
+# `arq app.workers.worker.WorkerSettings` from the same Dockerfile.
+
+databases:
+  - name: customersignal-ai-db
+    plan: free
+    databaseName: customersignal
+    user: customersignal
+    postgresMajorVersion: "17"
+    ipAllowList: []
+
+services:
+  - type: keyvalue
+    name: customersignal-ai-redis
+    plan: free
+    maxmemoryPolicy: noeviction
+    ipAllowList: []
+
+  - type: web
+    name: customersignal-ai-api
+    runtime: docker
+    plan: free
+    rootDir: apps/api
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: APP_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: customersignal-ai-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: customersignal-ai-redis
+          property: connectionString
+      - key: STORAGE_BACKEND
+        value: database
+      - key: RUN_WORKER_IN_PROCESS
+        value: "true"
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://customersignal-ai-web.onrender.com
+      - key: CORS_ORIGINS
+        value: https://customersignal-ai-web.onrender.com
+      # No email provider yet: allow sign-in without verification. Set RESEND_API_KEY, then flip this to true.
+      - key: EMAIL_VERIFICATION_REQUIRED
+        value: "false"
+      - key: ADMIN_BOOTSTRAP_SECRET
+        generateValue: true
+      - key: ADMIN_BOOTSTRAP_EMAIL
+        sync: false
+      # Optional integrations — fill in the Render dashboard when ready.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+
+  - type: web
+    name: customersignal-ai-web
+    runtime: node
+    plan: free
+    rootDir: apps/web
+    buildCommand: npx --yes pnpm@11.9.0 install --frozen-lockfile && npx --yes pnpm@11.9.0 build
+    startCommand: ./node_modules/.bin/next start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      # The Next.js server proxies /api/v1/* here; read at build time.
+      - key: API_INTERNAL_URL
+        value: https://customersignal-ai-api.onrender.com
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://customersignal-ai-web.onrender.com

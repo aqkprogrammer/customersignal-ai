@@ -1,0 +1,67 @@
+# Local full stack: Postgres (pgvector) + Redis + API + worker + web.
+#   cp .env.example .env   # fill in what you have; everything optional works without keys
+#   docker compose up --build
+#   docker compose exec api python -m app.scripts.seed --demo
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: customersignal
+      POSTGRES_PASSWORD: customersignal
+      POSTGRES_DB: customersignal
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U customersignal"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./apps/api
+    env_file: [.env]
+    environment:
+      DATABASE_URL: postgresql+asyncpg://customersignal:customersignal@db:5432/customersignal
+      REDIS_URL: redis://redis:6379/0
+      JOBS_INLINE: "false"
+      LOCAL_STORAGE_PATH: /app/storage
+    ports: ["8000:8000"]
+    volumes: [storage:/app/storage]
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  worker:
+    build: ./apps/api
+    command: ["arq", "app.workers.worker.WorkerSettings"]
+    env_file: [.env]
+    environment:
+      DATABASE_URL: postgresql+asyncpg://customersignal:customersignal@db:5432/customersignal
+      REDIS_URL: redis://redis:6379/0
+      LOCAL_STORAGE_PATH: /app/storage
+    volumes: [storage:/app/storage]
+    depends_on:
+      api: { condition: service_healthy }
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_APP_URL: http://localhost:3000
+        API_INTERNAL_URL: http://api:8000
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    ports: ["3000:3000"]
+    depends_on:
+      api: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  storage:
