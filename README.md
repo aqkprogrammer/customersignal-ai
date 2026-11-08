@@ -7,6 +7,9 @@
 AI-powered customer intelligence: analyze reviews, uncover recurring complaints, monitor competitors,
 and turn feedback into evidence-backed opportunities, outreach and branded PDF reports.
 
+**Live:** [customersignal-ai-web.onrender.com](https://customersignal-ai-web.onrender.com) · API docs: [customersignal-ai-api.onrender.com/api/docs](https://customersignal-ai-api.onrender.com/api/docs)
+<br/><sub>Free tier — the first request after idle can take 30–60 s while the services wake up.</sub>
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aqkprogrammer/customersignal-ai)
 
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black) ![FastAPI](https://img.shields.io/badge/FastAPI-0.16x-009688) ![PostgreSQL + pgvector](https://img.shields.io/badge/PostgreSQL-pgvector-336791) ![Tests](https://img.shields.io/badge/tests-95%20api%20%C2%B7%2026%20unit%20%C2%B7%209%20e2e-success) ![License](https://img.shields.io/badge/license-MIT-blue)
