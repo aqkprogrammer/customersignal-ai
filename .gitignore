@@ -15,3 +15,5 @@ test-results/
 coverage/
 .DS_Store
 .claude/
+*.local.md
+.demo_accounts_env

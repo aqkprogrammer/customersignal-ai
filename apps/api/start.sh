@@ -5,6 +5,9 @@ set -e
 
 alembic upgrade head
 python -m app.scripts.seed
+if [ -n "${DEMO_ACCOUNTS:-}" ]; then
+  python -m app.scripts.seed_demo_accounts || echo "Demo account seeding failed (continuing startup)"
+fi
 
 if [ "${RUN_WORKER_IN_PROCESS:-false}" = "true" ]; then
   echo "Starting arq worker in the same container"
