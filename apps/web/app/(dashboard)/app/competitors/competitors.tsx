@@ -125,7 +125,7 @@ export function CompetitorsPage() {
                   const comp = list.data.find((x) => x.business_id === b.business_id)
                   return (
                     <TableRow key={b.business_id} className={cn(b.is_primary && "bg-accent/40")}>
-                      <TableCell className="font-medium">{b.name} {b.is_primary && <Pill color="indigo">You</Pill>} {comp?.is_demo && <DemoBadge />}</TableCell>
+                      <TableCell className="font-medium">{b.name} {b.is_primary && <Pill color="signal">You</Pill>} {comp?.is_demo && <DemoBadge />}</TableCell>
                       <TableCell className="text-right tabular-nums">{b.review_count}</TableCell>
                       <TableCell className="text-right tabular-nums">{b.avg_rating ?? "—"}</TableCell>
                       <TableCell className="text-right text-emerald-600 tabular-nums">{b.positive_pct}%</TableCell>

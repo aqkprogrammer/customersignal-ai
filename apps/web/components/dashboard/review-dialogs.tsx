@@ -275,7 +275,7 @@ export function ReviewSheet({ reviewId, onOpenChange }: { reviewId: string | nul
             <div className="flex flex-wrap items-center gap-2">
               <Stars rating={r.rating} />
               <SentimentBadge sentiment={r.sentiment} />
-              {r.emotion && <Pill color="violet">{titleCase(r.emotion)}</Pill>}
+              {r.emotion && <Pill color="ice">{titleCase(r.emotion)}</Pill>}
               {r.is_demo && <DemoBadge />}
             </div>
             <blockquote className="rounded-xl border bg-muted/40 p-4 text-sm leading-relaxed whitespace-pre-wrap">{r.text}</blockquote>

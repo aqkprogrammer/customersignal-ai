@@ -3,6 +3,7 @@
 import { ArrowRight, ChevronDown, Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { motion } from "motion/react"
 import { useEffect, useState } from "react"
 import { Logo } from "@/components/brand/logo"
 import { Button } from "@/components/ui/button"
@@ -18,7 +19,20 @@ import { cn } from "@/lib/utils"
 import { PRIMARY_NAV, SOLUTIONS } from "./site-data"
 
 const linkBase =
-  "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+  "relative rounded-md px-3 py-2 text-[13.5px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none"
+
+/** Active-route indicator: a lit hairline that glides between items (shared layout animation). */
+function ActiveMark({ on }: { on: boolean }) {
+  if (!on) return null
+  return (
+    <motion.span
+      layoutId="site-nav-active"
+      aria-hidden
+      className="absolute inset-x-3 -bottom-[14px] h-px bg-signal shadow-[0_0_10px_var(--signal)]"
+      transition={{ type: "spring", stiffness: 420, damping: 38 }}
+    />
+  )
+}
 
 /** Reads the pathname for active-link styling. Render inside <Suspense fallback={<SiteHeader />}>. */
 export function SiteHeaderWithPath() {
@@ -44,7 +58,7 @@ export function SiteHeader({ pathname = null }: { pathname?: string | null }) {
       className={cn(
         "sticky top-0 z-40 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-300",
         scrolled
-          ? "border-border/70 bg-background/80 backdrop-blur-xl supports-backdrop-filter:bg-background/70"
+          ? "border-border bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/65"
           : "border-transparent bg-transparent",
       )}
     >
@@ -60,18 +74,20 @@ export function SiteHeader({ pathname = null }: { pathname?: string | null }) {
         <nav aria-label="Main" className="hidden items-center gap-0.5 md:flex">
           <Link href="/features" className={cn(linkBase, isActive("/features") && "text-foreground")}>
             Features
+            <ActiveMark on={isActive("/features")} />
           </Link>
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
-              className={cn(linkBase, "inline-flex items-center gap-1 data-[state=open]:text-foreground", isActive("/solutions") && "text-foreground")}
+              className={cn(linkBase, "group inline-flex items-center gap-1 data-[state=open]:text-foreground", isActive("/solutions") && "text-foreground")}
             >
-              Solutions <ChevronDown aria-hidden className="size-3.5 opacity-60" />
+              Solutions <ChevronDown aria-hidden className="size-3.5 opacity-60 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              <ActiveMark on={isActive("/solutions")} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" sideOffset={10} className="w-[22rem] rounded-xl p-2">
+            <DropdownMenuContent align="start" sideOffset={10} className="w-[22rem] rounded-lg border-border-strong p-1.5 dark:bg-popover/95 dark:backdrop-blur-md">
               {SOLUTIONS.map((s) => (
                 <DropdownMenuItem key={s.slug} asChild className="items-start gap-3 rounded-lg p-2.5">
                   <Link href={`/solutions/${s.slug}`}>
-                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg border bg-accent text-primary">
+                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md border border-border-strong text-signal">
                       <s.icon aria-hidden className="size-4" />
                     </span>
                     <span className="flex flex-col gap-0.5">
@@ -92,17 +108,18 @@ export function SiteHeader({ pathname = null }: { pathname?: string | null }) {
           {PRIMARY_NAV.filter((n) => n.href !== "/features").map((n) => (
             <Link key={n.href} href={n.href} className={cn(linkBase, isActive(n.href) && "text-foreground")}>
               {n.label}
+              <ActiveMark on={isActive(n.href)} />
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button asChild variant="ghost" className="h-9 px-3">
+          <Button asChild variant="ghost" className="h-9 px-3 text-[13.5px] text-muted-foreground">
             <Link href="/login">Sign in</Link>
           </Button>
-          <Button asChild className="h-9 rounded-lg px-4 shadow-[0_1px_0_rgba(255,255,255,0.2)_inset,0_8px_20px_-8px_rgba(79,70,229,0.7)]">
+          <Button asChild variant="signal" className="h-9 rounded-lg px-4">
             <Link href="/signup">
-              Start free <ArrowRight aria-hidden className="size-4" />
+              Start free <ArrowRight data-arrow aria-hidden className="size-4" />
             </Link>
           </Button>
         </div>

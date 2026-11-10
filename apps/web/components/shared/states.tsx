@@ -21,8 +21,8 @@ export function EmptyState({
   className?: string
 }) {
   return (
-    <div className={cn("flex flex-col items-center justify-center rounded-xl border border-dashed bg-card/50 px-6 py-14 text-center", className)}>
-      <div className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-accent text-primary">
+    <div className={cn("flex flex-col items-center justify-center rounded-xl border border-dashed border-border-strong bg-card/40 px-6 py-14 text-center", className)}>
+      <div className="mb-4 flex size-12 items-center justify-center rounded-lg border border-[color-mix(in_oklab,var(--primary)_35%,transparent)] text-primary shadow-[0_0_24px_-10px_var(--primary)]">
         <Icon className="size-5" />
       </div>
       <h3 className="text-base font-semibold">{title}</h3>
@@ -95,7 +95,7 @@ export function DemoBadge({ className }: { className?: string }) {
   return (
     <span
       title="Synthetic sample data — not real customer feedback"
-      className={cn("inline-flex items-center rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-amber-800 uppercase dark:bg-amber-500/15 dark:text-amber-300", className)}
+      className={cn("inline-flex items-center rounded-[4px] border border-amber-600/30 bg-amber-100 px-1.5 py-0.5 font-mono text-[9.5px] font-medium tracking-[0.14em] text-amber-800 uppercase dark:border-[color-mix(in_oklab,var(--ember)_35%,transparent)] dark:bg-[color-mix(in_oklab,var(--ember)_10%,transparent)] dark:text-ember", className)}
     >
       Demo
     </span>

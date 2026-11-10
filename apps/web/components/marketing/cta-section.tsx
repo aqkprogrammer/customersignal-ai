@@ -1,8 +1,9 @@
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { CinematicBackground, ReputationIntelligenceCore, TechnicalLabel } from "@/components/signal"
+import { Magnetic } from "@/components/signal/magnetic"
 import { Reveal } from "./motion"
-import { Container } from "./section"
 
 export function CtaSection({
   title = "Your next best decision is already in your reviews.",
@@ -12,31 +13,33 @@ export function CtaSection({
   description?: string
 }) {
   return (
-    <section aria-labelledby="cta-heading" className="py-20 sm:py-28">
-      <Container>
-        <Reveal className="relative overflow-hidden rounded-3xl bg-navy px-6 py-14 text-center sm:px-14 sm:py-20">
-          <div aria-hidden className="bg-grid absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
-          <div aria-hidden className="absolute -top-24 left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,58,237,0.45),transparent)] blur-2xl" />
-          <SignalLine className="absolute inset-x-0 bottom-0 h-24 w-full text-indigo-400/30" />
-          <div className="relative mx-auto max-w-2xl">
-            <h2 id="cta-heading" className="text-3xl font-semibold tracking-[-0.03em] text-balance text-white sm:text-5xl sm:leading-[1.05]">
-              {title}
-            </h2>
-            <p className="mt-5 text-base text-pretty text-indigo-100/75 sm:text-lg">{description}</p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild className="h-11 w-full rounded-xl bg-white px-6 text-[15px] text-navy hover:bg-indigo-50 sm:w-auto">
+    <section aria-labelledby="cta-heading" className="relative overflow-hidden border-t border-border">
+      <CinematicBackground light="right" scan={false} />
+      <div className="relative mx-auto grid w-full max-w-[1320px] items-center gap-6 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-12">
+        <Reveal className="lg:col-span-7">
+          <TechnicalLabel index="END">Ready when you are</TechnicalLabel>
+          <h2 id="cta-heading" className="mt-6 max-w-2xl text-[2.2rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[3.4rem]">
+            {title}
+          </h2>
+          <p className="mt-5 max-w-xl text-base text-pretty text-muted-foreground sm:text-lg">{description}</p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Magnetic className="w-full sm:w-auto">
+              <Button asChild variant="signal" className="h-12 w-full rounded-lg px-6 text-[15px] sm:w-auto">
                 <Link href="/signup">
-                  Start Free <ArrowRight aria-hidden className="size-4" />
+                  Start free <ArrowRight data-arrow aria-hidden className="size-4" />
                 </Link>
               </Button>
-              <Button asChild variant="ghost" className="h-11 w-full rounded-xl border border-white/15 px-6 text-[15px] text-white hover:bg-white/10 hover:text-white sm:w-auto">
-                <Link href="/contact?topic=demo">Book a Demo</Link>
-              </Button>
-            </div>
-            <p className="mt-5 text-xs text-indigo-200/60">Free plan · No credit card required · Cancel anytime</p>
+            </Magnetic>
+            <Button asChild variant="outline" className="h-12 w-full rounded-lg px-6 text-[15px] sm:w-auto">
+              <Link href="/contact?topic=demo">Book a demo</Link>
+            </Button>
           </div>
+          <p className="mt-6 font-mono text-[10.5px] tracking-[0.14em] text-subtle-foreground uppercase">Free plan · No credit card required · Cancel anytime</p>
         </Reveal>
-      </Container>
+        <div aria-hidden className="relative mx-auto hidden w-full max-w-[380px] lg:col-span-4 lg:col-start-9 lg:block">
+          <ReputationIntelligenceCore detail="lite" title="" />
+        </div>
+      </div>
     </section>
   )
 }

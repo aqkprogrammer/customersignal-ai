@@ -28,7 +28,7 @@ export function AdminThemeRoot({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <div className="dark min-h-svh bg-background text-foreground [background-image:radial-gradient(1200px_600px_at_80%_-10%,rgba(99,102,241,0.12),transparent_60%),radial-gradient(900px_500px_at_-10%_10%,rgba(124,58,237,0.08),transparent_60%)]">
+    <div className="dark min-h-svh bg-background text-foreground [background-image:radial-gradient(1200px_600px_at_80%_-10%,rgba(69,229,234,0.12),transparent_60%),radial-gradient(900px_500px_at_-10%_10%,rgba(128,189,255,0.08),transparent_60%)]">
       {children}
     </div>
   )

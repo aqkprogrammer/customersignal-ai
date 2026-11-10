@@ -78,7 +78,7 @@ export function AdminAuditLogs() {
                         </TableCell>
                         <TableCell className="text-xs whitespace-nowrap text-muted-foreground" title={formatDateTime(l.created_at)}>{formatDateTime(l.created_at)}</TableCell>
                         <TableCell>
-                          <span className={l.action.includes("failed") ? "font-mono text-xs text-rose-300" : "font-mono text-xs text-indigo-200"}>{l.action}</span>
+                          <span className={l.action.includes("failed") ? "font-mono text-xs text-rose-300" : "font-mono text-xs text-signal-200"}>{l.action}</span>
                           {hasMeta && <span className="ml-1.5 text-[10px] text-muted-foreground">+meta</span>}
                         </TableCell>
                         <TableCell className="max-w-[200px] truncate text-xs">{l.admin_email || "—"}</TableCell>
@@ -170,7 +170,7 @@ export function AdminFeatureFlags() {
                     {f.description && <div className="truncate text-xs text-muted-foreground" title={f.description}>{f.description}</div>}
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">{f.plan_codes.length ? f.plan_codes.map((p) => <Pill key={p} color="indigo">{p}</Pill>) : <span className="text-xs text-muted-foreground">All</span>}</div>
+                    <div className="flex flex-wrap gap-1">{f.plan_codes.length ? f.plan_codes.map((p) => <Pill key={p} color="signal">{p}</Pill>) : <span className="text-xs text-muted-foreground">All</span>}</div>
                   </TableCell>
                   <TableCell className="text-xs">{f.workspace_ids.length ? `${formatNumber(f.workspace_ids.length)} targeted` : <span className="text-muted-foreground">All</span>}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{timeAgo(f.updated_at)}</TableCell>
@@ -324,7 +324,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
     max_rows_per_upload: String(s.max_rows_per_upload),
     trial_days: String(s.trial_days),
     logo_url: s.branding?.logo_url || "",
-    primary_color: s.branding?.primary_color || "#4F46E5",
+    primary_color: s.branding?.primary_color || "#45e5ea",
   })
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setF((x) => ({ ...x, [k]: v }))
   const save = useAdminMutation<Record<string, unknown>>({
@@ -338,7 +338,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
   const rows = Number(f.max_rows_per_upload)
   const trial = Number(f.trial_days)
   if (!f.platform_name.trim()) errors.platform_name = "Required."
-  if (!/^#[0-9a-f]{6}$/i.test(f.primary_color)) errors.primary_color = "Use a hex color like #4F46E5."
+  if (!/^#[0-9a-f]{6}$/i.test(f.primary_color)) errors.primary_color = "Use a hex color like #45e5ea."
   if (f.logo_url && !/^(https:\/\/|\/)\S+$/i.test(f.logo_url)) errors.logo_url = "Must be an https:// URL or a /path."
   if (!/^[a-z]{3}$/.test(f.default_currency)) errors.default_currency = "3-letter ISO code, lowercase (e.g. usd)."
   if (!f.default_timezone.trim()) errors.default_timezone = "Required."
@@ -378,7 +378,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
             <Field label="Platform name" htmlFor="s-name" error={errors.platform_name}><Input id="s-name" value={f.platform_name} onChange={(e) => set("platform_name", e.target.value)} disabled={ro} /></Field>
             <Field label="Primary color" htmlFor="s-color" error={errors.primary_color}>
               <div className="flex gap-2">
-                <input type="color" aria-label="Pick primary color" value={/^#[0-9a-f]{6}$/i.test(f.primary_color) ? f.primary_color : "#4f46e5"} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} className="h-8 w-10 cursor-pointer rounded-md border bg-transparent p-0.5" />
+                <input type="color" aria-label="Pick primary color" value={/^#[0-9a-f]{6}$/i.test(f.primary_color) ? f.primary_color : "#45e5ea"} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} className="h-8 w-10 cursor-pointer rounded-md border bg-transparent p-0.5" />
                 <Input id="s-color" className="font-mono" value={f.primary_color} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} />
               </div>
             </Field>

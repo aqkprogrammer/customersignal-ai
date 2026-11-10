@@ -58,7 +58,7 @@ export function AdminAIUsage() {
       <div className="space-y-4">
         <KpiGrid className="xl:grid-cols-5">
           <KpiTile label="Requests" value={formatNumber(requests)} icon={Zap} />
-          <KpiTile label="Tokens" value={formatCompact(tokens)} icon={BotMessageSquare} tone="violet" />
+          <KpiTile label="Tokens" value={formatCompact(tokens)} icon={BotMessageSquare} tone="ice" />
           <KpiTile label="Cost" value={formatUsd(cost)} icon={DollarSign} tone="amber" />
           <KpiTile label="Error rate" value={requests ? `${((100 * errors) / requests).toFixed(1)}%` : "—"} icon={XCircle} tone={errors ? "rose" : "emerald"} hint={`${formatNumber(errors)} errors`} />
           <KpiTile label="Avg latency" value={avgMs ? `${Math.round(avgMs)} ms` : "—"} icon={Clock} tone="sky" />
@@ -85,7 +85,7 @@ export function AdminAIUsage() {
                 <TableBody>
                   {agg.map((a) => (
                     <TableRow key={`${a.provider}-${a.model}`}>
-                      <TableCell><Pill color="indigo">{a.provider}</Pill></TableCell>
+                      <TableCell><Pill color="signal">{a.provider}</Pill></TableCell>
                       <TableCell className="font-mono text-xs">{a.model}</TableCell>
                       <TableCell className="text-right tabular-nums">{formatNumber(a.requests)}</TableCell>
                       <TableCell className="text-right tabular-nums">{formatCompact(a.input_tokens)}</TableCell>
@@ -113,7 +113,7 @@ export function AdminAIUsage() {
                 Environment default <Pill>{d.providers.default}</Pill>
               </li>
               <li className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-                Active setting <Pill color="violet">{d.settings.ai_provider}</Pill>
+                Active setting <Pill color="ice">{d.settings.ai_provider}</Pill>
               </li>
             </ul>
           </Panel>
@@ -126,7 +126,7 @@ export function AdminAIUsage() {
               xKey="workspace"
               horizontal
               periodLabels={false}
-              series={[{ key: "cost_usd", label: "Cost", color: "#fbbf24" }]}
+              series={[{ key: "cost_usd", label: "Cost", color: "#eab56d" }]}
               format={(n) => formatUsd(n)}
               height={Math.max(160, d.top_workspaces_30d.length * 30)}
             />

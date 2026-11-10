@@ -190,7 +190,7 @@ export function AdminUserDetailPage() {
 
       <KpiGrid className="mb-4">
         <KpiTile label="Workspaces" value={formatNumber(u.workspaces.length)} />
-        <KpiTile label="AI tokens (all-time)" value={formatCompact(u.usage.ai_tokens)} tone="violet" />
+        <KpiTile label="AI tokens (all-time)" value={formatCompact(u.usage.ai_tokens)} tone="ice" />
         <KpiTile label="AI cost (all-time)" value={formatUsd(u.usage.ai_cost_usd)} tone="amber" />
         <KpiTile label="Last active" value={timeAgo(u.last_active_at)} tone="sky" hint={`Last login ${timeAgo(u.last_login_at)}`} />
       </KpiGrid>
@@ -215,11 +215,11 @@ export function AdminUserDetailPage() {
                   {u.workspaces.map((w) => (
                     <TableRow key={w.id}>
                       <TableCell>
-                        <Link href={`/admin/workspaces/${w.id}`} className="font-medium text-white hover:text-indigo-300">{w.name}</Link>
+                        <Link href={`/admin/workspaces/${w.id}`} className="font-medium text-white hover:text-signal-300">{w.name}</Link>
                         {w.is_demo && <Pill color="amber" className="ml-2">Demo</Pill>}
                       </TableCell>
                       <TableCell className="text-xs">{titleCase(w.role)}</TableCell>
-                      <TableCell><Pill color={w.plan === "free" ? "gray" : "indigo"}>{titleCase(w.plan)}</Pill></TableCell>
+                      <TableCell><Pill color={w.plan === "free" ? "gray" : "signal"}>{titleCase(w.plan)}</Pill></TableCell>
                       <TableCell><StatusBadge status={w.status} /></TableCell>
                       <TableCell className="text-right tabular-nums">{formatNumber(w.reviews_this_month)}</TableCell>
                     </TableRow>
@@ -237,7 +237,7 @@ export function AdminUserDetailPage() {
                 {u.activity.map((a, i) => (
                   <li key={i} className="flex items-start justify-between gap-3 px-4 py-2.5 text-sm">
                     <div className="min-w-0">
-                      <div className="font-mono text-xs text-indigo-200">{a.action}</div>
+                      <div className="font-mono text-xs text-signal-200">{a.action}</div>
                       {a.summary && <div className="truncate text-xs text-muted-foreground">{a.summary}</div>}
                     </div>
                     <span className="shrink-0 text-xs text-muted-foreground" title={formatDateTime(a.created_at)}>{timeAgo(a.created_at)}</span>

@@ -6,8 +6,8 @@ const tone = {
   red: "bg-rose-50 text-rose-700 ring-rose-600/15 dark:bg-rose-500/10 dark:text-rose-300",
   gray: "bg-slate-100 text-slate-600 ring-slate-500/15 dark:bg-slate-500/10 dark:text-slate-300",
   amber: "bg-amber-50 text-amber-700 ring-amber-600/15 dark:bg-amber-500/10 dark:text-amber-300",
-  indigo: "bg-indigo-50 text-indigo-700 ring-indigo-600/15 dark:bg-indigo-500/10 dark:text-indigo-300",
-  violet: "bg-violet-50 text-violet-700 ring-violet-600/15 dark:bg-violet-500/10 dark:text-violet-300",
+  signal: "bg-signal-50 text-signal-700 ring-signal-600/15 dark:bg-signal-500/10 dark:text-signal-300",
+  ice: "bg-ice-50 text-ice-700 ring-ice-600/15 dark:bg-ice-500/10 dark:text-ice-300",
   sky: "bg-sky-50 text-sky-700 ring-sky-600/15 dark:bg-sky-500/10 dark:text-sky-300",
 } as const
 export type Tone = keyof typeof tone
@@ -29,8 +29,8 @@ export function SentimentBadge({ sentiment }: { sentiment: string | null | undef
 const STATUS_TONES: Record<string, Tone> = {
   completed: "green", ready: "green", active: "green", connected: "green", succeeded: "green", paid: "green",
   converted: "green", resolved: "green", accepted: "green",
-  processing: "indigo", generating: "indigo", analyzing: "indigo", in_progress: "indigo", contacted: "indigo",
-  trialing: "violet", researched: "violet", replied: "violet", meeting_booked: "sky", planned: "sky",
+  processing: "signal", generating: "signal", analyzing: "signal", in_progress: "signal", contacted: "signal",
+  trialing: "ice", researched: "ice", replied: "ice", meeting_booked: "sky", planned: "sky",
   pending: "amber", open: "amber", waiting_on_customer: "amber", past_due: "amber", requires_approval: "amber",
   new: "sky", warning: "amber",
   failed: "red", error: "red", canceled: "red", cancelled: "red", suspended: "red", banned: "red", critical: "red",
@@ -65,7 +65,7 @@ export function TrendBadge({ trend, positive = false }: { trend: string; positiv
     )
   if (trend === "new")
     return (
-      <Pill color="violet">
+      <Pill color="ice">
         <Sparkle className="size-3" /> New
       </Pill>
     )

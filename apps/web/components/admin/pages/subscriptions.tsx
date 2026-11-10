@@ -74,9 +74,9 @@ export function AdminSubscriptions() {
                 {query.data.items.map((s) => (
                   <TableRow key={s.id} className="hover:bg-white/[0.03]">
                     <TableCell className="max-w-[220px]">
-                      <Link href={`/admin/workspaces/${s.workspace_id}`} className="block truncate font-medium text-white hover:text-indigo-300">{s.workspace_name}</Link>
+                      <Link href={`/admin/workspaces/${s.workspace_id}`} className="block truncate font-medium text-white hover:text-signal-300">{s.workspace_name}</Link>
                     </TableCell>
-                    <TableCell><Pill color={s.plan === "free" ? "gray" : "indigo"}>{s.plan_name}</Pill></TableCell>
+                    <TableCell><Pill color={s.plan === "free" ? "gray" : "signal"}>{s.plan_name}</Pill></TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <StatusBadge status={s.status} />
@@ -84,7 +84,7 @@ export function AdminSubscriptions() {
                       </div>
                     </TableCell>
                     <TableCell className="text-right tabular-nums">{formatCurrency(s.mrr_cents)}</TableCell>
-                    <TableCell>{s.stripe_subscription_id ? <Pill color="violet">Stripe</Pill> : s.manual ? <Pill color="amber">Manual</Pill> : <Pill>Free</Pill>}</TableCell>
+                    <TableCell>{s.stripe_subscription_id ? <Pill color="ice">Stripe</Pill> : s.manual ? <Pill color="amber">Manual</Pill> : <Pill>Free</Pill>}</TableCell>
                     <TableCell className="text-xs text-muted-foreground">
                       {s.trial_ends_at ? <>Trial → {formatDate(s.trial_ends_at)}</> : formatDate(s.current_period_end)}
                     </TableCell>

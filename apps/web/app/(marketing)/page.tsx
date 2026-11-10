@@ -3,10 +3,7 @@ import { CtaSection } from "@/components/marketing/cta-section"
 import { HOME_FAQ } from "@/components/marketing/faq"
 import { HomeHero } from "@/components/marketing/home-hero"
 import {
-  BuiltForStrip,
-  FeatureOverview,
   HomeFaq,
-  HowItWorks,
   PricingPreview,
   ProblemSolution,
   SampleInsights,
@@ -14,6 +11,7 @@ import {
   UseCases,
   WalkthroughSection,
 } from "@/components/marketing/home-sections"
+import { SignalPath } from "@/components/marketing/signal-path"
 import { absoluteUrl, faqJsonLd, JsonLd } from "@/components/marketing/seo"
 import { SITE } from "@/lib/site"
 
@@ -77,13 +75,11 @@ export default function HomePage() {
     <>
       <JsonLd data={[organization, software, faqJsonLd(HOME_FAQ)]} />
       <HomeHero />
-      <BuiltForStrip />
       <ProblemSolution />
-      <FeatureOverview />
-      <HowItWorks />
-      <UseCases />
-      <WalkthroughSection />
+      <SignalPath />
       <SampleInsights />
+      <WalkthroughSection />
+      <UseCases />
       <PricingPreview />
       <Testimonials />
       <HomeFaq />

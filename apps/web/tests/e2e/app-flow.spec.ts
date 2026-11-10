@@ -26,6 +26,9 @@ test("signup through first report", async ({ page }) => {
   await page.getByLabel("Work email").fill(email)
   await page.getByLabel("Password", { exact: true }).fill(password)
   await page.getByLabel("Confirm password").fill(password)
+  // Three sections: 01 account identity → 02 business profile → 03 workspace configuration.
+  await page.getByRole("button", { name: "Continue" }).click()
+  await page.getByRole("button", { name: "Continue" }).click()
   await page.getByRole("checkbox").first().click()
   await page.getByRole("button", { name: "Create account" }).click()
 

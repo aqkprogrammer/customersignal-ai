@@ -1,6 +1,7 @@
 "use client"
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { motion, useReducedMotion } from "motion/react"
 import {
   Bell,
   Check,
@@ -59,7 +60,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4" aria-label="Main">
       {NAV_SECTIONS.map((section) => (
         <div key={section.title}>
-          {!collapsed && <p className="mb-1.5 px-2 text-[11px] font-medium tracking-wider text-muted-foreground/80 uppercase">{section.title}</p>}
+          {!collapsed && <p className="mb-1.5 px-2 font-mono text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">{section.title}</p>}
           <ul className="space-y-0.5">
             {section.items.map((item) => {
               const active = item.href === "/app" ? pathname === "/app" : pathname.startsWith(item.href)
@@ -69,13 +70,23 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
                   onClick={onNavigate}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                    active && "bg-sidebar-accent text-sidebar-accent-foreground shadow-[inset_2px_0_0_var(--primary)]",
+                    "relative flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] font-medium text-sidebar-foreground transition-colors hover:bg-surface-hover/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none",
+                    active && "text-sidebar-accent-foreground",
                     collapsed && "justify-center px-0",
                   )}
                 >
-                  <item.icon className={cn("size-4 shrink-0", active ? "text-primary" : "text-muted-foreground")} />
-                  {!collapsed && <span className="truncate">{item.label}</span>}
+                  {active && (
+                    <motion.span
+                      layoutId={collapsed ? "app-nav-active-c" : "app-nav-active"}
+                      aria-hidden
+                      className="absolute inset-0 rounded-md bg-sidebar-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--primary)_18%,transparent)]"
+                      transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                    >
+                      <span className="absolute inset-y-2 left-0 w-px bg-primary shadow-[0_0_8px_var(--primary)]" />
+                    </motion.span>
+                  )}
+                  <item.icon className={cn("relative size-4 shrink-0", active ? "text-primary" : "text-muted-foreground")} />
+                  {!collapsed && <span className="relative truncate">{item.label}</span>}
                 </Link>
               )
               return (
@@ -118,19 +129,19 @@ function WorkspaceSwitcher({ collapsed }: { collapsed: boolean }) {
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "flex w-full items-center gap-2.5 rounded-lg border bg-background/60 p-2 text-left transition-colors hover:bg-muted",
+            "flex w-full items-center gap-2.5 rounded-md border bg-background/60 p-2 text-left transition-colors hover:border-border-strong hover:bg-surface-hover/60",
             collapsed && "justify-center border-transparent bg-transparent",
           )}
           aria-label="Switch workspace"
         >
-          <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 text-[11px] font-semibold text-white">
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-[color-mix(in_oklab,var(--primary)_40%,transparent)] bg-background font-mono text-[11px] font-medium text-primary">
             {initials(workspace?.name)}
           </span>
           {!collapsed && (
             <>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[13px] font-medium">{workspace?.name || "Loading…"}</span>
-                <span className="block text-[11px] text-muted-foreground">
+                <span className="block font-mono text-[10px] tracking-[0.12em] text-subtle-foreground uppercase">
                   {workspace?.is_demo ? "Demo data" : titleCase(workspace?.role || "")}
                 </span>
               </span>
@@ -190,7 +201,7 @@ function NotificationsBell() {
         <Button variant="ghost" size="icon" className="relative" aria-label={`Notifications${unread ? ` (${unread} unread)` : ""}`}>
           <Bell className="size-4" />
           {unread > 0 && (
-            <span className="absolute top-1 right-1 flex min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] leading-4 font-semibold text-white">
+            <span className="absolute top-1 right-1 flex min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] leading-4 font-semibold text-white">
               {unread > 9 ? "9+" : unread}
             </span>
           )}
@@ -361,7 +372,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <LogoMark />
             {!collapsed && (
               <span className="text-[15px] tracking-tight">
-                CustomerSignal<span className="text-primary"> AI</span>
+                CustomerSignal
+                <span className="ml-1.5 rounded-[4px] border border-[color-mix(in_oklab,var(--primary)_35%,transparent)] px-1 py-px align-[2px] font-mono text-[9.5px] font-medium tracking-[0.12em] text-primary">AI</span>
               </span>
             )}
           </Link>
@@ -392,7 +404,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/85 px-4 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur-md sm:px-6">
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open navigation">
             <Menu className="size-4" />
           </Button>
@@ -400,10 +412,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="ml-auto flex items-center gap-1.5">
             <button
               onClick={() => setCommandOpen(true)}
-              className="hidden h-8 w-64 items-center gap-2 rounded-lg border bg-card px-2.5 text-[13px] text-muted-foreground transition-colors hover:border-primary/30 sm:flex"
+              className="hidden h-8 w-64 items-center gap-2 rounded-md border bg-card/60 px-2.5 text-[13px] text-muted-foreground transition-colors hover:border-[color-mix(in_oklab,var(--primary)_35%,var(--border))] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none sm:flex"
             >
               <Search className="size-3.5" /> Search or jump to…
-              <kbd className="ml-auto rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
+              <kbd className="ml-auto rounded-[4px] border border-border-strong px-1.5 font-mono text-[10px] text-subtle-foreground">⌘K</kbd>
             </button>
             <Button variant="ghost" size="icon" className="sm:hidden" onClick={() => setCommandOpen(true)} aria-label="Search">
               <Search className="size-4" />
@@ -413,8 +425,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         {workspace?.is_demo && (
-          <div className="border-b border-amber-200 bg-amber-50 px-6 py-2 text-[13px] text-amber-900 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
-            <strong>Demo workspace:</strong> all reviews here are synthetic sample data, not real customer feedback.
+          <div className="flex items-center gap-2.5 border-b border-[color-mix(in_oklab,var(--ember)_25%,transparent)] bg-[color-mix(in_oklab,var(--ember)_8%,transparent)] px-6 py-2 text-[13px] text-ember">
+            <span className="font-mono text-[10px] tracking-[0.16em] uppercase">Demo</span>
+            <span className="text-foreground/85">All reviews in this workspace are synthetic sample data, not real customer feedback.</span>
           </div>
         )}
         {announcements?.slice(0, 1).map((a) => (
@@ -422,9 +435,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <strong>{a.title}</strong> — {a.body}
           </div>
         ))}
-        <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+        <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8">
+          <RouteTransition>{children}</RouteTransition>
+        </main>
       </div>
       <CommandPalette />
     </div>
+  )
+}
+
+/** Route entrance: a short fade + 6px rise keyed on the pathname (reduced motion: fade only). */
+function RouteTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const reduce = useReducedMotion()
+  return (
+    <motion.div
+      key={pathname}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
   )
 }

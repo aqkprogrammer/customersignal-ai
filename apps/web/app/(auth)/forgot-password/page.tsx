@@ -35,19 +35,19 @@ export default function ForgotPasswordPage() {
       {done ? (
         <div>
           <MailCheck className="size-8 text-primary" />
-          <h1 className="mt-4 text-2xl font-semibold">Check your email</h1>
+          <h1 className="mt-4 text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em]">Check your email</h1>
           <p className="mt-2 text-sm text-muted-foreground">{done} The link expires in 1 hour.</p>
         </div>
       ) : (
         <>
-          <h1 className="text-2xl font-semibold">Reset your password</h1>
+          <h1 className="text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em]">Reset your password</h1>
           <p className="mt-1 text-sm text-muted-foreground">Enter your account email and we&apos;ll send you a reset link.</p>
           <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
             {errors.root && <p role="alert" className="text-sm text-destructive">{errors.root.message}</p>}
-            <Field id="email" label="Email" error={errors.email?.message}>
+            <Field rail id="email" label="Email" error={errors.email?.message}>
               <Input id="email" type="email" autoComplete="email" className="h-10" {...form.register("email")} />
             </Field>
-            <Button type="submit" className="h-10 w-full" disabled={isSubmitting}>
+            <Button type="submit" variant="signal" className="h-11 w-full rounded-lg" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="animate-spin" />} Send reset link
             </Button>
           </form>

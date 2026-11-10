@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import { LogoMark } from "@/components/brand/logo"
+import { ReputationIntelligenceCore } from "@/components/signal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -195,7 +196,7 @@ export function OnboardingWizard() {
   const firstName = (session?.user.full_name || "").split(" ")[0]
 
   return (
-    <div className="min-h-screen bg-[#f3f4fb] dark:bg-background">
+    <div className="min-h-screen bg-[#eef2f4] dark:bg-background">
       <header className="flex items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2 font-semibold">
           <LogoMark /> CustomerSignal<span className="text-primary">AI</span>
@@ -219,15 +220,16 @@ export function OnboardingWizard() {
         <div className="surface p-6 sm:p-9">
           {step === 1 && (
             <div className="text-center">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30">
-                <Sparkles className="size-6" />
+              <div className="mx-auto w-40">
+                <ReputationIntelligenceCore detail="lite" pedestal={false} title="" />
               </div>
-              <h1 className="mt-6 text-3xl font-semibold">Welcome{firstName ? `, ${firstName}` : ""} 👋</h1>
+              <p className="mt-2 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">Workspace online</p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Welcome{firstName ? `, ${firstName}` : ""}.</h1>
               <p className="mx-auto mt-3 max-w-md text-muted-foreground">
                 Let&apos;s tailor CustomerSignal AI to your business. It takes about two minutes — you can skip any optional step.
               </p>
-              <Button size="lg" className="mt-8 h-11 px-6" onClick={() => go(2)} disabled={busy}>
-                Get started <ArrowRight />
+              <Button size="lg" variant="signal" className="mt-8 h-11 px-6" onClick={() => go(2)} disabled={busy}>
+                Get started <ArrowRight data-arrow />
               </Button>
             </div>
           )}

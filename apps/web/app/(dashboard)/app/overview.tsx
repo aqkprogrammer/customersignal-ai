@@ -21,6 +21,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { CategoryBars, CompetitorBars, RatingBars, SentimentDonut, SentimentTrendChart } from "@/components/charts/charts"
 import { PageHeader, Panel, ProjectSelect, StatCard } from "@/components/dashboard/primitives"
+import { IntelligenceStatus, ReputationIntelligenceCore, SentimentVisualization, StatusDot, TechnicalLabel } from "@/components/signal"
 import { ProductTour } from "@/components/dashboard/product-tour"
 import { Pill, SeverityMeter, StatusBadge, TrendBadge } from "@/components/shared/badges"
 import { CardSkeleton, DemoBadge, EmptyState, ErrorState } from "@/components/shared/states"
@@ -53,6 +54,49 @@ function UsageBar({ label, used, limit }: { label: string; used: number; limit: 
       </div>
       <Progress value={limit === null ? 4 : pct} className="mt-1.5 h-1.5" />
     </div>
+  )
+}
+
+/** Live summary of this workspace's intelligence pipeline — every figure comes from the dashboard API. */
+function IntelligenceHeader({ data }: { data: Dashboard }) {
+  const k = data.kpis
+  const themes = data.top_complaints.length + data.trending_issues.length
+  const running = data.activity.some((a) => a.status === "pending" || a.status === "processing")
+  const stage = k.analyzed_reviews < k.total_reviews ? 1 : data.opportunities.length ? 3 : themes ? 2 : 1
+  return (
+    <section className="surface relative mb-4 overflow-hidden dark:surface-lit" aria-label="Intelligence summary">
+      <div aria-hidden className="bg-tech-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_60%_90%_at_12%_50%,#000,transparent)]" />
+      <div className="relative grid items-center gap-6 p-5 md:grid-cols-[200px_1fr] lg:grid-cols-[220px_1fr_260px] lg:gap-8">
+        <div className="mx-auto w-[180px] md:w-full">
+          <ReputationIntelligenceCore detail="lite" pedestal={false} centerValue={formatCompact(k.analyzed_reviews)} centerLabel="Analyzed" title={`${k.analyzed_reviews} reviews analyzed`} />
+        </div>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <TechnicalLabel tone={data.ai_provider.is_llm ? "signal" : "ember"}>
+              <span className="inline-flex items-center gap-2">
+                <StatusDot tone={data.ai_provider.is_llm ? "signal" : "ember"} pulse={running} />
+                {running ? "Analysis running" : data.ai_provider.is_llm ? "Intelligence active" : "Built-in engine"}
+              </span>
+            </TechnicalLabel>
+            <span className="text-xs text-muted-foreground">
+              <Bot className="mr-1 inline size-3.5 align-[-2px]" />
+              {data.ai_provider.label}
+              {!data.ai_provider.is_llm && " — configure an AI provider for deeper, multilingual analysis."}
+            </span>
+          </div>
+          <IntelligenceStatus
+            className="mt-4"
+            active={stage}
+            stages={["Ingested", "Analyzed", "Themes", "Opportunities"]}
+            counts={[formatNumber(k.total_reviews), formatNumber(k.analyzed_reviews), themes, data.opportunities.length]}
+          />
+        </div>
+        <div className="text-[13px] md:col-span-2 lg:col-span-1">
+          <p className="micro-label mb-2.5">Sentiment · in scope</p>
+          <SentimentVisualization positive={k.positive_pct} neutral={k.neutral_pct} negative={k.negative_pct} />
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -152,11 +196,7 @@ export function OverviewPage() {
     <>
       {header}
       <ProductTour open={params.get("tour") === "1"} onClose={() => router.replace("/app")} />
-      <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
-        <Bot className="size-3.5" />
-        Analysis engine: <span className="font-medium text-foreground">{data.ai_provider.label}</span>
-        {!data.ai_provider.is_llm && <span>— configure an AI provider for deeper, multilingual analysis.</span>}
-      </div>
+      <IntelligenceHeader data={data} />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <StatCard label="Reviews analyzed" value={formatCompact(k.analyzed_reviews)} hint={`${formatNumber(k.total_reviews)} total in scope`} icon={MessageSquareText} />
@@ -244,7 +284,7 @@ export function OverviewPage() {
             <ul className="space-y-3">
               {data.opportunities.map((o) => (
                 <li key={o.id} className="flex gap-3">
-                  <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300">
+                  <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-ice-50 text-ice-600 dark:bg-ice-500/15 dark:text-ice-300">
                     <Lightbulb className="size-3.5" />
                   </span>
                   <div className="min-w-0">
@@ -263,7 +303,7 @@ export function OverviewPage() {
             <div className="flex flex-wrap gap-1.5">
               {data.top_keywords.map((kw) => (
                 <Link key={kw.keyword} href={`/app/reviews?q=${encodeURIComponent(kw.keyword)}`}>
-                  <Pill color={kw.negative_share >= 0.5 ? "red" : kw.negative_share >= 0.25 ? "amber" : "indigo"} className="hover:opacity-80">
+                  <Pill color={kw.negative_share >= 0.5 ? "red" : kw.negative_share >= 0.25 ? "amber" : "signal"} className="hover:opacity-80">
                     {kw.keyword} <span className="opacity-60">{kw.count}</span>
                   </Pill>
                 </Link>
@@ -275,7 +315,7 @@ export function OverviewPage() {
           <p className="mt-3 text-[11px] text-muted-foreground">Red = mostly in negative reviews.</p>
         </Panel>
         <div className="space-y-4">
-          <Panel title="Monthly usage" actions={<Pill color="indigo">{data.usage.plan.plan_name}</Pill>}>
+          <Panel title="Monthly usage" actions={<Pill color="signal">{data.usage.plan.plan_name}</Pill>}>
             <div className="space-y-3">
               <UsageBar label="Reviews analyzed" {...data.usage.reviews_analyzed} />
               <UsageBar label="AI reports" {...data.usage.reports_generated} />

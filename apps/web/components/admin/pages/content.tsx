@@ -41,11 +41,11 @@ function ReviewAnalyticsBody({ d }: { d: ReviewAnalytics }) {
       <KpiGrid>
         <KpiTile label="Total reviews" value={formatCompact(d.total_reviews)} icon={Star} hint={`${formatCompact(d.demo_reviews)} demo`} />
         <KpiTile label="Ingested (30d)" value={formatCompact(last30)} icon={Star} tone="sky" spark={d.ingested_30d.map((r) => r.reviews)} />
-        <KpiTile label="Analyzed" value={formatCompact(analyzed)} tone="violet" hint={d.total_reviews ? `${Math.round((100 * analyzed) / d.total_reviews)}% coverage` : undefined} />
+        <KpiTile label="Analyzed" value={formatCompact(analyzed)} tone="ice" hint={d.total_reviews ? `${Math.round((100 * analyzed) / d.total_reviews)}% coverage` : undefined} />
         <KpiTile label="Net sentiment" value={analyzed ? `${(((pos - neg) / analyzed) * 100).toFixed(0)}` : "—"} tone={pos >= neg ? "emerald" : "rose"} hint="% positive − % negative" />
       </KpiGrid>
       <Panel title="Reviews ingested" description="Per day, last 30 days">
-        <TrendChart data={d.ingested_30d} xKey="date" series={[{ key: "reviews", label: "Reviews", color: "#38bdf8" }]} />
+        <TrendChart data={d.ingested_30d} xKey="date" series={[{ key: "reviews", label: "Reviews", color: "#80bdff" }]} />
       </Panel>
       <div className="grid gap-4 lg:grid-cols-2">
         <Panel title="Sentiment mix">
@@ -58,7 +58,7 @@ function ReviewAnalyticsBody({ d }: { d: ReviewAnalytics }) {
           <BarsChart data={d.by_platform} xKey="platform" horizontal periodLabels={false} labelFormat={titleCase} series={[{ key: "count", label: "Reviews" }]} height={Math.max(160, d.by_platform.length * 28)} />
         </Panel>
         <Panel title={<span className="inline-flex items-center gap-1.5"><Languages className="size-3.5" /> Top languages</span>}>
-          <BarsChart data={d.by_language} xKey="language" horizontal periodLabels={false} series={[{ key: "count", label: "Reviews", color: "#a78bfa" }]} height={Math.max(160, d.by_language.length * 28)} />
+          <BarsChart data={d.by_language} xKey="language" horizontal periodLabels={false} series={[{ key: "count", label: "Reviews", color: "#80bdff" }]} height={Math.max(160, d.by_language.length * 28)} />
         </Panel>
       </div>
     </div>
@@ -110,7 +110,7 @@ export function AdminProjects() {
                       <div className="truncate text-xs text-muted-foreground">{p.business_name || [p.industry, p.country].filter(Boolean).join(" · ") || "—"}</div>
                     </TableCell>
                     <TableCell className="max-w-[200px] truncate">
-                      <Link href={`/admin/workspaces/${p.workspace_id}`} className="text-xs text-indigo-300 hover:underline">{p.workspace_name}</Link>
+                      <Link href={`/admin/workspaces/${p.workspace_id}`} className="text-xs text-signal-300 hover:underline">{p.workspace_name}</Link>
                     </TableCell>
                     <TableCell className="text-xs">{[titleCase(p.kind), titleCase(p.data_source)].filter(Boolean).join(" · ") || "—"}</TableCell>
                     <TableCell>{p.archived_at ? <Pill>Archived</Pill> : <StatusBadge status={p.status} />}</TableCell>

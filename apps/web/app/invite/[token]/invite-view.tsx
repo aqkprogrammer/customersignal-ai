@@ -38,7 +38,7 @@ export function InvitePage() {
   const next = encodeURIComponent(`/invite/${token}`)
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f3f4fb] px-4 dark:bg-background">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#eef2f4] px-4 dark:bg-background">
       <Logo className="mb-8" />
       <div className="surface w-full max-w-md p-8 text-center">
         {preview.isLoading ? (

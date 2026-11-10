@@ -176,7 +176,7 @@ export function ReviewsPage() {
               <StatCard label="Reviews" value={formatNumber(a.kpis.total_reviews)} hint={`${formatNumber(a.kpis.analyzed_reviews)} analyzed`} />
               <StatCard label="Average rating" value={a.kpis.avg_rating ? `${a.kpis.avg_rating}★` : "—"} tone="amber" />
               <StatCard label="Positive / Negative" value={`${a.kpis.positive_pct}% / ${a.kpis.negative_pct}%`} tone="green" />
-              <StatCard label="Avg sentiment score" value={a.kpis.avg_sentiment?.toFixed(2) ?? "—"} hint="-1 (negative) to +1 (positive)" tone="violet" />
+              <StatCard label="Avg sentiment score" value={a.kpis.avg_sentiment?.toFixed(2) ?? "—"} hint="-1 (negative) to +1 (positive)" tone="ice" />
             </div>
             <div className="grid gap-4 lg:grid-cols-3">
               <Panel title="Sentiment over time" className="lg:col-span-2"><SentimentTrendChart data={a.over_time} /></Panel>
@@ -196,7 +196,7 @@ export function ReviewsPage() {
                 <div className="flex flex-wrap gap-1.5">
                   {a.keywords.map((k) => (
                     <button key={k.keyword} onClick={() => { setQ(k.keyword); setSemantic(false); setTab("explorer") }}>
-                      <Pill color={k.negative_share >= 0.5 ? "red" : k.negative_share >= 0.25 ? "amber" : "indigo"}>{k.keyword} <span className="opacity-60">{k.count}</span></Pill>
+                      <Pill color={k.negative_share >= 0.5 ? "red" : k.negative_share >= 0.25 ? "amber" : "signal"}>{k.keyword} <span className="opacity-60">{k.count}</span></Pill>
                     </button>
                   ))}
                 </div>
@@ -278,7 +278,7 @@ export function ReviewsPage() {
                 </div>
               </div>
               {clusterId && (
-                <div className="mt-3"><Pill color="violet">Filtered to one theme <button onClick={() => setClusterId(null)} aria-label="Remove theme filter"><X className="size-3" /></button></Pill></div>
+                <div className="mt-3"><Pill color="ice">Filtered to one theme <button onClick={() => setClusterId(null)} aria-label="Remove theme filter"><X className="size-3" /></button></Pill></div>
               )}
             </div>
 

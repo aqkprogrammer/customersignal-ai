@@ -73,7 +73,7 @@ export function OpportunitiesPage() {
           {list.data.map((o) => (
             <button key={o.id} onClick={() => setOpenId(o.id)} className="surface flex flex-col p-5 text-left transition-shadow hover:shadow-md">
               <div className="flex items-start justify-between gap-3">
-                <span className="flex size-10 items-center justify-center rounded-xl bg-violet-50 text-lg font-semibold text-violet-700 tabular-nums dark:bg-violet-500/15 dark:text-violet-300">{Math.round(o.score)}</span>
+                <span className="flex size-10 items-center justify-center rounded-xl bg-ice-50 text-lg font-semibold text-ice-700 tabular-nums dark:bg-ice-500/15 dark:text-ice-300">{Math.round(o.score)}</span>
                 <div className="flex flex-wrap justify-end gap-1">{o.is_demo && <DemoBadge />}<StatusBadge status={o.status} /></div>
               </div>
               <h3 className="mt-3 text-sm font-semibold">{o.title}</h3>
@@ -81,7 +81,7 @@ export function OpportunitiesPage() {
               <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
                 <Pill color={impactColor[o.impact]}>{titleCase(o.impact)} impact</Pill>
                 <Pill>{titleCase(o.effort)} effort</Pill>
-                <Pill color="indigo">{titleCase(o.opportunity_type)}</Pill>
+                <Pill color="signal">{titleCase(o.opportunity_type)}</Pill>
                 <Pill color="gray">{o.evidence_count} evidence</Pill>
               </div>
             </button>

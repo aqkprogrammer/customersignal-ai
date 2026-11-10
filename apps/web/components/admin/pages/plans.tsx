@@ -35,7 +35,7 @@ export function AdminPlans() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {q.data.plans.map((p) => (
-            <div key={p.id} className={cn("flex flex-col rounded-xl border bg-card/70 p-4", p.highlighted && "border-indigo-400/40 shadow-[0_0_0_1px_rgba(129,140,248,0.25),0_20px_50px_-25px_rgba(99,102,241,0.6)]")}>
+            <div key={p.id} className={cn("flex flex-col rounded-xl border bg-card/70 p-4", p.highlighted && "border-signal-400/40 shadow-[0_0_0_1px_rgba(69,229,234,0.25),0_20px_50px_-25px_rgba(69,229,234,0.6)]")}>
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export function AdminPlans() {
                   <div className="mt-1 flex flex-wrap gap-1">
                     {p.is_active ? <Pill color="green">Active</Pill> : <Pill color="gray">Inactive</Pill>}
                     {p.is_public ? <Pill color="sky">Public</Pill> : <Pill color="gray">Hidden</Pill>}
-                    {p.highlighted && <Pill color="violet"><Sparkles className="size-3" /> Highlighted</Pill>}
+                    {p.highlighted && <Pill color="ice"><Sparkles className="size-3" /> Highlighted</Pill>}
                   </div>
                 </div>
                 {can("plans.manage") && (
@@ -70,7 +70,7 @@ export function AdminPlans() {
                 </div>
               </dl>
               <div className="mt-3 flex flex-wrap gap-1">
-                {p.features.map((f) => <Pill key={f} color="indigo">{titleCase(f)}</Pill>)}
+                {p.features.map((f) => <Pill key={f} color="signal">{titleCase(f)}</Pill>)}
               </div>
               <div className="mt-auto flex items-center justify-between border-t pt-3 text-xs text-muted-foreground">
                 <span>{formatNumber(p.subscribers)} subscriptions</span>

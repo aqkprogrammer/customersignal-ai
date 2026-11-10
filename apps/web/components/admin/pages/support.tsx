@@ -94,7 +94,7 @@ export function AdminSupport() {
                   <TableRow key={t.id} className="hover:bg-white/[0.03]">
                     <TableCell className="max-w-[320px]">
                       <Link href={`/admin/support/${t.id}`} className="block min-w-0">
-                        <div className="truncate font-medium text-white hover:text-indigo-300">{t.subject}</div>
+                        <div className="truncate font-medium text-white hover:text-signal-300">{t.subject}</div>
                         <div className="truncate text-xs text-muted-foreground">{t.email} · {t.source === "contact_form" ? "Contact form" : "In-app"}</div>
                       </Link>
                     </TableCell>
@@ -169,7 +169,7 @@ export function AdminTicketDetail() {
                           m.internal
                             ? "border-amber-400/25 bg-amber-500/10"
                             : admin
-                              ? "border-indigo-400/25 bg-indigo-500/15"
+                              ? "border-signal-400/25 bg-signal-500/15"
                               : "bg-white/[0.03]",
                         )}
                       >
@@ -264,8 +264,8 @@ export function AdminTicketDetail() {
                 ["Created", formatDateTime(t.created_at)],
                 ["First response", formatDateTime(t.first_response_at)],
                 ["Resolved", formatDateTime(t.resolved_at)],
-                ["User", t.user_id && can("users.read") ? <Link key="u" className="text-indigo-300 hover:underline" href={`/admin/users/${t.user_id}`}>View user</Link> : t.user_id ? "Registered user" : "Guest"],
-                ["Workspace", t.workspace_id && can("workspaces.read") ? <Link key="w" className="text-indigo-300 hover:underline" href={`/admin/workspaces/${t.workspace_id}`}>View workspace</Link> : "—"],
+                ["User", t.user_id && can("users.read") ? <Link key="u" className="text-signal-300 hover:underline" href={`/admin/users/${t.user_id}`}>View user</Link> : t.user_id ? "Registered user" : "Guest"],
+                ["Workspace", t.workspace_id && can("workspaces.read") ? <Link key="w" className="text-signal-300 hover:underline" href={`/admin/workspaces/${t.workspace_id}`}>View workspace</Link> : "—"],
               ]}
             />
           </Panel>

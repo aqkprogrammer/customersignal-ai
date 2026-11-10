@@ -65,9 +65,9 @@ export function AdminAnnouncements() {
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-semibold text-white">{a.title}</h3>
                     <Pill color={LEVEL_TONE[a.level]}>{titleCase(a.level)}</Pill>
-                    <Pill color="violet">Audience: {titleCase(a.audience)}</Pill>
+                    <Pill color="ice">Audience: {titleCase(a.audience)}</Pill>
                     {a.is_active ? <Pill color="green">Active</Pill> : <Pill>Inactive</Pill>}
-                    {a.send_email && <Pill color="indigo"><Mail className="size-3" /> Email</Pill>}
+                    {a.send_email && <Pill color="signal"><Mail className="size-3" /> Email</Pill>}
                   </div>
                   <p className="mt-1.5 line-clamp-3 text-sm whitespace-pre-wrap text-muted-foreground">{a.body}</p>
                   <div className="mt-2 text-xs text-muted-foreground">
@@ -224,7 +224,7 @@ export function AdminEmailTemplates() {
                   <button
                     type="button"
                     onClick={() => setSelected(t.key)}
-                    className={cn("w-full rounded-md px-2.5 py-2 text-left hover:bg-white/5", current.key === t.key && "bg-indigo-500/15")}
+                    className={cn("w-full rounded-md px-2.5 py-2 text-left hover:bg-white/5", current.key === t.key && "bg-signal-500/15")}
                   >
                     <div className="truncate text-sm text-white">{t.name}</div>
                     <div className="truncate font-mono text-[10px] text-muted-foreground">{t.key} · {timeAgo(t.updated_at)}</div>
@@ -302,7 +302,7 @@ function TemplateEditor({ template }: { template: EmailTemplate }) {
           {template.variables.length > 0 && (
             <div className="flex flex-wrap items-center gap-1">
               <span className="text-[11px] text-muted-foreground">Variables:</span>
-              {template.variables.map((v) => <code key={v} className="rounded bg-indigo-500/15 px-1.5 py-0.5 font-mono text-[10px] text-indigo-200">{`{{${v}}}`}</code>)}
+              {template.variables.map((v) => <code key={v} className="rounded bg-signal-500/15 px-1.5 py-0.5 font-mono text-[10px] text-signal-200">{`{{${v}}}`}</code>)}
             </div>
           )}
           <Field label="Subject" htmlFor="t-subject"><Input id="t-subject" value={subject} onChange={(e) => setSubject(e.target.value)} readOnly={!manage} maxLength={300} /></Field>

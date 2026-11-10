@@ -21,7 +21,7 @@ function ResetForm() {
   if (!token)
     return (
       <div>
-        <h1 className="text-2xl font-semibold">Invalid link</h1>
+        <h1 className="text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em]">Invalid link</h1>
         <p className="mt-2 text-sm text-muted-foreground">This reset link is missing its token.</p>
         <Button asChild className="mt-6"><Link href="/forgot-password">Request a new link</Link></Button>
       </div>
@@ -30,14 +30,14 @@ function ResetForm() {
     return (
       <div>
         <CheckCircle2 className="size-8 text-emerald-600" />
-        <h1 className="mt-4 text-2xl font-semibold">Password updated</h1>
+        <h1 className="mt-4 text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em]">Password updated</h1>
         <p className="mt-2 text-sm text-muted-foreground">All other sessions were signed out for your security.</p>
         <Button asChild className="mt-6"><Link href="/login">Sign in</Link></Button>
       </div>
     )
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Choose a new password</h1>
+      <h1 className="text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em]">Choose a new password</h1>
       <form
         className="mt-6 space-y-4"
         noValidate
@@ -55,13 +55,13 @@ function ResetForm() {
             {errors.root.message} <Link href="/forgot-password" className="underline">Request a new link</Link>
           </p>
         )}
-        <Field id="password" label="New password" error={errors.password?.message}>
+        <Field rail id="password" label="New password" error={errors.password?.message}>
           <PasswordInput id="password" autoComplete="new-password" {...form.register("password")} />
         </Field>
-        <Field id="confirm" label="Confirm password" error={errors.confirm?.message}>
+        <Field rail id="confirm" label="Confirm password" error={errors.confirm?.message}>
           <PasswordInput id="confirm" autoComplete="new-password" {...form.register("confirm")} />
         </Field>
-        <Button type="submit" className="h-10 w-full" disabled={isSubmitting}>
+        <Button type="submit" variant="signal" className="h-11 w-full rounded-lg" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="animate-spin" />} Update password
         </Button>
       </form>

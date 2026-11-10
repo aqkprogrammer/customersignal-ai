@@ -36,8 +36,13 @@ export function PageHeader({
   return (
     <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
-        {eyebrow && <div className="mb-1 text-xs font-medium tracking-wide text-indigo-300/80 uppercase">{eyebrow}</div>}
-        <h1 className="truncate text-xl font-semibold tracking-tight text-white sm:text-2xl">{title}</h1>
+        {eyebrow && (
+          <div className="mb-2 inline-flex items-center gap-2 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">
+            <span aria-hidden className="h-px w-5 bg-current opacity-60" />
+            {eyebrow}
+          </div>
+        )}
+        <h1 className="truncate text-xl font-semibold tracking-[-0.03em] text-white sm:text-[26px]">{title}</h1>
         {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -66,14 +71,14 @@ export function Panel({
     <section
       id={id}
       className={cn(
-        "rounded-xl border bg-card/70 shadow-[0_1px_0_rgba(255,255,255,0.03)_inset,0_12px_32px_-18px_rgba(0,0,0,0.6)] backdrop-blur-sm",
+        "min-w-0 rounded-lg border bg-card/70 surface-lit",
         className,
       )}
     >
       {(title || actions) && (
         <header className="flex flex-wrap items-start justify-between gap-2 border-b px-4 py-3">
           <div className="min-w-0">
-            {title && <h2 className="text-sm font-semibold text-white">{title}</h2>}
+            {title && <h2 className="text-[13.5px] font-semibold tracking-[-0.01em] text-white">{title}</h2>}
             {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
           </div>
           {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -89,7 +94,7 @@ export function KpiTile({
   value,
   hint,
   icon: Icon,
-  tone = "indigo",
+  tone = "signal",
   spark,
   className,
 }: {
@@ -97,32 +102,33 @@ export function KpiTile({
   value: React.ReactNode
   hint?: React.ReactNode
   icon?: LucideIcon
-  tone?: "indigo" | "violet" | "sky" | "emerald" | "amber" | "rose"
+  tone?: "signal" | "ice" | "sky" | "emerald" | "amber" | "rose"
   spark?: number[]
   className?: string
 }) {
   const tones = {
-    indigo: { icon: "bg-indigo-500/15 text-indigo-300", spark: "#818cf8" },
-    violet: { icon: "bg-violet-500/15 text-violet-300", spark: "#a78bfa" },
-    sky: { icon: "bg-sky-500/15 text-sky-300", spark: "#38bdf8" },
-    emerald: { icon: "bg-emerald-500/15 text-emerald-300", spark: "#34d399" },
-    amber: { icon: "bg-amber-500/15 text-amber-300", spark: "#fbbf24" },
-    rose: { icon: "bg-rose-500/15 text-rose-300", spark: "#fb7185" },
+    signal: { icon: "text-signal", spark: "#45e5ea" },
+    ice: { icon: "text-ice", spark: "#80bdff" },
+    sky: { icon: "text-ice", spark: "#80bdff" },
+    emerald: { icon: "text-mint", spark: "#76f0c1" },
+    amber: { icon: "text-ember", spark: "#eab56d" },
+    rose: { icon: "text-negative", spark: "#f2706b" },
   }[tone]
   return (
-    <div className={cn("relative overflow-hidden rounded-xl border bg-card/70 p-3.5", className)}>
+    <div className={cn("relative overflow-hidden rounded-lg border bg-card/70 p-3.5 surface-lit", className)}>
+      <span aria-hidden className="absolute inset-x-3.5 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg, ${tones.spark}, transparent 70%)` }} />
       <div className="flex items-center justify-between gap-2">
-        <span className="truncate text-xs font-medium text-muted-foreground">{label}</span>
+        <span className="truncate font-mono text-[10px] tracking-[0.14em] text-subtle-foreground uppercase">{label}</span>
         {Icon && (
-          <span className={cn("flex size-6 shrink-0 items-center justify-center rounded-md", tones.icon)}>
+          <span className={cn("flex size-6 shrink-0 items-center justify-center rounded-md border border-border", tones.icon)}>
             <Icon className="size-3.5" />
           </span>
         )}
       </div>
-      <div className="mt-2 flex items-end justify-between gap-2">
+      <div className="mt-2.5 flex items-end justify-between gap-2">
         <div className="min-w-0">
-          <div className="truncate text-xl font-semibold tracking-tight text-white tabular-nums">{value}</div>
-          {hint && <div className="mt-0.5 truncate text-[11px] text-muted-foreground">{hint}</div>}
+          <div className="truncate text-[22px] leading-none font-semibold tracking-[-0.035em] text-white tabular-nums">{value}</div>
+          {hint && <div className="mt-1.5 truncate text-[11px] text-muted-foreground">{hint}</div>}
         </div>
         {spark && spark.length > 1 && <Sparkline data={spark} color={tones.spark} className="h-8 w-20 shrink-0" />}
       </div>
@@ -558,7 +564,7 @@ export function JsonBlock({ value, className }: { value: unknown; className?: st
     text = String(value)
   }
   return (
-    <pre className={cn("max-h-80 overflow-auto rounded-lg border bg-black/30 p-3 font-mono text-[11px] leading-relaxed text-indigo-100/90", className)}>
+    <pre className={cn("max-h-80 overflow-auto rounded-lg border bg-black/30 p-3 font-mono text-[11px] leading-relaxed text-signal-100/90", className)}>
       {text ?? "null"}
     </pre>
   )
@@ -567,7 +573,7 @@ export function JsonBlock({ value, className }: { value: unknown; className?: st
 export function BoolDot({ value, on = "Yes", off = "No" }: { value: boolean; on?: string; off?: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-xs">
-      <span className={cn("size-1.5 rounded-full", value ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.7)]" : "bg-slate-500")} />
+      <span className={cn("size-1.5 rounded-full", value ? "bg-emerald-400 shadow-[0_0_6px_rgba(118,240,193,0.7)]" : "bg-slate-500")} />
       {value ? on : off}
     </span>
   )
@@ -575,7 +581,7 @@ export function BoolDot({ value, on = "Yes", off = "No" }: { value: boolean; on?
 
 export function Meter({ value, max, className }: { value: number; max: number | null; className?: string }) {
   const pct = max ? Math.min(100, (value / max) * 100) : 0
-  const color = pct >= 90 ? "bg-rose-400" : pct >= 70 ? "bg-amber-400" : "bg-indigo-400"
+  const color = pct >= 90 ? "bg-rose-400" : pct >= 70 ? "bg-amber-400" : "bg-signal-400"
   return (
     <div className={cn("space-y-1", className)}>
       <div className="flex justify-between text-[11px] text-muted-foreground tabular-nums">
@@ -583,7 +589,7 @@ export function Meter({ value, max, className }: { value: number; max: number | 
         <span>{max === null ? "Unlimited" : formatNumber(max)}</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
-        <div className={cn("h-full rounded-full", max === null ? "w-full bg-indigo-400/30" : color)} style={max === null ? undefined : { width: `${pct}%` }} />
+        <div className={cn("h-full rounded-full", max === null ? "w-full bg-signal-400/30" : color)} style={max === null ? undefined : { width: `${pct}%` }} />
       </div>
     </div>
   )

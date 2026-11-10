@@ -102,7 +102,7 @@ export function AdminUsers() {
                   <TableRow key={u.id} className="hover:bg-white/[0.03]">
                     <TableCell className="max-w-[280px]">
                       <Link href={`/admin/users/${u.id}`} className="block min-w-0">
-                        <div className="truncate font-medium text-white hover:text-indigo-300">{u.full_name || u.email}</div>
+                        <div className="truncate font-medium text-white hover:text-signal-300">{u.full_name || u.email}</div>
                         <div className="truncate text-xs text-muted-foreground">
                           {u.email}
                           {u.company_name && ` · ${u.company_name}`}
@@ -113,7 +113,7 @@ export function AdminUsers() {
                       <StatusBadge status={u.status} />
                     </TableCell>
                     <TableCell>
-                      <Pill color={u.plan === "free" ? "gray" : "indigo"}>{titleCase(u.plan)}</Pill>
+                      <Pill color={u.plan === "free" ? "gray" : "signal"}>{titleCase(u.plan)}</Pill>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1">

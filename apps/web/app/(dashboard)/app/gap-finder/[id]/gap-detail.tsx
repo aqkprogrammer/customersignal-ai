@@ -33,7 +33,7 @@ interface GapData {
   report: null | { id: string; payload: GapPayload; provider: string; created_at: string; is_demo: boolean }
 }
 
-function PointList({ title, points, tone }: { title: string; points: Point[]; tone: "green" | "red" | "sky" | "amber" | "violet" }) {
+function PointList({ title, points, tone }: { title: string; points: Point[]; tone: "green" | "red" | "sky" | "amber" | "ice" }) {
   return (
     <Panel title={title}>
       {!points.length ? <p className="text-sm text-muted-foreground">Nothing notable.</p> : (
@@ -97,7 +97,7 @@ export function GapDetailPage() {
         {businesses.map((b) => (
           <div key={b.id} className="surface flex items-center justify-between p-4">
             <div>
-              <p className="text-sm font-medium">{b.name} {b.is_primary ? <Pill color="indigo">Your product</Pill> : <Pill>Competitor</Pill>}</p>
+              <p className="text-sm font-medium">{b.name} {b.is_primary ? <Pill color="signal">Your product</Pill> : <Pill>Competitor</Pill>}</p>
               <p className="text-xs text-muted-foreground">{b.review_count} reviews uploaded</p>
             </div>
             {can("analyst") && <Button variant="outline" size="sm" onClick={() => setUploadFor(b.id)}><Upload /> Upload</Button>}
@@ -133,11 +133,11 @@ export function GapDetailPage() {
             <PointList title="What customers like" points={r.likes} tone="green" />
             <PointList title="What customers dislike" points={r.dislikes} tone="red" />
             <PointList title="What customers wish existed" points={r.wishes} tone="sky" />
-            <PointList title="Missing features" points={r.missing_features} tone="violet" />
+            <PointList title="Missing features" points={r.missing_features} tone="ice" />
             <PointList title="Quality complaints" points={r.quality_complaints} tone="red" />
             <PointList title="Price vs. value" points={r.price_value} tone="amber" />
             <PointList title="Unmet expectations" points={r.unmet_expectations} tone="amber" />
-            <PointList title="Competitor advantages" points={r.competitor_advantages} tone="violet" />
+            <PointList title="Competitor advantages" points={r.competitor_advantages} tone="ice" />
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             <Panel title="Feature recommendations">

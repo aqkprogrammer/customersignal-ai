@@ -1,6 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
+import { motion } from "motion/react"
 import { ChevronsLeft, ChevronsRight, KeyRound, Loader2, LogOut, Menu, ShieldAlert, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -43,7 +44,7 @@ function NavList({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: 
       {sections.map((section) => (
         <div key={section.title}>
           {!collapsed && (
-            <div className="px-2 pb-1 text-[10px] font-semibold tracking-[0.12em] text-sidebar-foreground/45 uppercase">{section.title}</div>
+            <div className="px-2 pb-1 font-mono text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">{section.title}</div>
           )}
           <ul className="space-y-0.5">
             {section.items.map((item) => {
@@ -55,13 +56,22 @@ function NavList({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: 
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "group relative flex h-8 items-center gap-2.5 rounded-md px-2 text-[13px] text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-white",
-                    active && "bg-gradient-to-r from-indigo-500/20 to-violet-500/5 text-white",
+                    active && "text-white",
                     collapsed && "justify-center px-0",
                   )}
                 >
-                  {active && <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-indigo-400" />}
-                  <item.icon className={cn("size-4 shrink-0", active ? "text-indigo-300" : "text-sidebar-foreground/60 group-hover:text-indigo-200")} />
-                  {!collapsed && <span className="truncate">{item.label}</span>}
+                  {active && (
+                    <motion.span
+                      layoutId={collapsed ? "admin-nav-active-c" : "admin-nav-active"}
+                      aria-hidden
+                      className="absolute inset-0 rounded-md bg-sidebar-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--signal)_18%,transparent)]"
+                      transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                    >
+                      <span className="absolute inset-y-1.5 left-0 w-px bg-signal shadow-[0_0_8px_var(--signal)]" />
+                    </motion.span>
+                  )}
+                  <item.icon className={cn("relative size-4 shrink-0", active ? "text-signal" : "text-sidebar-foreground/60 group-hover:text-signal-200")} />
+                  {!collapsed && <span className="relative truncate">{item.label}</span>}
                 </Link>
               )
               return (
@@ -91,7 +101,7 @@ function Brand({ collapsed }: { collapsed?: boolean }) {
       {!collapsed && (
         <span className="leading-tight">
           <span className="block text-[13px] font-semibold text-white">CustomerSignal</span>
-          <span className="block text-[10px] font-medium tracking-[0.14em] text-indigo-300/80 uppercase">Admin console</span>
+          <span className="block font-mono text-[9.5px] tracking-[0.16em] text-signal/80 uppercase">Command centre</span>
         </span>
       )}
     </Link>
@@ -101,7 +111,7 @@ function Brand({ collapsed }: { collapsed?: boolean }) {
 function RoleBadge({ role }: { role: string }) {
   const tone =
     role === "super_admin"
-      ? "bg-violet-500/15 text-violet-200 ring-violet-400/30"
+      ? "bg-ice-500/15 text-ice-200 ring-ice-400/30"
       : role === "billing_admin"
         ? "bg-sky-500/15 text-sky-200 ring-sky-400/30"
         : role === "support_admin"
@@ -149,7 +159,7 @@ function UserMenu({ me }: { me: AdminMe }) {
           className="flex items-center gap-2 rounded-lg px-1.5 py-1 text-left outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Account menu"
         >
-          <span className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-[11px] font-semibold text-white">
+          <span className="flex size-7 items-center justify-center rounded-md border border-[color-mix(in_oklab,var(--signal)_40%,transparent)] font-mono text-[11px] text-signal">
             {initials(me.full_name || me.email)}
           </span>
           <span className="hidden max-w-[160px] leading-tight md:block">
@@ -264,8 +274,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2 lg:hidden">
             <LogoMark className="size-6" />
           </div>
-          <div className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
-            <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+          <div className="hidden items-center gap-2 font-mono text-[10.5px] tracking-[0.14em] text-subtle-foreground uppercase sm:flex">
+            <span className="size-1.5 rounded-full bg-mint shadow-[0_0_8px_var(--mint)]" />
             Secure admin session
           </div>
           <div className="ml-auto flex items-center gap-2">

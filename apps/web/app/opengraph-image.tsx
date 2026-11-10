@@ -15,7 +15,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #0b1033 0%, #141a52 60%, #2a1a6b 100%)",
+          background: "linear-gradient(135deg, #05080b 0%, #0c1a24 60%, #0b2a33 100%)",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
@@ -26,7 +26,7 @@ export default function OpengraphImage() {
               width: 56,
               height: 56,
               borderRadius: 16,
-              background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+              background: "linear-gradient(135deg, #45e5ea, #80bdff)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -44,18 +44,18 @@ export default function OpengraphImage() {
             </svg>
           </div>
           <div style={{ display: "flex", fontSize: 30, fontWeight: 600 }}>
-            CustomerSignal<span style={{ color: "#a5b4fc", marginLeft: 8 }}>AI</span>
+            CustomerSignal<span style={{ color: "#9df1f3", marginLeft: 8 }}>AI</span>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", fontSize: 68, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2, maxWidth: 980 }}>
             Your customers are telling you what to build next.
           </div>
-          <div style={{ display: "flex", fontSize: 28, color: "rgba(224,227,255,0.75)", maxWidth: 900 }}>
+          <div style={{ display: "flex", fontSize: 28, color: "rgba(220,232,240,0.75)", maxWidth: 900 }}>
             AI-powered review analysis, competitor intelligence and product opportunity discovery.
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 22, color: "rgba(199,210,254,0.6)" }}>customersignal.ai</div>
+        <div style={{ display: "flex", fontSize: 22, color: "rgba(166,180,192,0.6)" }}>customersignal.ai</div>
       </div>
     ),
     size,

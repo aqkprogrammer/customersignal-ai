@@ -76,7 +76,7 @@ export function AdminWorkspaces() {
                 {query.data.items.map((w) => (
                   <TableRow key={w.id} className="hover:bg-white/[0.03]">
                     <TableCell className="max-w-[240px]">
-                      <Link href={`/admin/workspaces/${w.id}`} className="block truncate font-medium text-white hover:text-indigo-300">{w.name}</Link>
+                      <Link href={`/admin/workspaces/${w.id}`} className="block truncate font-medium text-white hover:text-signal-300">{w.name}</Link>
                       <div className="truncate text-xs text-muted-foreground">
                         {[w.industry, w.country].filter(Boolean).join(" · ") || w.slug}
                         {w.is_demo && " · demo"}
@@ -84,7 +84,7 @@ export function AdminWorkspaces() {
                     </TableCell>
                     <TableCell className="max-w-[200px] truncate text-xs">{w.owner_email}</TableCell>
                     <TableCell>
-                      <Pill color={w.plan === "free" ? "gray" : "indigo"}>{titleCase(w.plan)}</Pill>
+                      <Pill color={w.plan === "free" ? "gray" : "signal"}>{titleCase(w.plan)}</Pill>
                       {w.subscription_status && w.subscription_status !== "active" && <StatusBadge status={w.subscription_status} className="ml-1" />}
                     </TableCell>
                     <TableCell><StatusBadge status={w.status} /></TableCell>
@@ -137,7 +137,7 @@ export function AdminWorkspaceDetailPage() {
         description={
           <>
             {w.owner ? (
-              <>Owned by <Link className="text-indigo-300 hover:underline" href={`/admin/users/${w.owner.id}`}>{w.owner.email}</Link></>
+              <>Owned by <Link className="text-signal-300 hover:underline" href={`/admin/users/${w.owner.id}`}>{w.owner.email}</Link></>
             ) : "No owner"}
             {" · "}created {formatDate(w.created_at)}
           </>
@@ -155,7 +155,7 @@ export function AdminWorkspaceDetailPage() {
       <KpiGrid className="mb-4">
         <KpiTile label="Plan" value={ent.plan_name} hint={titleCase(ent.status)} />
         <KpiTile label="Projects" value={formatNumber(w.projects.length)} tone="sky" hint={`Limit ${ent.limits.max_projects ?? "unlimited"}`} />
-        <KpiTile label="Members" value={formatNumber(w.members.length)} tone="violet" hint={`Limit ${ent.limits.max_members ?? "unlimited"}`} />
+        <KpiTile label="Members" value={formatNumber(w.members.length)} tone="ice" hint={`Limit ${ent.limits.max_members ?? "unlimited"}`} />
         <KpiTile label="AI tokens (this month)" value={formatCompact(w.usage.ai_tokens)} tone="amber" />
       </KpiGrid>
 
@@ -210,7 +210,7 @@ export function AdminWorkspaceDetailPage() {
                 {w.members.map((m) => (
                   <li key={m.email} className="flex items-center justify-between px-4 py-2 text-sm">
                     <span className="truncate">{m.email}</span>
-                    <Pill color={m.role === "owner" ? "violet" : "gray"}>{titleCase(m.role)}</Pill>
+                    <Pill color={m.role === "owner" ? "ice" : "gray"}>{titleCase(m.role)}</Pill>
                   </li>
                 ))}
               </ul>
@@ -234,7 +234,7 @@ export function AdminWorkspaceDetailPage() {
               <p className="text-xs text-muted-foreground">No subscription record — the workspace is on the free plan.</p>
             )}
             {can("subscriptions.read") && (
-              <Link href="/admin/subscriptions" className="mt-3 inline-block text-xs text-indigo-300 hover:underline">Manage in Subscriptions →</Link>
+              <Link href="/admin/subscriptions" className="mt-3 inline-block text-xs text-signal-300 hover:underline">Manage in Subscriptions →</Link>
             )}
           </Panel>
           <Panel title="Entitlements" description="Effective limits (plan + overrides)">
@@ -250,7 +250,7 @@ export function AdminWorkspaceDetailPage() {
               ))}
             </ul>
             <div className="mt-3 flex flex-wrap gap-1">
-              {ent.features.map((f) => <Pill key={f} color="indigo">{titleCase(f)}</Pill>)}
+              {ent.features.map((f) => <Pill key={f} color="signal">{titleCase(f)}</Pill>)}
             </div>
           </Panel>
           <Panel title="Details">

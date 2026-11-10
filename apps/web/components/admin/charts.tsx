@@ -21,23 +21,23 @@ import {
 import { shortPeriod } from "@/lib/admin-api"
 import { cn, formatCompact, titleCase } from "@/lib/utils"
 
-export const CHART_COLORS = ["#818cf8", "#a78bfa", "#38bdf8", "#fbbf24", "#f472b6", "#34d399", "#fb7185", "#94a3b8"]
+export const CHART_COLORS = ["#45e5ea", "#80bdff", "#80bdff", "#eab56d", "#eab56d", "#76f0c1", "#f2706b", "#647583"]
 
-const GRID = "rgba(160,170,255,0.08)"
-const AXIS = { fontSize: 11, fill: "#8b92b8" }
+const GRID = "rgba(180,205,220,0.08)"
+const AXIS = { fontSize: 11, fill: "#647583" }
 
 const tooltipProps = {
   contentStyle: {
-    background: "rgba(13,17,48,0.96)",
-    border: "1px solid rgba(160,170,255,0.18)",
+    background: "rgba(12,19,26,0.96)",
+    border: "1px solid rgba(180,205,220,0.18)",
     borderRadius: 10,
     boxShadow: "0 12px 32px -12px rgba(0,0,0,0.7)",
     fontSize: 12,
     padding: "8px 10px",
   },
-  labelStyle: { color: "#e8eaf6", fontWeight: 600, marginBottom: 4 },
-  itemStyle: { color: "#c3c8e6", padding: 0 },
-  cursor: { fill: "rgba(129,140,248,0.08)", stroke: "rgba(129,140,248,0.25)" },
+  labelStyle: { color: "#f4f7fa", fontWeight: 600, marginBottom: 4 },
+  itemStyle: { color: "#a6b4c0", padding: 0 },
+  cursor: { fill: "rgba(69,229,234,0.08)", stroke: "rgba(69,229,234,0.25)" },
 }
 
 export type Series = { key: string; label: string; color?: string }
@@ -89,7 +89,7 @@ export function TrendChart({
       <XAxis dataKey={xKey} tick={AXIS} tickLine={false} axisLine={false} tickFormatter={xf} minTickGap={16} />
       <YAxis tick={AXIS} tickLine={false} axisLine={false} width={48} tickFormatter={(v) => format(Number(v))} />
       <Tooltip {...tooltipProps} labelFormatter={(l) => xf(l)} formatter={(v, n) => [format(Number(v)), n]} />
-      {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#9aa1c4" }} />}
+      {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#a6b4c0" }} />}
     </>
   )
   if (type === "line") {
@@ -173,7 +173,7 @@ export function BarsChart({
           </>
         )}
         <Tooltip {...tooltipProps} labelFormatter={(l) => xf(l)} formatter={(v, n) => [format(Number(v)), n]} />
-        {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#9aa1c4" }} />}
+        {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#a6b4c0" }} />}
         {series.map((s, i) => (
           <Bar
             key={s.key}
@@ -239,7 +239,7 @@ export function DonutChart({
   )
 }
 
-export function Sparkline({ data, color = "#818cf8", className }: { data: number[]; color?: string; className?: string }) {
+export function Sparkline({ data, color = "#45e5ea", className }: { data: number[]; color?: string; className?: string }) {
   const uid = useId().replace(/:/g, "")
   const rows = data.map((v, i) => ({ i, v }))
   return (

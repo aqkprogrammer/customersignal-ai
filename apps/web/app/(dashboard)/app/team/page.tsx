@@ -72,7 +72,7 @@ export default function TeamPage() {
       {team.error ? <ErrorState error={team.error} onRetry={() => team.refetch()} /> : !t ? <CardSkeleton rows={6} /> : (
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <Pill color="indigo">{t.members.length + pending} / {t.limit ?? "∞"} seats used</Pill>
+            <Pill color="signal">{t.members.length + pending} / {t.limit ?? "∞"} seats used</Pill>
             {!t.team_collaboration && <span>Upgrade to Pro for team collaboration.</span>}
           </div>
           <div className="surface overflow-hidden">
@@ -96,7 +96,7 @@ export default function TeamPage() {
                         <div><p className="text-sm font-medium">{m.full_name || m.email} {m.is_you && <Pill>You</Pill>}</p><p className="text-xs text-muted-foreground">{m.email}</p></div>
                       </div>
                     </TableCell>
-                    <TableCell><Pill color={m.role === "owner" ? "violet" : m.role === "admin" ? "indigo" : "gray"}>{titleCase(m.role)}</Pill></TableCell>
+                    <TableCell><Pill color={m.role === "owner" ? "ice" : m.role === "admin" ? "signal" : "gray"}>{titleCase(m.role)}</Pill></TableCell>
                     <TableCell className="hidden text-sm text-muted-foreground md:table-cell">{timeAgo(m.last_active_at)}</TableCell>
                     <TableCell className="hidden text-right tabular-nums md:table-cell">{m.actions_30d}</TableCell>
                     <TableCell className="hidden text-sm text-muted-foreground lg:table-cell">{formatDate(m.joined_at)}</TableCell>

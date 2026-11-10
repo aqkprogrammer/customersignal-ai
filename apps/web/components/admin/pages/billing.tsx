@@ -75,7 +75,7 @@ function PaymentsTable() {
                 {q.data.items.map((p) => (
                   <TableRow key={p.id}>
                     <TableCell className="max-w-[220px] truncate font-medium text-white">{p.workspace_name}</TableCell>
-                    <TableCell>{p.plan_code ? <Pill color="indigo">{titleCase(p.plan_code)}</Pill> : "—"}</TableCell>
+                    <TableCell>{p.plan_code ? <Pill color="signal">{titleCase(p.plan_code)}</Pill> : "—"}</TableCell>
                     <TableCell className="text-right tabular-nums">{money(p.amount_cents, p.currency)}</TableCell>
                     <TableCell className="text-right text-muted-foreground tabular-nums">{p.refunded_cents ? money(p.refunded_cents, p.currency) : "—"}</TableCell>
                     <TableCell><StatusBadge status={p.status} /></TableCell>
@@ -125,14 +125,14 @@ function InvoicesTable() {
               <TableRow key={i.id}>
                 <TableCell className="font-mono text-xs">{i.number || i.id.slice(0, 8)}</TableCell>
                 <TableCell className="max-w-[220px] truncate font-medium text-white">{i.workspace_name}</TableCell>
-                <TableCell>{i.plan_code ? <Pill color="indigo">{titleCase(i.plan_code)}</Pill> : "—"}</TableCell>
+                <TableCell>{i.plan_code ? <Pill color="signal">{titleCase(i.plan_code)}</Pill> : "—"}</TableCell>
                 <TableCell className="text-right tabular-nums">{money(i.amount_paid_cents)}</TableCell>
                 <TableCell className="text-right tabular-nums">{money(i.amount_due_cents)}</TableCell>
                 <TableCell><StatusBadge status={i.status} /></TableCell>
                 <TableCell className="text-xs text-muted-foreground">{formatDateTime(i.created_at)}</TableCell>
                 <TableCell className="text-right">
                   {i.hosted_invoice_url && (
-                    <a href={i.hosted_invoice_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-indigo-300 hover:underline">
+                    <a href={i.hosted_invoice_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-signal-300 hover:underline">
                       View <ExternalLink className="size-3" />
                     </a>
                   )}
@@ -179,7 +179,7 @@ function RevenueBody({ r }: { r: RevenueData }) {
         <KpiTile label="MRR" value={money(r.mrr_cents)} icon={DollarSign} tone="emerald" spark={r.trend.map((t) => t.net_cents)} />
         <KpiTile label="ARR" value={money(r.arr_cents)} icon={TrendingUp} tone="emerald" />
         <KpiTile label="Gross revenue" value={money(r.gross_revenue_cents)} icon={Wallet} hint="All-time collected" />
-        <KpiTile label="Net revenue" value={money(r.net_revenue_cents)} icon={Wallet} tone="violet" hint="Gross minus refunds" />
+        <KpiTile label="Net revenue" value={money(r.net_revenue_cents)} icon={Wallet} tone="ice" hint="Gross minus refunds" />
         <KpiTile label="Refunds" value={money(r.refunds_cents)} icon={RotateCcw} tone="amber" hint={`${refundRate.toFixed(1)}% of gross`} />
         <KpiTile label="Failed payments" value={formatNumber(r.failed_payments)} icon={AlertTriangle} tone={r.failed_payments ? "rose" : "emerald"} hint={`${money(r.failed_amount_cents)} attempted`} />
       </KpiGrid>
@@ -190,9 +190,9 @@ function RevenueBody({ r }: { r: RevenueData }) {
           type="line"
           format={(n) => money(n)}
           series={[
-            { key: "gross_cents", label: "Gross", color: "#818cf8" },
-            { key: "net_cents", label: "Net", color: "#34d399" },
-            { key: "refunds_cents", label: "Refunds", color: "#fb7185" },
+            { key: "gross_cents", label: "Gross", color: "#45e5ea" },
+            { key: "net_cents", label: "Net", color: "#76f0c1" },
+            { key: "refunds_cents", label: "Refunds", color: "#f2706b" },
           ]}
           height={280}
         />
@@ -202,7 +202,7 @@ function RevenueBody({ r }: { r: RevenueData }) {
           <DonutChart data={r.revenue_by_plan.map((p) => ({ name: p.plan || "unknown", value: p.revenue_cents }))} format={(n) => money(n)} />
         </Panel>
         <Panel title="MRR by plan" description="Active paid subscribers × list price">
-          <BarsChart data={r.mrr_by_plan} xKey="plan" periodLabels={false} labelFormat={titleCase} series={[{ key: "mrr_cents", label: "MRR", color: "#34d399" }]} format={(n) => money(n)} height={200} />
+          <BarsChart data={r.mrr_by_plan} xKey="plan" periodLabels={false} labelFormat={titleCase} series={[{ key: "mrr_cents", label: "MRR", color: "#76f0c1" }]} format={(n) => money(n)} height={200} />
           <Table className="mt-3">
             <TableHeader>
               <TableRow>

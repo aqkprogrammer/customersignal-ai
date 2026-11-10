@@ -40,7 +40,7 @@ const tooltipStyle = {
     borderRadius: 10,
     fontSize: 12,
     color: "var(--popover-foreground)",
-    boxShadow: "0 8px 24px -12px rgba(11,16,51,.25)",
+    boxShadow: "0 8px 24px -12px rgba(0,0,0,.25)",
   },
   labelStyle: { color: "var(--muted-foreground)", marginBottom: 4 },
   cursor: { fill: "var(--muted)", opacity: 0.5 },

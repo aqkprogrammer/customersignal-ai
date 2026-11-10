@@ -110,7 +110,7 @@ export default function IntegrationsPage() {
                 )}
                 <div>
                   <p className="mb-1.5 text-xs font-medium text-muted-foreground">Capabilities</p>
-                  <div className="flex flex-wrap gap-1.5">{current.capabilities.map((c) => <Pill key={c} color="indigo">{c}</Pill>)}</div>
+                  <div className="flex flex-wrap gap-1.5">{current.capabilities.map((c) => <Pill key={c} color="signal">{c}</Pill>)}</div>
                 </div>
                 <div>
                   <p className="mb-1.5 text-xs font-medium text-muted-foreground">Setup instructions</p>

@@ -41,16 +41,16 @@ export function SentimentChart({ className, gradientId = "dp-pos" }: { className
     <svg viewBox={`0 0 ${w} ${h + 22}`} className={cn("h-auto w-full", className)} role="img" aria-label="Sample sentiment trend over 12 weeks: positive share rising from 54% to 61%, negative share easing from 26% to 23%">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#4f46e5" stopOpacity="0.22" />
-          <stop offset="1" stopColor="#4f46e5" stopOpacity="0" />
+          <stop offset="0" stopColor="#45e5ea" stopOpacity="0.22" />
+          <stop offset="1" stopColor="#45e5ea" stopOpacity="0" />
         </linearGradient>
       </defs>
       {[0, 1, 2, 3].map((i) => (
         <line key={i} x1="0" x2={w} y1={(h / 3) * i} y2={(h / 3) * i} stroke="currentColor" strokeOpacity="0.08" />
       ))}
       <path d={`${pos} L${w},${h} L0,${h} Z`} fill={`url(#${gradientId})`} />
-      <path d={pos} fill="none" stroke="#4f46e5" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
-      <path d={neg} fill="none" stroke="#e11d48" strokeWidth="1.8" strokeDasharray="4 4" strokeLinecap="round" />
+      <path d={pos} fill="none" stroke="#45e5ea" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+      <path d={neg} fill="none" stroke="#d14b46" strokeWidth="1.8" strokeDasharray="4 4" strokeLinecap="round" />
       {["W1", "W3", "W5", "W7", "W9", "W12"].map((l, i) => (
         <text key={l} x={(w / 5) * i} y={h + 16} fontSize="10" fill="currentColor" fillOpacity="0.45" textAnchor={i === 0 ? "start" : i === 5 ? "end" : "middle"}>
           {l}
@@ -83,7 +83,7 @@ export function ClusterList({ className }: { className?: string }) {
           </div>
           <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
             <div
-              className={cn("h-full rounded-full", c.trend === "rising" ? "bg-rose-500/80" : "bg-indigo-500/70")}
+              className={cn("h-full rounded-full", c.trend === "rising" ? "bg-rose-500/80" : "bg-signal-500/70")}
               style={{ width: `${(c.share / 25) * 100}%` }}
             />
           </div>
@@ -95,8 +95,8 @@ export function ClusterList({ className }: { className?: string }) {
 
 export function InsightCard({ className }: { className?: string }) {
   return (
-    <div className={cn("relative overflow-hidden rounded-xl border border-indigo-500/20 bg-gradient-to-br from-indigo-50 to-violet-50 p-4 dark:from-indigo-500/10 dark:to-violet-500/10", className)}>
-      <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wide text-indigo-700 uppercase dark:text-indigo-300">
+    <div className={cn("relative overflow-hidden rounded-xl border border-signal-500/20 bg-gradient-to-br from-signal-50 to-ice-50 p-4 dark:from-signal-500/10 dark:to-ice-500/10", className)}>
+      <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wide text-signal-700 uppercase dark:text-signal-300">
         <Sparkles aria-hidden className="size-3.5" /> AI insight
       </div>
       <p className="mt-2 text-[13px] leading-snug font-medium text-foreground">
@@ -152,7 +152,7 @@ export function DashboardPreview({ className }: { className?: string }) {
                 <p className="text-[13px] font-semibold">Sentiment trend</p>
                 <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
                   <span className="flex items-center gap-1.5">
-                    <span className="h-0.5 w-3 rounded bg-indigo-600" /> Positive
+                    <span className="h-0.5 w-3 rounded bg-signal-600" /> Positive
                   </span>
                   <span className="flex items-center gap-1.5">
                     <span className="h-0.5 w-3 rounded border-t-2 border-dashed border-rose-600" /> Negative

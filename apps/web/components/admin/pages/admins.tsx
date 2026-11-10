@@ -107,7 +107,7 @@ function SecurityPanel({ me }: { me: AdminMe }) {
               <li>Or enter this secret manually:</li>
             </ol>
             <div className="flex items-center gap-2">
-              <code className="flex-1 truncate rounded-md border bg-black/30 px-2.5 py-1.5 font-mono text-xs tracking-wider text-indigo-100">{setup.secret}</code>
+              <code className="flex-1 truncate rounded-md border bg-black/30 px-2.5 py-1.5 font-mono text-xs tracking-wider text-signal-100">{setup.secret}</code>
               <Button
                 type="button"
                 variant="outline"
@@ -249,7 +249,7 @@ function AdminsManager({ meId }: { meId?: string }) {
               <div key={role} className="rounded-lg border p-3">
                 <div className="mb-2 text-sm font-medium text-white">{ROLE_LABELS[role] || titleCase(role)}</div>
                 <div className="flex flex-wrap gap-1">
-                  {perms.includes("*") ? <Pill color="violet">Everything</Pill> : perms.map((p) => <code key={p} className="rounded bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">{p}</code>)}
+                  {perms.includes("*") ? <Pill color="ice">Everything</Pill> : perms.map((p) => <code key={p} className="rounded bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">{p}</code>)}
                 </div>
               </div>
             ))}

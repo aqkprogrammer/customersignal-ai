@@ -100,7 +100,7 @@ export function ProjectDetailPage() {
           <div className="mt-5 border-t pt-4">
             <p className="mb-2 text-xs font-medium text-muted-foreground">Businesses in this project</p>
             <div className="flex flex-wrap gap-1.5">
-              {p.businesses?.map((b) => <Pill key={b.id} color={b.is_primary ? "indigo" : "gray"}>{b.name}{b.is_primary ? " (yours)" : ""}</Pill>)}
+              {p.businesses?.map((b) => <Pill key={b.id} color={b.is_primary ? "signal" : "gray"}>{b.name}{b.is_primary ? " (yours)" : ""}</Pill>)}
             </div>
           </div>
         </Panel>

@@ -110,7 +110,7 @@ export function BillingPage() {
           const isCurrent = p.code === current
           return (
             <div key={p.code} className={cn("surface flex flex-col p-5", p.highlighted && "border-primary ring-1 ring-primary")}>
-              <div className="flex items-center justify-between"><p className="font-semibold">{p.name}</p>{p.highlighted && <Pill color="indigo">Popular</Pill>}</div>
+              <div className="flex items-center justify-between"><p className="font-semibold">{p.name}</p>{p.highlighted && <Pill color="signal">Popular</Pill>}</div>
               <p className="mt-2 text-2xl font-semibold">{p.price_monthly_cents === null ? "Custom" : formatCurrency(p.price_monthly_cents)}<span className="text-sm font-normal text-muted-foreground">{p.price_monthly_cents ? "/mo" : ""}</span></p>
               <p className="mt-1 text-xs text-muted-foreground">{p.description}</p>
               <ul className="mt-4 flex-1 space-y-1.5 text-sm">{p.marketing_features.map((f) => <li key={f} className="flex gap-2"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{f}</li>)}</ul>

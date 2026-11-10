@@ -115,7 +115,7 @@ function LogList({ rows, empty }: { rows: IntegrationLog[]; empty: string }) {
         <li key={i} className="px-4 py-2.5 text-sm">
           <div className="flex items-center justify-between gap-2">
             <span className="flex min-w-0 items-center gap-2">
-              <Pill color="indigo">{r.provider}</Pill>
+              <Pill color="signal">{r.provider}</Pill>
               <span className="truncate text-xs">{r.workspace}</span>
             </span>
             <span className="shrink-0 text-xs text-muted-foreground">{timeAgo(r.created_at)}</span>
@@ -176,7 +176,7 @@ export function AdminJobs() {
             key={s}
             label={`${titleCase(s)} (7d)`}
             value={formatNumber(counts[s] || 0)}
-            tone={s === "failed" ? "rose" : s === "completed" ? "emerald" : s === "processing" ? "indigo" : s === "pending" ? "amber" : "sky"}
+            tone={s === "failed" ? "rose" : s === "completed" ? "emerald" : s === "processing" ? "signal" : s === "pending" ? "amber" : "sky"}
           />
         ))}
       </KpiGrid>
@@ -187,7 +187,7 @@ export function AdminJobs() {
           <Switch id="dead" size="sm" checked={dead} onCheckedChange={(v) => { setDead(v); setPage(1) }} />
           <Label htmlFor="dead" className="text-xs font-normal text-muted-foreground">Dead-letter only</Label>
         </div>
-        {live && <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-indigo-300"><span className="size-1.5 animate-pulse rounded-full bg-indigo-400" /> Live</span>}
+        {live && <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-signal-300"><span className="size-1.5 animate-pulse rounded-full bg-signal-400" /> Live</span>}
       </FilterBar>
       {q.isError ? (
         <ErrorState error={q.error} onRetry={() => q.refetch()} />

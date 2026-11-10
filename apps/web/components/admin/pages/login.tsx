@@ -66,14 +66,15 @@ export function AdminLogin() {
 
   return (
     <div className="relative flex min-h-svh items-center justify-center overflow-hidden px-4 py-10">
-      <div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_right,rgba(129,140,248,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(129,140,248,0.05)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+      <div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_right,rgba(69,229,234,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(69,229,234,0.05)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
       <div className="relative w-full max-w-sm">
         <div className="mb-6 flex flex-col items-center text-center">
           <LogoMark className="size-10" />
-          <h1 className="mt-4 text-xl font-semibold text-white">Admin console</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Restricted area. All access is audit-logged.</p>
+          <p className="mt-5 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">Command centre · restricted</p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">Admin console</h1>
+          <p className="mt-1 text-sm text-muted-foreground">All access is audit-logged.</p>
         </div>
-        <div className="rounded-2xl border bg-card/80 p-6 shadow-[0_30px_80px_-30px_rgba(79,70,229,0.5)] backdrop-blur">
+        <div className="hud-corners rounded-lg border border-border-strong bg-card/70 p-6 surface-lit">
           {step === "credentials" ? (
             <form
               className="space-y-4"
@@ -102,11 +103,11 @@ export function AdminLogin() {
                 />
               </div>
               {error && (
-                <p role="alert" className="rounded-md border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
+                <p role="alert" className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
                   {error}
                 </p>
               )}
-              <Button type="submit" className="h-9 w-full" disabled={pending}>
+              <Button type="submit" variant="signal" className="h-10 w-full" disabled={pending}>
                 {pending ? <Loader2 className="animate-spin" /> : <LockKeyhole />}
                 Sign in
               </Button>
@@ -124,7 +125,7 @@ export function AdminLogin() {
               }}
             >
               <div className="flex items-start gap-3">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-signal/40 text-signal">
                   <ShieldCheck className="size-4" />
                 </span>
                 <div>
@@ -147,7 +148,7 @@ export function AdminLogin() {
                 />
               </div>
               {error && (
-                <p role="alert" className="rounded-md border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
+                <p role="alert" className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
                   {error}
                 </p>
               )}

@@ -2,9 +2,9 @@ import { expect, test } from "@playwright/test"
 
 test("homepage shows the hero and CTAs", async ({ page }) => {
   await page.goto("/")
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Your Customers Are Telling You What to Build Next.")
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Your customers are telling you what to build next.")
   await expect(page.getByRole("link", { name: /Start Free/i }).first()).toBeVisible()
-  await expect(page.getByText(/Illustrative preview with sample data/i).first()).toBeVisible()
+  await expect(page.getByText(/Illustrative · sample data/i).first()).toBeVisible()
 })
 
 test("pricing loads plans from the API", async ({ page }) => {
@@ -26,10 +26,11 @@ test("admin routes redirect to the admin login", async ({ page }) => {
 
 test("signup validates fields client-side", async ({ page }) => {
   await page.goto("/signup")
-  await page.getByRole("button", { name: "Create account" }).click()
+  // Section 01 — account identity is validated before moving on.
+  await page.getByRole("button", { name: "Continue" }).click()
   await expect(page.getByText("Enter your full name")).toBeVisible()
   await expect(page.getByText("Enter a valid work email")).toBeVisible()
-  await expect(page.getByText("You must accept the terms to continue")).toBeVisible()
+  await expect(page.getByText("Use at least 10 characters")).toBeVisible()
 })
 
 test("login rejects wrong credentials without revealing accounts", async ({ page }) => {

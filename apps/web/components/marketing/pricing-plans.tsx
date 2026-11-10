@@ -63,7 +63,7 @@ function PlanCard({ plan }: { plan: PublicPlan }) {
     <li
       className={cn(
         "relative flex flex-col rounded-2xl border bg-card p-6",
-        plan.highlighted ? "border-primary/40 shadow-[0_20px_50px_-24px_rgba(79,70,229,0.55)] ring-1 ring-primary/20" : "shadow-sm",
+        plan.highlighted ? "border-primary/40 shadow-[0_20px_50px_-24px_rgba(69,229,234,0.55)] ring-1 ring-primary/20" : "shadow-sm",
       )}
     >
       {plan.highlighted && (
