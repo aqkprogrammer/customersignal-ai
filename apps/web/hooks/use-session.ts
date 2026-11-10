@@ -14,6 +14,9 @@ export function useSession() {
     queryKey: ["session"],
     queryFn: () => api<Session>("/auth/me", { noWorkspace: true }),
     staleTime: 60_000,
+    // 4xx is final (401 → login). Network errors and 5xx usually mean the API is waking up: keep trying for ~1 min.
+    retry: (count, err) => !(err instanceof ApiError && err.status >= 400 && err.status < 500) && count < 6,
+    retryDelay: (attempt) => Math.min(2000 * 2 ** attempt, 15_000),
   })
 
   useEffect(() => {

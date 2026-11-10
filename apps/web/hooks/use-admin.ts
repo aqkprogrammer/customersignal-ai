@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient, type QueryKey } from "@tanstack/
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "sonner"
 import { adminApi, adminErrorMessage, can } from "@/lib/admin-api"
+import { ApiError } from "@/lib/api"
 import type { AdminMe } from "@/lib/admin-types"
 
 export const ME_KEY = ["admin", "me"] as const
@@ -13,7 +14,9 @@ export function useAdminMe() {
     queryKey: ME_KEY,
     queryFn: () => adminApi<AdminMe>("/auth/me"),
     staleTime: 60_000,
-    retry: false,
+    // Retry only transient failures (API cold start); auth errors are final.
+    retry: (count, err) => !(err instanceof ApiError && err.status >= 400 && err.status < 500) && count < 6,
+    retryDelay: (attempt) => Math.min(2000 * 2 ** attempt, 15_000),
   })
 }
 

@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import { LogoMark } from "@/components/brand/logo"
+import { ConnectingScreen } from "@/components/shared/connecting"
 import { ReputationIntelligenceCore } from "@/components/signal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -34,7 +35,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useSession } from "@/hooks/use-session"
-import { api, errorMessage, setActiveWorkspaceId } from "@/lib/api"
+import { api, ApiError, errorMessage, setActiveWorkspaceId } from "@/lib/api"
 import { COUNTRIES, INDUSTRIES } from "@/lib/site"
 import { cn } from "@/lib/utils"
 import type { Project, Workspace } from "@/types/api"
@@ -109,7 +110,7 @@ function OptionCard({ selected, onClick, icon: Icon, label, note }: { selected: 
 export function OnboardingWizard() {
   const router = useRouter()
   const qc = useQueryClient()
-  const { data: session, isLoading } = useSession()
+  const { data: session, isLoading, error: sessionError, failureCount, refetch: refetchSession } = useSession()
   const [step, setStep] = useState(1)
   const [data, setData] = useState<Data>({})
   const [project, setProject] = useState({ name: "", business_name: "", description: "" })
@@ -178,11 +179,10 @@ export function OnboardingWizard() {
   }
 
   if (isLoading || !hydrated) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="size-6 animate-spin text-primary" />
-      </div>
-    )
+    return <ConnectingScreen attempts={failureCount} />
+  }
+  if (!session && sessionError && !(sessionError instanceof ApiError && sessionError.status === 401)) {
+    return <ConnectingScreen error={sessionError} attempts={failureCount} onRetry={() => void refetchSession()} loginHref="/login?next=%2Fonboarding" />
   }
 
   const toggle = (key: "goals" | "preferred_sources", value: string) => {

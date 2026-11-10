@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   output: process.env.BUILD_STANDALONE ? "standalone" : undefined,
+  experimental: {
+    // The API runs on a free tier that sleeps when idle; a cold start can take ~60s. Wait for it instead of
+    // failing the proxied request at the 30s default.
+    proxyTimeout: 120_000,
+  },
   turbopack: {
     rules: {
       "*.css": {

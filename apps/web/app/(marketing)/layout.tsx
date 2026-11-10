@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { MarketingMotion } from "@/components/marketing/motion"
 import { SiteFooter } from "@/components/marketing/site-footer"
 import { SiteHeader, SiteHeaderWithPath } from "@/components/marketing/site-header"
+import { ApiWarmup } from "@/components/shared/api-warmup"
 import { ForceDark } from "@/components/signal/force-dark"
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -9,6 +10,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
     <MarketingMotion>
       {/* The marketing site is always the dark instrument theme, whatever the app theme is. */}
       <ForceDark />
+      <ApiWarmup />
       <div className="dark flex min-h-screen flex-col overflow-x-clip bg-background text-foreground">
         {/* usePathname can suspend on unlisted dynamic params under cacheComponents; the fallback is the same header without active state. */}
         <Suspense fallback={<SiteHeader />}>

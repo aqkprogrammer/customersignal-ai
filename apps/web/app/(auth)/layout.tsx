@@ -2,12 +2,14 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Logo } from "@/components/brand/logo"
 import { CinematicBackground, SignalScene, StatusDot, TechnicalLabel } from "@/components/signal"
+import { ApiWarmup } from "@/components/shared/api-warmup"
 import { ForceDark } from "@/components/signal/force-dark"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="dark min-h-dvh bg-background text-foreground">
       <ForceDark />
+      <ApiWarmup />
       <div className="mx-auto grid min-h-dvh max-w-[1680px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)]">
         {/* ---------------------------------------------------- workspace access terminal */}
         <div className="relative flex flex-col overflow-hidden px-5 py-5 sm:px-10 lg:px-14">

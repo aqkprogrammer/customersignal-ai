@@ -26,6 +26,7 @@ import { toast } from "sonner"
 import { LogoMark } from "@/components/brand/logo"
 import { CommandPalette } from "@/components/dashboard/command-palette"
 import { NAV_SECTIONS, navLabel } from "@/components/dashboard/nav"
+import { ConnectingScreen } from "@/components/shared/connecting"
 import { DemoBadge } from "@/components/shared/states"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -49,7 +50,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useSession, useWorkspace } from "@/hooks/use-session"
-import { api, errorMessage, setActiveWorkspaceId } from "@/lib/api"
+import { api, ApiError, errorMessage, setActiveWorkspaceId } from "@/lib/api"
 import { cn, initials, timeAgo, titleCase } from "@/lib/utils"
 import { useWorkspaceStore } from "@/stores/workspace"
 import type { Notification, Workspace } from "@/types/api"
@@ -325,7 +326,7 @@ function Crumbs() {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { data: session, isLoading } = useSession()
+  const { data: session, isLoading, error: sessionError, failureCount, refetch: refetchSession } = useSession()
   const { workspace } = useWorkspace()
   const router = useRouter()
   const collapsed = useWorkspaceStore((s) => s.sidebarCollapsed)
@@ -352,10 +353,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   })
 
   if (isLoading || !session) {
+    // 401 redirects to /login (useSession); anything else gets an explained, recoverable state — never an endless spinner.
+    const unauthorized = sessionError instanceof ApiError && sessionError.status === 401
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <LogoMark className="size-9 animate-pulse" />
-      </div>
+      <ConnectingScreen
+        error={isLoading || unauthorized ? undefined : sessionError ?? new Error("No session")}
+        attempts={failureCount}
+        onRetry={() => void refetchSession()}
+        loginHref={`/login?next=${encodeURIComponent(typeof window === "undefined" ? "/app" : window.location.pathname)}`}
+      />
     )
   }
 
