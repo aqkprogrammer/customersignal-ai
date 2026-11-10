@@ -21,7 +21,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { CategoryBars, CompetitorBars, RatingBars, SentimentDonut, SentimentTrendChart } from "@/components/charts/charts"
 import { PageHeader, Panel, ProjectSelect, StatCard } from "@/components/dashboard/primitives"
-import { IntelligenceStatus, ReputationIntelligenceCore, SentimentVisualization, StatusDot, TechnicalLabel } from "@/components/signal"
+import { PipelineSteps, SentimentDistribution, SignalEmblem, StatusDot } from "@/components/aurora"
 import { ProductTour } from "@/components/dashboard/product-tour"
 import { Pill, SeverityMeter, StatusBadge, TrendBadge } from "@/components/shared/badges"
 import { CardSkeleton, DemoBadge, EmptyState, ErrorState } from "@/components/shared/states"
@@ -64,36 +64,40 @@ function IntelligenceHeader({ data }: { data: Dashboard }) {
   const running = data.activity.some((a) => a.status === "pending" || a.status === "processing")
   const stage = k.analyzed_reviews < k.total_reviews ? 1 : data.opportunities.length ? 3 : themes ? 2 : 1
   return (
-    <section className="surface relative mb-4 overflow-hidden dark:surface-lit" aria-label="Intelligence summary">
-      <div aria-hidden className="bg-tech-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_60%_90%_at_12%_50%,#000,transparent)]" />
-      <div className="relative grid items-center gap-6 p-5 md:grid-cols-[200px_1fr] lg:grid-cols-[220px_1fr_260px] lg:gap-8">
-        <div className="mx-auto w-[180px] md:w-full">
-          <ReputationIntelligenceCore detail="lite" pedestal={false} centerValue={formatCompact(k.analyzed_reviews)} centerLabel="Analyzed" title={`${k.analyzed_reviews} reviews analyzed`} />
+    <section className="relative mb-5 overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]" aria-label="Intelligence summary">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 -right-16 size-72 rounded-full bg-[radial-gradient(closest-side,rgb(255_213_190/0.55),transparent)] dark:opacity-30" />
+        <div className="bg-dots absolute inset-0 [mask-image:radial-gradient(ellipse_40%_90%_at_10%_50%,#000,transparent)]" />
+      </div>
+      <div className="relative grid items-center gap-6 p-5 md:grid-cols-[150px_1fr] lg:grid-cols-[170px_1.3fr_1fr] lg:gap-8 lg:p-6">
+        <div className="mx-auto w-[150px] text-foreground md:w-full">
+          <SignalEmblem className="w-full" />
         </div>
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <TechnicalLabel tone={data.ai_provider.is_llm ? "signal" : "ember"}>
-              <span className="inline-flex items-center gap-2">
-                <StatusDot tone={data.ai_provider.is_llm ? "signal" : "ember"} pulse={running} />
-                {running ? "Analysis running" : data.ai_provider.is_llm ? "Intelligence active" : "Built-in engine"}
-              </span>
-            </TechnicalLabel>
-            <span className="text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#eef2ff] px-2.5 py-1 text-[12.5px] font-semibold text-[#2f52dd] dark:bg-white/10 dark:text-[#92C9FF]">
+              <StatusDot tone={running ? "orange" : data.ai_provider.is_llm ? "lime" : "orange"} pulse={running} />
+              {running ? "Analysis running" : data.ai_provider.is_llm ? "Intelligence active" : "Built-in engine"}
+            </span>
+            <span className="text-[13px] text-muted-foreground">
               <Bot className="mr-1 inline size-3.5 align-[-2px]" />
               {data.ai_provider.label}
-              {!data.ai_provider.is_llm && " — configure an AI provider for deeper, multilingual analysis."}
+              {!data.ai_provider.is_llm && " — connect an AI provider for deeper, multilingual analysis."}
             </span>
           </div>
-          <IntelligenceStatus
+          <p className="mt-3 text-[15px] text-muted-foreground">
+            <span className="text-[26px] font-semibold tracking-[-0.03em] text-foreground tabular-nums">{formatNumber(k.analyzed_reviews)}</span> reviews analyzed in scope
+          </p>
+          <PipelineSteps
             className="mt-4"
             active={stage}
             stages={["Ingested", "Analyzed", "Themes", "Opportunities"]}
             counts={[formatNumber(k.total_reviews), formatNumber(k.analyzed_reviews), themes, data.opportunities.length]}
           />
         </div>
-        <div className="text-[13px] md:col-span-2 lg:col-span-1">
-          <p className="micro-label mb-2.5">Sentiment · in scope</p>
-          <SentimentVisualization positive={k.positive_pct} neutral={k.neutral_pct} negative={k.negative_pct} />
+        <div className="md:col-span-2 lg:col-span-1">
+          <p className="mb-3 text-[13px] font-medium text-muted-foreground">Customer sentiment</p>
+          <SentimentDistribution positive={k.positive_pct} neutral={k.neutral_pct} negative={k.negative_pct} />
         </div>
       </div>
     </section>

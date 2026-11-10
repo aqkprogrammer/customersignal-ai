@@ -64,13 +64,13 @@ function NavList({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: 
                     <motion.span
                       layoutId={collapsed ? "admin-nav-active-c" : "admin-nav-active"}
                       aria-hidden
-                      className="absolute inset-0 rounded-md bg-sidebar-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--signal)_18%,transparent)]"
+                      className="absolute inset-0 rounded-md bg-sidebar-accent shadow-[inset_0_0_0_1px_rgb(91_127_255/0.3)]"
                       transition={{ type: "spring", stiffness: 420, damping: 38 }}
                     >
-                      <span className="absolute inset-y-1.5 left-0 w-px bg-signal shadow-[0_0_8px_var(--signal)]" />
+                      <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-r-full bg-[#FF8757]" />
                     </motion.span>
                   )}
-                  <item.icon className={cn("relative size-4 shrink-0", active ? "text-signal" : "text-sidebar-foreground/60 group-hover:text-signal-200")} />
+                  <item.icon className={cn("relative size-4 shrink-0", active ? "text-[#92C9FF]" : "text-sidebar-foreground/60 group-hover:text-white")} />
                   {!collapsed && <span className="relative truncate">{item.label}</span>}
                 </Link>
               )
@@ -101,7 +101,7 @@ function Brand({ collapsed }: { collapsed?: boolean }) {
       {!collapsed && (
         <span className="leading-tight">
           <span className="block text-[13px] font-semibold text-white">CustomerSignal</span>
-          <span className="block font-mono text-[9.5px] tracking-[0.16em] text-signal/80 uppercase">Command centre</span>
+          <span className="block text-[11px] font-medium text-[#92C9FF]">Admin console</span>
         </span>
       )}
     </Link>
@@ -111,13 +111,13 @@ function Brand({ collapsed }: { collapsed?: boolean }) {
 function RoleBadge({ role }: { role: string }) {
   const tone =
     role === "super_admin"
-      ? "bg-ice-500/15 text-ice-200 ring-ice-400/30"
+      ? "bg-[#eef2ff] text-[#2641b5] ring-[#4169F5]/25"
       : role === "billing_admin"
-        ? "bg-sky-500/15 text-sky-200 ring-sky-400/30"
+        ? "bg-[#fff1e8] text-[#b6461a] ring-[#FF8757]/30"
         : role === "support_admin"
-          ? "bg-emerald-500/15 text-emerald-200 ring-emerald-400/30"
-          : "bg-slate-500/15 text-slate-200 ring-slate-400/30"
-  return <span className={cn("rounded-md px-1.5 py-0.5 text-[10px] font-semibold ring-1 ring-inset", tone)}>{ROLE_LABELS[role] || role}</span>
+          ? "bg-[#f3fbe6] text-[#3b6b0c] ring-[#8FCB3F]/35"
+          : "bg-muted text-muted-foreground ring-border"
+  return <span className={cn("rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1 ring-inset", tone)}>{ROLE_LABELS[role] || role}</span>
 }
 
 function MfaBadge({ enabled }: { enabled: boolean }) {
@@ -125,8 +125,8 @@ function MfaBadge({ enabled }: { enabled: boolean }) {
     <Link
       href="/admin/admins#security"
       className={cn(
-        "hidden items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold ring-1 ring-inset sm:inline-flex",
-        enabled ? "bg-emerald-500/10 text-emerald-300 ring-emerald-400/25" : "bg-amber-500/10 text-amber-300 ring-amber-400/30",
+        "hidden items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-semibold ring-1 ring-inset sm:inline-flex",
+        enabled ? "bg-[#f3fbe6] text-[#3b6b0c] ring-[#8FCB3F]/35" : "bg-[#fff1e8] text-[#b6461a] ring-[#FF8757]/30",
       )}
       title={enabled ? "Two-factor authentication is on" : "Two-factor authentication is off — set it up"}
     >
@@ -159,11 +159,11 @@ function UserMenu({ me }: { me: AdminMe }) {
           className="flex items-center gap-2 rounded-lg px-1.5 py-1 text-left outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Account menu"
         >
-          <span className="flex size-7 items-center justify-center rounded-md border border-[color-mix(in_oklab,var(--signal)_40%,transparent)] font-mono text-[11px] text-signal">
+          <span className="flex size-8 items-center justify-center rounded-full bg-[#101B35] text-[11.5px] font-semibold text-white">
             {initials(me.full_name || me.email)}
           </span>
           <span className="hidden max-w-[160px] leading-tight md:block">
-            <span className="block truncate text-xs font-medium text-white">{me.full_name || me.email}</span>
+            <span className="block truncate text-xs font-medium text-foreground">{me.full_name || me.email}</span>
             <span className="block truncate text-[10px] text-muted-foreground">{me.email}</span>
           </span>
         </button>
@@ -233,7 +233,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "sticky top-0 hidden h-svh shrink-0 flex-col border-r border-sidebar-border bg-sidebar/85 backdrop-blur transition-[width] duration-200 lg:flex",
+          "dark sticky top-0 hidden h-svh shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200 lg:flex",
           collapsed ? "w-[60px]" : "w-60",
         )}
       >
@@ -256,7 +256,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       {/* Mobile sidebar */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-72 gap-0 border-sidebar-border bg-sidebar p-0 text-sidebar-foreground">
+        <SheetContent side="left" className="dark w-72 gap-0 border-sidebar-border bg-sidebar p-0 text-sidebar-foreground">
           <SheetHeader className="h-14 justify-center border-b border-sidebar-border px-3">
             <SheetTitle className="sr-only">Admin navigation</SheetTitle>
             <SheetDescription className="sr-only">Navigate the admin console</SheetDescription>
@@ -267,15 +267,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/75 px-3 backdrop-blur-md sm:px-5">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-3 backdrop-blur-md sm:px-5">
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open navigation">
             <Menu />
           </Button>
           <div className="flex items-center gap-2 lg:hidden">
             <LogoMark className="size-6" />
           </div>
-          <div className="hidden items-center gap-2 font-mono text-[10.5px] tracking-[0.14em] text-subtle-foreground uppercase sm:flex">
-            <span className="size-1.5 rounded-full bg-mint shadow-[0_0_8px_var(--mint)]" />
+          <div className="hidden items-center gap-2 text-[13px] text-muted-foreground sm:flex">
+            <span className="size-2 rounded-full bg-[#8FCB3F]" />
             Secure admin session
           </div>
           <div className="ml-auto flex items-center gap-2">

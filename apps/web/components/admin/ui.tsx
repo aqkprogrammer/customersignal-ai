@@ -37,12 +37,12 @@ export function PageHeader({
     <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
         {eyebrow && (
-          <div className="mb-2 inline-flex items-center gap-2 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">
-            <span aria-hidden className="h-px w-5 bg-current opacity-60" />
+          <div className="mb-2 inline-flex items-center gap-2 text-[12.5px] font-semibold tracking-[0.08em] text-[#2f52dd] uppercase">
+            <span aria-hidden className="size-1.5 rounded-full bg-[#FF8757]" />
             {eyebrow}
           </div>
         )}
-        <h1 className="truncate text-xl font-semibold tracking-[-0.03em] text-white sm:text-[26px]">{title}</h1>
+        <h1 className="truncate text-xl font-semibold tracking-[-0.03em] text-foreground sm:text-[26px]">{title}</h1>
         {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -71,14 +71,14 @@ export function Panel({
     <section
       id={id}
       className={cn(
-        "min-w-0 rounded-lg border bg-card/70 surface-lit",
+        "min-w-0 rounded-2xl border bg-card shadow-[var(--shadow-card)]",
         className,
       )}
     >
       {(title || actions) && (
         <header className="flex flex-wrap items-start justify-between gap-2 border-b px-4 py-3">
           <div className="min-w-0">
-            {title && <h2 className="text-[13.5px] font-semibold tracking-[-0.01em] text-white">{title}</h2>}
+            {title && <h2 className="text-[13.5px] font-semibold tracking-[-0.01em] text-foreground">{title}</h2>}
             {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
           </div>
           {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -107,27 +107,27 @@ export function KpiTile({
   className?: string
 }) {
   const tones = {
-    signal: { icon: "text-signal", spark: "#45e5ea" },
-    ice: { icon: "text-ice", spark: "#80bdff" },
-    sky: { icon: "text-ice", spark: "#80bdff" },
-    emerald: { icon: "text-mint", spark: "#76f0c1" },
-    amber: { icon: "text-ember", spark: "#eab56d" },
-    rose: { icon: "text-negative", spark: "#f2706b" },
+    signal: { icon: "text-[#2f52dd]", spark: "#4169F5" },
+    ice: { icon: "text-[#2e7fd0]", spark: "#5FA8F0" },
+    sky: { icon: "text-[#2e7fd0]", spark: "#5FA8F0" },
+    emerald: { icon: "text-[#4f8a12]", spark: "#8FCB3F" },
+    amber: { icon: "text-[#d9561f]", spark: "#FF8757" },
+    rose: { icon: "text-[#d8463f]", spark: "#E5534B" },
   }[tone]
   return (
-    <div className={cn("relative overflow-hidden rounded-lg border bg-card/70 p-3.5 surface-lit", className)}>
-      <span aria-hidden className="absolute inset-x-3.5 top-0 h-px opacity-60" style={{ background: `linear-gradient(90deg, ${tones.spark}, transparent 70%)` }} />
+    <div className={cn("relative overflow-hidden rounded-2xl border bg-card p-4 shadow-[var(--shadow-card)]", className)}>
+      <span aria-hidden className="absolute top-4 bottom-4 left-0 w-[3px] rounded-r-full" style={{ background: tones.spark }} />
       <div className="flex items-center justify-between gap-2">
-        <span className="truncate font-mono text-[10px] tracking-[0.14em] text-subtle-foreground uppercase">{label}</span>
+        <span className="truncate text-[13px] font-medium text-muted-foreground">{label}</span>
         {Icon && (
-          <span className={cn("flex size-6 shrink-0 items-center justify-center rounded-md border border-border", tones.icon)}>
+          <span className={cn("flex size-7 shrink-0 items-center justify-center rounded-lg", tones.icon)} style={{ background: `${tones.spark}1f` }}>
             <Icon className="size-3.5" />
           </span>
         )}
       </div>
       <div className="mt-2.5 flex items-end justify-between gap-2">
         <div className="min-w-0">
-          <div className="truncate text-[22px] leading-none font-semibold tracking-[-0.035em] text-white tabular-nums">{value}</div>
+          <div className="truncate text-[22px] leading-none font-semibold tracking-[-0.035em] text-foreground tabular-nums">{value}</div>
           {hint && <div className="mt-1.5 truncate text-[11px] text-muted-foreground">{hint}</div>}
         </div>
         {spark && spark.length > 1 && <Sparkline data={spark} color={tones.spark} className="h-8 w-20 shrink-0" />}
@@ -144,7 +144,7 @@ export function KpiSkeleton({ count = 4 }: { count?: number }) {
   return (
     <KpiGrid>
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="rounded-xl border bg-card/70 p-3.5">
+        <div key={i} className="rounded-2xl border bg-card p-4">
           <Skeleton className="h-3 w-20" />
           <Skeleton className="mt-3 h-6 w-24" />
         </div>
@@ -158,7 +158,7 @@ export function Delta({ value, suffix = "%", invert }: { value: number | null | 
   if (value === null || value === undefined || !Number.isFinite(value)) return null
   const good = invert ? value <= 0 : value >= 0
   return (
-    <span className={cn("inline-flex items-center gap-0.5 font-medium", good ? "text-emerald-400" : "text-rose-400")}>
+    <span className={cn("inline-flex items-center gap-0.5 font-medium", good ? "text-emerald-700" : "text-rose-700")}>
       {value >= 0 ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />}
       {Math.abs(value).toFixed(1)}
       {suffix}
@@ -170,7 +170,7 @@ export function KV({ items, className }: { items: [React.ReactNode, React.ReactN
   return (
     <dl className={cn("grid grid-cols-1 gap-x-6 gap-y-2.5 text-sm sm:grid-cols-2", className)}>
       {items.map(([k, v], i) => (
-        <div key={i} className="flex min-w-0 items-baseline justify-between gap-3 border-b border-dashed border-white/5 pb-2">
+        <div key={i} className="flex min-w-0 items-baseline justify-between gap-3 border-b border-dashed border-border pb-2">
           <dt className="shrink-0 text-xs text-muted-foreground">{k}</dt>
           <dd className="min-w-0 truncate text-right text-foreground">{v ?? "—"}</dd>
         </div>
@@ -190,7 +190,7 @@ export function NoAccess({ what = "this section" }: { what?: string }) {
 // ------------------------------------------------------------------------------------------------ tables
 export function TableCard({ children, footer, className }: { children: React.ReactNode; footer?: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("overflow-hidden rounded-xl border bg-card/70", className)}>
+    <div className={cn("overflow-hidden rounded-2xl border bg-card shadow-[var(--shadow-card)]", className)}>
       <div className="[&_td]:py-2 [&_th]:h-9 [&_th]:text-[11px] [&_th]:font-semibold [&_th]:tracking-wide [&_th]:text-muted-foreground [&_th]:uppercase [&_thead_tr]:bg-white/[0.02]">
         {children}
       </div>
@@ -375,7 +375,7 @@ export function Field({ label, htmlFor, hint, error, children, className }: {
         {label}
       </Label>
       {children}
-      {error ? <p className="text-xs text-rose-400">{error}</p> : hint ? <p className="text-[11px] text-muted-foreground">{hint}</p> : null}
+      {error ? <p className="text-xs text-rose-700">{error}</p> : hint ? <p className="text-[11px] text-muted-foreground">{hint}</p> : null}
     </div>
   )
 }
@@ -487,7 +487,7 @@ function ReasonForm({
         <Textarea id="admin-reason" value={reason} onChange={(e) => setReason(e.target.value)} rows={3} maxLength={1000} autoFocus />
       </Field>
       {confirmText && (
-        <Field label={<>Type <span className="font-mono text-rose-300">{confirmText}</span> to confirm</>} htmlFor="admin-confirm-text">
+        <Field label={<>Type <span className="font-mono text-rose-700">{confirmText}</span> to confirm</>} htmlFor="admin-confirm-text">
           <Input id="admin-confirm-text" value={typed} onChange={(e) => setTyped(e.target.value)} autoComplete="off" />
         </Field>
       )}
@@ -564,7 +564,7 @@ export function JsonBlock({ value, className }: { value: unknown; className?: st
     text = String(value)
   }
   return (
-    <pre className={cn("max-h-80 overflow-auto rounded-lg border bg-black/30 p-3 font-mono text-[11px] leading-relaxed text-signal-100/90", className)}>
+    <pre className={cn("max-h-80 overflow-auto rounded-lg border bg-muted p-3 font-mono text-[11px] leading-relaxed text-signal-100/90", className)}>
       {text ?? "null"}
     </pre>
   )
@@ -573,7 +573,7 @@ export function JsonBlock({ value, className }: { value: unknown; className?: st
 export function BoolDot({ value, on = "Yes", off = "No" }: { value: boolean; on?: string; off?: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-xs">
-      <span className={cn("size-1.5 rounded-full", value ? "bg-emerald-400 shadow-[0_0_6px_rgba(118,240,193,0.7)]" : "bg-slate-500")} />
+      <span className={cn("size-1.5 rounded-full", value ? "bg-emerald-400 shadow-[0_0_6px_rgba(183,230,107,0.7)]" : "bg-slate-500")} />
       {value ? on : off}
     </span>
   )
@@ -588,7 +588,7 @@ export function Meter({ value, max, className }: { value: number; max: number | 
         <span>{formatNumber(value)}</span>
         <span>{max === null ? "Unlimited" : formatNumber(max)}</span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
+      <div className="h-1.5 overflow-hidden rounded-full bg-muted">
         <div className={cn("h-full rounded-full", max === null ? "w-full bg-signal-400/30" : color)} style={max === null ? undefined : { width: `${pct}%` }} />
       </div>
     </div>

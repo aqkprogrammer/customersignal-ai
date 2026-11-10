@@ -74,12 +74,12 @@ function PaymentsTable() {
               <TableBody>
                 {q.data.items.map((p) => (
                   <TableRow key={p.id}>
-                    <TableCell className="max-w-[220px] truncate font-medium text-white">{p.workspace_name}</TableCell>
+                    <TableCell className="max-w-[220px] truncate font-medium text-foreground">{p.workspace_name}</TableCell>
                     <TableCell>{p.plan_code ? <Pill color="signal">{titleCase(p.plan_code)}</Pill> : "—"}</TableCell>
                     <TableCell className="text-right tabular-nums">{money(p.amount_cents, p.currency)}</TableCell>
                     <TableCell className="text-right text-muted-foreground tabular-nums">{p.refunded_cents ? money(p.refunded_cents, p.currency) : "—"}</TableCell>
                     <TableCell><StatusBadge status={p.status} /></TableCell>
-                    <TableCell className="max-w-[240px] truncate text-xs text-rose-300" title={p.failure_reason || undefined}>{p.failure_reason || <span className="text-muted-foreground">—</span>}</TableCell>
+                    <TableCell className="max-w-[240px] truncate text-xs text-rose-700" title={p.failure_reason || undefined}>{p.failure_reason || <span className="text-muted-foreground">—</span>}</TableCell>
                     <TableCell className="text-xs text-muted-foreground">{formatDateTime(p.created_at)}</TableCell>
                   </TableRow>
                 ))}
@@ -124,7 +124,7 @@ function InvoicesTable() {
             {q.data.items.map((i) => (
               <TableRow key={i.id}>
                 <TableCell className="font-mono text-xs">{i.number || i.id.slice(0, 8)}</TableCell>
-                <TableCell className="max-w-[220px] truncate font-medium text-white">{i.workspace_name}</TableCell>
+                <TableCell className="max-w-[220px] truncate font-medium text-foreground">{i.workspace_name}</TableCell>
                 <TableCell>{i.plan_code ? <Pill color="signal">{titleCase(i.plan_code)}</Pill> : "—"}</TableCell>
                 <TableCell className="text-right tabular-nums">{money(i.amount_paid_cents)}</TableCell>
                 <TableCell className="text-right tabular-nums">{money(i.amount_due_cents)}</TableCell>
@@ -132,7 +132,7 @@ function InvoicesTable() {
                 <TableCell className="text-xs text-muted-foreground">{formatDateTime(i.created_at)}</TableCell>
                 <TableCell className="text-right">
                   {i.hosted_invoice_url && (
-                    <a href={i.hosted_invoice_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-signal-300 hover:underline">
+                    <a href={i.hosted_invoice_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-signal-700 hover:underline">
                       View <ExternalLink className="size-3" />
                     </a>
                   )}
@@ -167,7 +167,7 @@ function RevenueBody({ r }: { r: RevenueData }) {
   return (
     <div className="space-y-4">
       {!r.stripe_enabled && (
-        <div className="flex items-start gap-2 rounded-lg border border-amber-500/25 bg-amber-500/10 px-3 py-2.5 text-sm text-amber-200">
+        <div className="flex items-start gap-2 rounded-lg border border-amber-500/25 bg-amber-500/10 px-3 py-2.5 text-sm text-amber-700">
           <AlertTriangle className="mt-0.5 size-4 shrink-0" />
           <div>
             <span className="font-medium">Stripe is not configured.</span> Payment and invoice figures only include manually recorded data, and MRR is
@@ -190,9 +190,9 @@ function RevenueBody({ r }: { r: RevenueData }) {
           type="line"
           format={(n) => money(n)}
           series={[
-            { key: "gross_cents", label: "Gross", color: "#45e5ea" },
-            { key: "net_cents", label: "Net", color: "#76f0c1" },
-            { key: "refunds_cents", label: "Refunds", color: "#f2706b" },
+            { key: "gross_cents", label: "Gross", color: "#4169F5" },
+            { key: "net_cents", label: "Net", color: "#8FCB3F" },
+            { key: "refunds_cents", label: "Refunds", color: "#E5534B" },
           ]}
           height={280}
         />
@@ -202,7 +202,7 @@ function RevenueBody({ r }: { r: RevenueData }) {
           <DonutChart data={r.revenue_by_plan.map((p) => ({ name: p.plan || "unknown", value: p.revenue_cents }))} format={(n) => money(n)} />
         </Panel>
         <Panel title="MRR by plan" description="Active paid subscribers × list price">
-          <BarsChart data={r.mrr_by_plan} xKey="plan" periodLabels={false} labelFormat={titleCase} series={[{ key: "mrr_cents", label: "MRR", color: "#76f0c1" }]} format={(n) => money(n)} height={200} />
+          <BarsChart data={r.mrr_by_plan} xKey="plan" periodLabels={false} labelFormat={titleCase} series={[{ key: "mrr_cents", label: "MRR", color: "#8FCB3F" }]} format={(n) => money(n)} height={200} />
           <Table className="mt-3">
             <TableHeader>
               <TableRow>

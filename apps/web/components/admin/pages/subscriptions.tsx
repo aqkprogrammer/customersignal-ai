@@ -72,9 +72,9 @@ export function AdminSubscriptions() {
               </TableHeader>
               <TableBody>
                 {query.data.items.map((s) => (
-                  <TableRow key={s.id} className="hover:bg-white/[0.03]">
+                  <TableRow key={s.id} className="hover:bg-surface-hover">
                     <TableCell className="max-w-[220px]">
-                      <Link href={`/admin/workspaces/${s.workspace_id}`} className="block truncate font-medium text-white hover:text-signal-300">{s.workspace_name}</Link>
+                      <Link href={`/admin/workspaces/${s.workspace_id}`} className="block truncate font-medium text-foreground hover:text-signal-600">{s.workspace_name}</Link>
                     </TableCell>
                     <TableCell><Pill color={s.plan === "free" ? "gray" : "signal"}>{s.plan_name}</Pill></TableCell>
                     <TableCell>
@@ -219,7 +219,7 @@ function AdjustForm({ sub, onDone }: { sub: AdminSubscriptionRow; onDone: () => 
             </div>
           ))}
         </div>
-        {!limitsValid && <p className="mt-1 text-xs text-rose-400">Custom limits need a whole number.</p>}
+        {!limitsValid && <p className="mt-1 text-xs text-rose-700">Custom limits need a whole number.</p>}
       </div>
       <Field label="Reason (required, audit-logged)" htmlFor="adjust-reason">
         <Textarea id="adjust-reason" value={reason} onChange={(e) => setReason(e.target.value)} rows={2} maxLength={1000} />

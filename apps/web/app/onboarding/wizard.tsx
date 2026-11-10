@@ -28,7 +28,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { LogoMark } from "@/components/brand/logo"
 import { ConnectingScreen } from "@/components/shared/connecting"
-import { ReputationIntelligenceCore } from "@/components/signal"
+import { SignalEmblem } from "@/components/aurora"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -196,7 +196,7 @@ export function OnboardingWizard() {
   const firstName = (session?.user.full_name || "").split(" ")[0]
 
   return (
-    <div className="min-h-screen bg-[#eef2f4] dark:bg-background">
+    <div className="min-h-screen bg-[#EFEEE9] dark:bg-background">
       <header className="flex items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2 font-semibold">
           <LogoMark /> CustomerSignal<span className="text-primary">AI</span>
@@ -220,10 +220,10 @@ export function OnboardingWizard() {
         <div className="surface p-6 sm:p-9">
           {step === 1 && (
             <div className="text-center">
-              <div className="mx-auto w-40">
-                <ReputationIntelligenceCore detail="lite" pedestal={false} title="" />
+              <div className="mx-auto w-40 text-foreground">
+                <SignalEmblem className="w-full" />
               </div>
-              <p className="mt-2 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">Workspace online</p>
+              <p className="mt-3 inline-flex rounded-full bg-[#f3fbe6] px-3 py-1 text-[13px] font-semibold text-[#3b6b0c]">Workspace ready</p>
               <h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Welcome{firstName ? `, ${firstName}` : ""}.</h1>
               <p className="mx-auto mt-3 max-w-md text-muted-foreground">
                 Let&apos;s tailor CustomerSignal AI to your business. It takes about two minutes — you can skip any optional step.

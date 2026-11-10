@@ -61,7 +61,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4" aria-label="Main">
       {NAV_SECTIONS.map((section) => (
         <div key={section.title}>
-          {!collapsed && <p className="mb-1.5 px-2 font-mono text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">{section.title}</p>}
+          {!collapsed && <p className="mb-1.5 px-2.5 text-[11.5px] font-semibold tracking-[0.06em] text-subtle-foreground uppercase">{section.title}</p>}
           <ul className="space-y-0.5">
             {section.items.map((item) => {
               const active = item.href === "/app" ? pathname === "/app" : pathname.startsWith(item.href)
@@ -71,7 +71,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
                   onClick={onNavigate}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] font-medium text-sidebar-foreground transition-colors hover:bg-surface-hover/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none",
+                    "relative flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[14px] font-medium text-sidebar-foreground transition-colors hover:bg-surface-hover/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none",
                     active && "text-sidebar-accent-foreground",
                     collapsed && "justify-center px-0",
                   )}
@@ -80,10 +80,10 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
                     <motion.span
                       layoutId={collapsed ? "app-nav-active-c" : "app-nav-active"}
                       aria-hidden
-                      className="absolute inset-0 rounded-md bg-sidebar-accent shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--primary)_18%,transparent)]"
+                      className="absolute inset-0 rounded-lg bg-sidebar-accent"
                       transition={{ type: "spring", stiffness: 420, damping: 38 }}
                     >
-                      <span className="absolute inset-y-2 left-0 w-px bg-primary shadow-[0_0_8px_var(--primary)]" />
+                      <span className="absolute inset-y-2 left-0 w-[3px] rounded-r-full bg-primary" />
                     </motion.span>
                   )}
                   <item.icon className={cn("relative size-4 shrink-0", active ? "text-primary" : "text-muted-foreground")} />
@@ -130,19 +130,19 @@ function WorkspaceSwitcher({ collapsed }: { collapsed: boolean }) {
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "flex w-full items-center gap-2.5 rounded-md border bg-background/60 p-2 text-left transition-colors hover:border-border-strong hover:bg-surface-hover/60",
+            "flex w-full items-center gap-2.5 rounded-xl border bg-card p-2 text-left shadow-[0_1px_2px_rgb(23_32_51/0.04)] transition-colors hover:border-border-strong",
             collapsed && "justify-center border-transparent bg-transparent",
           )}
           aria-label="Switch workspace"
         >
-          <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-[color-mix(in_oklab,var(--primary)_40%,transparent)] bg-background font-mono text-[11px] font-medium text-primary">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#101B35] text-[11.5px] font-semibold text-white dark:bg-primary">
             {initials(workspace?.name)}
           </span>
           {!collapsed && (
             <>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[13px] font-medium">{workspace?.name || "Loading…"}</span>
-                <span className="block font-mono text-[10px] tracking-[0.12em] text-subtle-foreground uppercase">
+                <span className="block text-[12px] text-muted-foreground">
                   {workspace?.is_demo ? "Demo data" : titleCase(workspace?.role || "")}
                 </span>
               </span>
@@ -377,9 +377,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Link href="/app" className="flex items-center gap-2 font-semibold" aria-label="Overview">
             <LogoMark />
             {!collapsed && (
-              <span className="text-[15px] tracking-tight">
-                CustomerSignal
-                <span className="ml-1.5 rounded-[4px] border border-[color-mix(in_oklab,var(--primary)_35%,transparent)] px-1 py-px align-[2px] font-mono text-[9.5px] font-medium tracking-[0.12em] text-primary">AI</span>
+              <span className="text-[16px] tracking-[-0.02em]">
+                CustomerSignal<span className="ml-1 font-medium text-primary">AI</span>
               </span>
             )}
           </Link>
@@ -418,7 +417,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="ml-auto flex items-center gap-1.5">
             <button
               onClick={() => setCommandOpen(true)}
-              className="hidden h-8 w-64 items-center gap-2 rounded-md border bg-card/60 px-2.5 text-[13px] text-muted-foreground transition-colors hover:border-[color-mix(in_oklab,var(--primary)_35%,var(--border))] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none sm:flex"
+              className="hidden h-9 w-72 items-center gap-2 rounded-full border bg-card px-3.5 text-[13.5px] text-muted-foreground transition-colors hover:border-[color-mix(in_oklab,var(--primary)_35%,var(--border))] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none sm:flex"
             >
               <Search className="size-3.5" /> Search or jump to…
               <kbd className="ml-auto rounded-[4px] border border-border-strong px-1.5 font-mono text-[10px] text-subtle-foreground">⌘K</kbd>
@@ -431,9 +430,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         {workspace?.is_demo && (
-          <div className="flex items-center gap-2.5 border-b border-[color-mix(in_oklab,var(--ember)_25%,transparent)] bg-[color-mix(in_oklab,var(--ember)_8%,transparent)] px-6 py-2 text-[13px] text-ember">
-            <span className="font-mono text-[10px] tracking-[0.16em] uppercase">Demo</span>
-            <span className="text-foreground/85">All reviews in this workspace are synthetic sample data, not real customer feedback.</span>
+          <div className="flex items-center gap-2.5 border-b border-[#FF8757]/25 bg-[#FFF1E8] px-6 py-2 text-[13.5px] dark:bg-[#FF8757]/10">
+            <span className="rounded-full bg-[#FF8757] px-2 py-0.5 text-[11px] font-semibold text-[#2a1206]">Demo</span>
+            <span className="text-foreground/80">All reviews in this workspace are synthetic sample data, not real customer feedback.</span>
           </div>
         )}
         {announcements?.slice(0, 1).map((a) => (

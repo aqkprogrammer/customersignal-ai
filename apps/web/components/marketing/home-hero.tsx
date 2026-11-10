@@ -1,100 +1,74 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
+import { IntelligenceVisualization } from "@/components/aurora"
+import { Magnetic } from "@/components/aurora/magnetic"
 import { Button } from "@/components/ui/button"
-import { CinematicBackground, SignalScene, TechnicalLabel } from "@/components/signal"
-import { Magnetic } from "@/components/signal/magnetic"
+import { HeroWords } from "./hero-words"
 
-const SPEC = [
-  { k: "Inputs", v: "CSV · Excel · Reviews API · approved integrations" },
-  { k: "Languages", v: "English and العربية, translated side by side" },
-  { k: "Analysis", v: "Anthropic or OpenAI — or a labelled built-in engine" },
-  { k: "Outputs", v: "Branded PDF reports · alerts · signed webhooks" },
-]
+const TRUST = ["Free plan, no credit card", "English and Arabic reviews", "Official access only — no scraping"]
 
 export function HomeHero() {
   return (
-    <section aria-labelledby="hero-heading" className="relative -mt-16 overflow-hidden pt-16">
-      <CinematicBackground />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,var(--background))]" />
+    <section aria-labelledby="hero-heading" className="relative overflow-hidden pt-28 pb-12 sm:pt-36 sm:pb-24 lg:pb-32">
+      {/* light & geometry */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-dots absolute inset-0 [mask-image:radial-gradient(ellipse_60%_60%_at_70%_40%,#000_30%,transparent_80%)]" />
+        <div className="absolute -top-40 right-[-12%] size-[760px] rounded-full bg-[radial-gradient(closest-side,rgb(255_213_190/0.85),transparent)]" />
+        <div className="absolute top-[30%] left-[-14%] size-[560px] rounded-full bg-[radial-gradient(closest-side,rgb(146_201_255/0.42),transparent)]" />
+        <svg className="absolute top-24 right-[4%] hidden h-[640px] w-[640px] text-[#4169F5] lg:block" viewBox="0 0 640 640" fill="none">
+          <circle cx="320" cy="320" r="318" stroke="currentColor" strokeOpacity="0.08" />
+          <circle cx="320" cy="320" r="240" stroke="currentColor" strokeOpacity="0.06" strokeDasharray="2 8" />
+        </svg>
+      </div>
 
-      <div className="relative mx-auto w-full max-w-[1320px] px-5 sm:px-8">
-        {/* HUD rule */}
-        <div className="flex items-center justify-between border-b border-border py-3">
-          <TechnicalLabel index="CS-01">Customer intelligence // Signals into growth</TechnicalLabel>
-          <TechnicalLabel className="hidden md:inline-flex">Uploads · official APIs · authorized providers</TechnicalLabel>
-        </div>
+      <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-16 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10">
+        <div className="relative z-10">
+          <Link
+            href="/features#gap-finder"
+            className="group inline-flex items-center gap-2 rounded-full border border-border bg-white/70 py-1 pr-3 pl-1 text-[13.5px] font-medium text-muted-foreground backdrop-blur transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none"
+          >
+            <span className="rounded-full bg-[#B7E66B] px-2 py-0.5 text-[12px] font-semibold text-[#20330a]">New</span>
+            3-Star Gap Finder — what stops good becoming great
+            <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+          </Link>
 
-        <div className="grid items-center gap-10 pt-12 pb-14 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-6 lg:pt-16 lg:pb-16">
-          {/* Copy is not opacity-animated so the LCP element paints immediately. */}
-          <div className="relative z-10 max-w-xl">
-            <Link
-              href="/features#gap-finder"
-              className="group inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.16em] text-signal uppercase transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none"
-            >
-              <span aria-hidden className="h-px w-6 bg-current" />
-              New · 3-Star Gap Finder
-              <ArrowUpRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-px group-hover:-translate-y-px" />
-            </Link>
+          {/* The headline is static markup (LCP); HeroWords only animates the highlighted phrase in. */}
+          <h1 id="hero-heading" className="mt-8 text-[2.9rem] leading-[0.98] font-semibold tracking-[-0.055em] text-balance text-foreground sm:text-[4.2rem] lg:text-[3.9rem] xl:text-[4.5rem]">
+            Your customers are telling you <HeroWords />
+          </h1>
+          <p className="mt-7 max-w-[34rem] text-[18px] leading-relaxed text-pretty text-muted-foreground sm:text-[19px]">
+            CustomerSignal reads the reviews you upload or connect — yours and your competitors’ — finds the themes that keep
+            coming back, and turns them into evidence-backed opportunities your team can act on.
+          </p>
 
-            <h1
-              id="hero-heading"
-              className="mt-7 text-[2.7rem] leading-[0.98] font-semibold tracking-[-0.048em] text-balance sm:text-[3.6rem] lg:text-[3.5rem] xl:text-[4.15rem]"
-            >
-              Your customers are telling you <span className="text-gradient">what to build next.</span>
-            </h1>
-            <p className="mt-7 max-w-[34rem] text-[16.5px] leading-relaxed text-pretty text-muted-foreground sm:text-lg">
-              CustomerSignal reads the reviews you upload or connect — yours and your competitors’ — clusters what keeps
-              coming up, and hands you evidence-backed opportunities, with the quotes to prove them.
-            </p>
-
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Magnetic className="w-full sm:w-auto">
-                <Button asChild variant="signal" className="h-12 w-full rounded-lg px-6 text-[15px] sm:w-auto">
-                  <Link href="/signup">
-                    Start free <ArrowRight data-arrow aria-hidden className="size-4" />
-                  </Link>
-                </Button>
-              </Magnetic>
-              <Button asChild variant="outline" className="h-12 w-full rounded-lg bg-background/40 px-6 text-[15px] backdrop-blur-sm sm:w-auto">
-                <Link href="/contact?topic=demo">Book a demo</Link>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Magnetic className="w-full sm:w-auto">
+              <Button asChild variant="signal" className="h-13 w-full rounded-full px-7 text-[16px] sm:w-auto">
+                <Link href="/signup">
+                  Start free <ArrowRight data-arrow aria-hidden className="size-4" />
+                </Link>
               </Button>
-            </div>
-
-            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10.5px] tracking-[0.14em] text-subtle-foreground uppercase">
-              {["Free plan · no card", "English + Arabic", "No scraping, ever"].map((t) => (
-                <li key={t} className="inline-flex items-center gap-2">
-                  <span aria-hidden className="h-px w-2.5 bg-signal/70" />
-                  {t}
-                </li>
-              ))}
-            </ul>
+            </Magnetic>
+            <Button asChild variant="outline" className="h-13 w-full rounded-full px-7 text-[16px] sm:w-auto">
+              <Link href="/contact?topic=demo">Book a demo</Link>
+            </Button>
           </div>
 
-          <div className="relative min-w-0 lg:-mr-8 xl:-mr-16">
-            <SignalScene variant="hero" />
-          </div>
+          <ul className="mt-9 flex flex-col gap-2.5 text-[14.5px] text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-6">
+            {TRUST.map((t) => (
+              <li key={t} className="inline-flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-[#B7E66B]/45 text-[#3b6b0c]">
+                  <Check aria-hidden className="size-3" strokeWidth={3} />
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <dl className="relative grid grid-cols-1 border-y border-border sm:grid-cols-2 lg:grid-cols-4">
-          {SPEC.map((f, i) => (
-            <div
-              key={f.k}
-              className={[
-                "py-5 sm:px-5",
-                i > 0 ? "border-t border-border sm:border-t-0" : "",
-                i % 2 === 1 ? "sm:border-l" : "",
-                i >= 2 ? "sm:border-t lg:border-t-0" : "",
-                i === 2 ? "lg:border-l" : "",
-                i === 0 ? "sm:pl-0" : "",
-              ].join(" ")}
-            >
-              <dt className="micro-label flex items-center gap-2">
-                <span className="text-signal/80 tabular">{String(i + 1).padStart(2, "0")}</span> {f.k}
-              </dt>
-              <dd className="mt-2 text-[14px] leading-snug text-foreground/85">{f.v}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="relative min-w-0 lg:-mr-6">
+          <IntelligenceVisualization />
+        </div>
       </div>
     </section>
   )

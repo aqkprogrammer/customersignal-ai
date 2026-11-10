@@ -25,10 +25,10 @@ export function PageHeader({ title, description, actions, badge }: { title: stri
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold tracking-[-0.03em] sm:text-[24px]">{title}</h1>
+          <h1 className="text-[1.6rem] font-semibold tracking-[-0.035em] sm:text-[2rem]">{title}</h1>
           {badge}
         </div>
-        {description && <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{description}</p>}
+        {description && <p className="mt-1.5 max-w-2xl text-[15px] text-muted-foreground">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -51,25 +51,25 @@ export function StatCard({
   className?: string
 }) {
   const tones = {
-    signal: { text: "text-primary", line: "var(--primary)" },
-    green: { text: "text-positive", line: "var(--positive)" },
-    red: { text: "text-negative", line: "var(--negative)" },
-    gray: { text: "text-muted-foreground", line: "var(--muted-foreground)" },
-    ice: { text: "text-ice", line: "var(--ice)" },
-    amber: { text: "text-ember", line: "var(--ember)" },
+    signal: { text: "text-[#2f52dd] dark:text-[#8aa5ff]", line: "#4169F5" },
+    green: { text: "text-[#4f8a12] dark:text-lime", line: "#8FCB3F" },
+    red: { text: "text-[#d9561f] dark:text-orange", line: "#FF8757" },
+    gray: { text: "text-muted-foreground", line: "#929AAA" },
+    ice: { text: "text-[#2e7fd0] dark:text-sky", line: "#5FA8F0" },
+    amber: { text: "text-[#c26a14] dark:text-orange", line: "#FFB48F" },
   }
   return (
-    <div className={cn("surface relative overflow-hidden p-4 dark:surface-lit", className)}>
-      <span aria-hidden className="absolute inset-x-4 top-0 h-px opacity-70" style={{ background: `linear-gradient(90deg, ${tones[tone].line}, transparent 70%)` }} />
+    <div className={cn("surface relative overflow-hidden rounded-2xl p-5", className)}>
+      <span aria-hidden className="absolute top-5 bottom-5 left-0 w-[3px] rounded-r-full" style={{ background: tones[tone].line }} />
       <div className="flex items-start justify-between gap-2">
-        <p className="font-mono text-[10.5px] tracking-[0.14em] text-subtle-foreground uppercase">{label}</p>
+        <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
         {Icon && (
-          <span className={cn("flex size-7 items-center justify-center rounded-md border border-border", tones[tone].text)}>
+          <span className={cn("flex size-8 items-center justify-center rounded-lg", tones[tone].text)} style={{ background: `${tones[tone].line}1f` }}>
             <Icon className="size-3.5" />
           </span>
         )}
       </div>
-      <p className="mt-2.5 text-[26px] leading-none font-semibold tracking-[-0.035em] tabular-nums">{value}</p>
+      <p className="mt-3 text-[28px] leading-none font-semibold tracking-[-0.035em] tabular-nums">{value}</p>
       {hint && <p className="mt-2 text-xs text-muted-foreground">{hint}</p>}
     </div>
   )
@@ -84,11 +84,11 @@ export function Panel({ title, description, actions, children, className, bodyCl
   bodyClassName?: string
 }) {
   return (
-    <section className={cn("surface flex min-w-0 flex-col dark:surface-lit", className)}>
+    <section className={cn("surface flex min-w-0 flex-col rounded-2xl", className)}>
       {(title || actions) && (
         <div className="flex items-start justify-between gap-3 px-5 pt-4">
           <div>
-            {title && <h2 className="text-[13.5px] font-semibold tracking-[-0.01em]">{title}</h2>}
+            {title && <h2 className="text-[15px] font-semibold tracking-[-0.01em]">{title}</h2>}
             {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
           </div>
           {actions}

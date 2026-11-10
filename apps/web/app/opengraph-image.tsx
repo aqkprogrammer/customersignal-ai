@@ -15,7 +15,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #05080b 0%, #0c1a24 60%, #0b2a33 100%)",
+          background: "linear-gradient(135deg, #101B35 0%, #0c1a24 60%, #0b2a33 100%)",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
@@ -26,7 +26,7 @@ export default function OpengraphImage() {
               width: 56,
               height: 56,
               borderRadius: 16,
-              background: "linear-gradient(135deg, #45e5ea, #80bdff)",
+              background: "linear-gradient(135deg, #4169F5, #5FA8F0)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -44,7 +44,7 @@ export default function OpengraphImage() {
             </svg>
           </div>
           <div style={{ display: "flex", fontSize: 30, fontWeight: 600 }}>
-            CustomerSignal<span style={{ color: "#9df1f3", marginLeft: 8 }}>AI</span>
+            CustomerSignal<span style={{ color: "#BCCBFD", marginLeft: 8 }}>AI</span>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>

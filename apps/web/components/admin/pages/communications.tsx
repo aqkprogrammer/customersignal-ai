@@ -63,7 +63,7 @@ export function AdminAnnouncements() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-semibold text-white">{a.title}</h3>
+                    <h3 className="font-semibold text-foreground">{a.title}</h3>
                     <Pill color={LEVEL_TONE[a.level]}>{titleCase(a.level)}</Pill>
                     <Pill color="ice">Audience: {titleCase(a.audience)}</Pill>
                     {a.is_active ? <Pill color="green">Active</Pill> : <Pill>Inactive</Pill>}
@@ -224,9 +224,9 @@ export function AdminEmailTemplates() {
                   <button
                     type="button"
                     onClick={() => setSelected(t.key)}
-                    className={cn("w-full rounded-md px-2.5 py-2 text-left hover:bg-white/5", current.key === t.key && "bg-signal-500/15")}
+                    className={cn("w-full rounded-md px-2.5 py-2 text-left hover:bg-surface-hover", current.key === t.key && "bg-signal-500/15")}
                   >
-                    <div className="truncate text-sm text-white">{t.name}</div>
+                    <div className="truncate text-sm text-foreground">{t.name}</div>
                     <div className="truncate font-mono text-[10px] text-muted-foreground">{t.key} · {timeAgo(t.updated_at)}</div>
                   </button>
                 </li>
@@ -302,7 +302,7 @@ function TemplateEditor({ template }: { template: EmailTemplate }) {
           {template.variables.length > 0 && (
             <div className="flex flex-wrap items-center gap-1">
               <span className="text-[11px] text-muted-foreground">Variables:</span>
-              {template.variables.map((v) => <code key={v} className="rounded bg-signal-500/15 px-1.5 py-0.5 font-mono text-[10px] text-signal-200">{`{{${v}}}`}</code>)}
+              {template.variables.map((v) => <code key={v} className="rounded bg-signal-500/15 px-1.5 py-0.5 font-mono text-[10px] text-signal-700">{`{{${v}}}`}</code>)}
             </div>
           )}
           <Field label="Subject" htmlFor="t-subject"><Input id="t-subject" value={subject} onChange={(e) => setSubject(e.target.value)} readOnly={!manage} maxLength={300} /></Field>
@@ -325,7 +325,7 @@ function TemplateEditor({ template }: { template: EmailTemplate }) {
               </Button>
             </div>
           )}
-          {manage && dirty && <p className="text-[11px] text-amber-300/90">Unsaved changes — test emails use the last saved version.</p>}
+          {manage && dirty && <p className="text-[11px] text-amber-700">Unsaved changes — test emails use the last saved version.</p>}
         </div>
       </Panel>
       <Panel title={<span className="inline-flex items-center gap-1.5"><Eye className="size-3.5" /> Live preview</span>} description="Rendered with sample values; scripts are disabled." actions={preview.isFetching && <Loader2 className="size-3.5 animate-spin text-muted-foreground" />}>
@@ -337,7 +337,7 @@ function TemplateEditor({ template }: { template: EmailTemplate }) {
           <CardSkeleton rows={10} />
         ) : (
           <div className="space-y-2">
-            <div className="rounded-md border bg-black/20 px-3 py-2 text-sm"><span className="text-xs text-muted-foreground">Subject: </span>{preview.data.subject}</div>
+            <div className="rounded-md border bg-muted px-3 py-2 text-sm"><span className="text-xs text-muted-foreground">Subject: </span>{preview.data.subject}</div>
             <iframe title="Email preview" sandbox="" srcDoc={preview.data.html} className="h-[560px] w-full rounded-md border bg-white" />
           </div>
         )}

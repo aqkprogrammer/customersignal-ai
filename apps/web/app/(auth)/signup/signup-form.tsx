@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { AuthHeading, Divider, Field, GoogleButton, PasswordInput, TerminalPanel } from "@/components/forms/auth-fields"
-import { StatusDot } from "@/components/signal"
+import { StatusDot } from "@/components/aurora"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -193,7 +193,7 @@ export function SignupForm() {
           label="Verification"
           status={
             <span className="inline-flex items-center gap-1.5">
-              <StatusDot tone="ember" pulse /> Awaiting confirmation
+              <StatusDot tone="orange" pulse /> Awaiting confirmation
             </span>
           }
         >
@@ -367,16 +367,16 @@ export function SignupForm() {
 
         <div className="mt-7 flex items-center gap-3">
           {section > 0 && (
-            <Button type="button" variant="ghost" className="h-11 px-4" onClick={() => go(section - 1)}>
+            <Button type="button" variant="ghost" className="h-12 rounded-full px-5" onClick={() => go(section - 1)}>
               <ArrowLeft /> Back
             </Button>
           )}
           {section < SECTIONS.length - 1 ? (
-            <Button type="submit" className="h-11 flex-1 rounded-lg text-[15px]">
+            <Button type="submit" className="h-12 flex-1 rounded-full text-[15.5px]">
               Continue <ArrowRight data-arrow />
             </Button>
           ) : (
-            <Button type="submit" variant="signal" className="h-11 flex-1 rounded-lg text-[15px]" disabled={isSubmitting}>
+            <Button type="submit" variant="signal" className="h-12 flex-1 rounded-full text-[15.5px]" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="animate-spin" /> Creating workspace

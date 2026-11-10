@@ -4,7 +4,7 @@ test("homepage shows the hero and CTAs", async ({ page }) => {
   await page.goto("/")
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Your customers are telling you what to build next.")
   await expect(page.getByRole("link", { name: /Start Free/i }).first()).toBeVisible()
-  await expect(page.getByText(/Illustrative · sample data/i).first()).toBeVisible()
+  await expect(page.getByText(/Sample data/i).first()).toBeVisible()
 })
 
 test("pricing loads plans from the API", async ({ page }) => {

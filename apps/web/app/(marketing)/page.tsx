@@ -2,16 +2,9 @@ import type { Metadata } from "next"
 import { CtaSection } from "@/components/marketing/cta-section"
 import { HOME_FAQ } from "@/components/marketing/faq"
 import { HomeHero } from "@/components/marketing/home-hero"
-import {
-  HomeFaq,
-  PricingPreview,
-  ProblemSolution,
-  SampleInsights,
-  Testimonials,
-  UseCases,
-  WalkthroughSection,
-} from "@/components/marketing/home-sections"
-import { SignalPath } from "@/components/marketing/signal-path"
+import { HomeFaq, PricingPreview } from "@/components/marketing/home-sections"
+import { IngestionSection, ProblemSection, ProcessSection } from "@/components/marketing/story-a"
+import { CompetitiveSection, EngineSection, OpportunitySection, ReportsSection } from "@/components/marketing/story-b"
 import { absoluteUrl, faqJsonLd, JsonLd } from "@/components/marketing/seo"
 import { SITE } from "@/lib/site"
 
@@ -75,13 +68,14 @@ export default function HomePage() {
     <>
       <JsonLd data={[organization, software, faqJsonLd(HOME_FAQ)]} />
       <HomeHero />
-      <ProblemSolution />
-      <SignalPath />
-      <SampleInsights />
-      <WalkthroughSection />
-      <UseCases />
+      <ProblemSection />
+      <ProcessSection />
+      <IngestionSection />
+      <EngineSection />
+      <OpportunitySection />
+      <CompetitiveSection />
+      <ReportsSection />
       <PricingPreview />
-      <Testimonials />
       <HomeFaq />
       <CtaSection />
     </>

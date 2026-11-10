@@ -35,11 +35,11 @@ export function AdminPlans() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {q.data.plans.map((p) => (
-            <div key={p.id} className={cn("flex flex-col rounded-xl border bg-card/70 p-4", p.highlighted && "border-signal-400/40 shadow-[0_0_0_1px_rgba(69,229,234,0.25),0_20px_50px_-25px_rgba(69,229,234,0.6)]")}>
+            <div key={p.id} className={cn("flex flex-col rounded-xl border bg-card/70 p-4", p.highlighted && "border-signal-400/40 shadow-[0_0_0_1px_rgba(65,105,245,0.25),0_20px_50px_-25px_rgba(65,105,245,0.6)]")}>
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base font-semibold text-white">{p.name}</h3>
+                    <h3 className="text-base font-semibold text-foreground">{p.name}</h3>
                     <span className="font-mono text-[10px] text-muted-foreground">{p.code}</span>
                   </div>
                   <div className="mt-1 flex flex-wrap gap-1">
@@ -52,7 +52,7 @@ export function AdminPlans() {
                   <Button variant="outline" size="xs" onClick={() => setEditing(p)}><Pencil /> Edit</Button>
                 )}
               </div>
-              <div className="mt-3 text-2xl font-semibold text-white tabular-nums">
+              <div className="mt-3 text-2xl font-semibold text-foreground tabular-nums">
                 {formatCurrency(p.price_monthly_cents, p.currency)}
                 {p.price_monthly_cents !== null && <span className="text-sm font-normal text-muted-foreground"> /mo</span>}
               </div>
@@ -198,7 +198,7 @@ function PlanForm({ plan, features, onDone }: { plan: AdminPlan; features: Recor
           <div className="mb-2 text-xs font-medium">Feature entitlements</div>
           <div className="grid gap-1.5 rounded-lg border p-3 sm:grid-cols-2">
             {Object.entries(features).map(([key, label]) => (
-              <label key={key} className="flex items-start gap-2 rounded-md p-1 text-xs hover:bg-white/[0.03]">
+              <label key={key} className="flex items-start gap-2 rounded-md p-1 text-xs hover:bg-surface-hover">
                 <Checkbox
                   checked={feats.includes(key)}
                   onCheckedChange={(v) => setFeats((s) => (v === true ? [...s, key] : s.filter((x) => x !== key)))}
@@ -228,7 +228,7 @@ function PlanForm({ plan, features, onDone }: { plan: AdminPlan; features: Recor
           ))}
         </div>
         {errors.length > 0 && (
-          <ul className="space-y-0.5 rounded-md border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
+          <ul className="space-y-0.5 rounded-md border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs text-rose-700">
             {errors.map((e) => <li key={e}>{e}</li>)}
           </ul>
         )}

@@ -74,9 +74,9 @@ export function AdminWorkspaces() {
               </TableHeader>
               <TableBody>
                 {query.data.items.map((w) => (
-                  <TableRow key={w.id} className="hover:bg-white/[0.03]">
+                  <TableRow key={w.id} className="hover:bg-surface-hover">
                     <TableCell className="max-w-[240px]">
-                      <Link href={`/admin/workspaces/${w.id}`} className="block truncate font-medium text-white hover:text-signal-300">{w.name}</Link>
+                      <Link href={`/admin/workspaces/${w.id}`} className="block truncate font-medium text-foreground hover:text-signal-600">{w.name}</Link>
                       <div className="truncate text-xs text-muted-foreground">
                         {[w.industry, w.country].filter(Boolean).join(" · ") || w.slug}
                         {w.is_demo && " · demo"}
@@ -137,7 +137,7 @@ export function AdminWorkspaceDetailPage() {
         description={
           <>
             {w.owner ? (
-              <>Owned by <Link className="text-signal-300 hover:underline" href={`/admin/users/${w.owner.id}`}>{w.owner.email}</Link></>
+              <>Owned by <Link className="text-signal-700 hover:underline" href={`/admin/users/${w.owner.id}`}>{w.owner.email}</Link></>
             ) : "No owner"}
             {" · "}created {formatDate(w.created_at)}
           </>
@@ -168,7 +168,7 @@ export function AdminWorkspaceDetailPage() {
                 return (
                   <div key={metric}>
                     <div className="mb-1.5 text-xs font-medium text-foreground/90">{titleCase(metric)}</div>
-                    {limitKey ? <Meter value={value} max={ent.limits[limitKey]} /> : <div className="text-lg font-semibold text-white tabular-nums">{formatCompact(value)}</div>}
+                    {limitKey ? <Meter value={value} max={ent.limits[limitKey]} /> : <div className="text-lg font-semibold text-foreground tabular-nums">{formatCompact(value)}</div>}
                   </div>
                 )
               })}
@@ -191,7 +191,7 @@ export function AdminWorkspaceDetailPage() {
                 <TableBody>
                   {w.projects.map((p) => (
                     <TableRow key={p.id}>
-                      <TableCell className="font-medium text-white">{p.name}{p.is_demo && <Pill color="amber" className="ml-2">Demo</Pill>}</TableCell>
+                      <TableCell className="font-medium text-foreground">{p.name}{p.is_demo && <Pill color="amber" className="ml-2">Demo</Pill>}</TableCell>
                       <TableCell className="text-xs">{titleCase(p.data_source) || "—"}</TableCell>
                       <TableCell><StatusBadge status={p.status} /></TableCell>
                       <TableCell className="text-xs text-muted-foreground">{formatDate(p.last_analyzed_at)}</TableCell>
@@ -234,7 +234,7 @@ export function AdminWorkspaceDetailPage() {
               <p className="text-xs text-muted-foreground">No subscription record — the workspace is on the free plan.</p>
             )}
             {can("subscriptions.read") && (
-              <Link href="/admin/subscriptions" className="mt-3 inline-block text-xs text-signal-300 hover:underline">Manage in Subscriptions →</Link>
+              <Link href="/admin/subscriptions" className="mt-3 inline-block text-xs text-signal-700 hover:underline">Manage in Subscriptions →</Link>
             )}
           </Panel>
           <Panel title="Entitlements" description="Effective limits (plan + overrides)">

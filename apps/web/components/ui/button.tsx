@@ -11,10 +11,13 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.35),0_1px_2px_rgb(0_0_0/0.3)] hover:bg-primary/90 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.35),var(--glow)]",
         /* Hero CTA: lit cyan → ice surface with a slow light sweep on hover. */
+        /* Primary marketing CTA: solid cobalt with depth, not a gradient. */
         signal:
-          "relative overflow-hidden text-primary-foreground bg-[linear-gradient(100deg,var(--signal),color-mix(in_oklab,var(--signal)_55%,var(--ice))_65%,var(--ice))] shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_12px_32px_-12px_color-mix(in_oklab,var(--signal)_75%,transparent)] hover:brightness-[1.06] before:pointer-events-none before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:opacity-0 before:transition-all before:duration-700 hover:before:left-[120%] hover:before:opacity-100",
+          "bg-[#4169F5] text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_24px_-10px_rgb(65_105_245/0.75)] hover:bg-[#3558e8] hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_14px_30px_-10px_rgb(65_105_245/0.8)]",
+        /* Opportunity emphasis (use sparingly). */
+        orange: "bg-[#FF8757] text-[#2a1206] shadow-[inset_0_1px_0_rgb(255_255_255/0.35)] hover:bg-[#ff7a45]",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-border-strong dark:bg-transparent dark:hover:border-[color-mix(in_oklab,var(--signal)_40%,var(--border-strong))] dark:hover:bg-surface-hover",
+          "border-border-strong bg-card hover:bg-surface-hover hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-surface-hover",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:

@@ -24,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       }),
   )
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
       <QueryClientProvider client={client}>
         <TooltipProvider delayDuration={200}>
           {children}

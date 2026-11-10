@@ -70,7 +70,7 @@ export function AdminAuditLogs() {
                   const hasMeta = !!l.metadata && typeof l.metadata === "object" && Object.keys(l.metadata as object).length > 0
                   return (
                     <Fragment key={l.id}>
-                      <TableRow className="hover:bg-white/[0.03]">
+                      <TableRow className="hover:bg-surface-hover">
                         <TableCell>
                           <Button variant="ghost" size="icon-xs" onClick={() => setOpen(expanded ? null : l.id)} aria-label={expanded ? "Collapse" : "Expand"} aria-expanded={expanded}>
                             {expanded ? <ChevronDown /> : <ChevronRight />}
@@ -78,7 +78,7 @@ export function AdminAuditLogs() {
                         </TableCell>
                         <TableCell className="text-xs whitespace-nowrap text-muted-foreground" title={formatDateTime(l.created_at)}>{formatDateTime(l.created_at)}</TableCell>
                         <TableCell>
-                          <span className={l.action.includes("failed") ? "font-mono text-xs text-rose-300" : "font-mono text-xs text-signal-200"}>{l.action}</span>
+                          <span className={l.action.includes("failed") ? "font-mono text-xs text-rose-700" : "font-mono text-xs text-signal-700"}>{l.action}</span>
                           {hasMeta && <span className="ml-1.5 text-[10px] text-muted-foreground">+meta</span>}
                         </TableCell>
                         <TableCell className="max-w-[200px] truncate text-xs">{l.admin_email || "—"}</TableCell>
@@ -88,7 +88,7 @@ export function AdminAuditLogs() {
                         <TableCell className="font-mono text-[11px] text-muted-foreground">{l.ip_address || "—"}</TableCell>
                       </TableRow>
                       {expanded && (
-                        <TableRow className="bg-black/20 hover:bg-black/20">
+                        <TableRow className="bg-muted hover:bg-muted">
                           <TableCell colSpan={6} className="whitespace-normal">
                             <div className="grid gap-3 py-2 lg:grid-cols-[280px_1fr]">
                               <KV
@@ -166,7 +166,7 @@ export function AdminFeatureFlags() {
               {q.data.map((f) => (
                 <TableRow key={f.id}>
                   <TableCell className="max-w-[320px]">
-                    <div className="font-mono text-sm text-white">{f.key}</div>
+                    <div className="font-mono text-sm text-foreground">{f.key}</div>
                     {f.description && <div className="truncate text-xs text-muted-foreground" title={f.description}>{f.description}</div>}
                   </TableCell>
                   <TableCell>
@@ -324,7 +324,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
     max_rows_per_upload: String(s.max_rows_per_upload),
     trial_days: String(s.trial_days),
     logo_url: s.branding?.logo_url || "",
-    primary_color: s.branding?.primary_color || "#45e5ea",
+    primary_color: s.branding?.primary_color || "#4169F5",
   })
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setF((x) => ({ ...x, [k]: v }))
   const save = useAdminMutation<Record<string, unknown>>({
@@ -338,7 +338,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
   const rows = Number(f.max_rows_per_upload)
   const trial = Number(f.trial_days)
   if (!f.platform_name.trim()) errors.platform_name = "Required."
-  if (!/^#[0-9a-f]{6}$/i.test(f.primary_color)) errors.primary_color = "Use a hex color like #45e5ea."
+  if (!/^#[0-9a-f]{6}$/i.test(f.primary_color)) errors.primary_color = "Use a hex color like #4169F5."
   if (f.logo_url && !/^(https:\/\/|\/)\S+$/i.test(f.logo_url)) errors.logo_url = "Must be an https:// URL or a /path."
   if (!/^[a-z]{3}$/.test(f.default_currency)) errors.default_currency = "3-letter ISO code, lowercase (e.g. usd)."
   if (!f.default_timezone.trim()) errors.default_timezone = "Required."
@@ -378,7 +378,7 @@ function SettingsForm({ data }: { data: SettingsResponse }) {
             <Field label="Platform name" htmlFor="s-name" error={errors.platform_name}><Input id="s-name" value={f.platform_name} onChange={(e) => set("platform_name", e.target.value)} disabled={ro} /></Field>
             <Field label="Primary color" htmlFor="s-color" error={errors.primary_color}>
               <div className="flex gap-2">
-                <input type="color" aria-label="Pick primary color" value={/^#[0-9a-f]{6}$/i.test(f.primary_color) ? f.primary_color : "#45e5ea"} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} className="h-8 w-10 cursor-pointer rounded-md border bg-transparent p-0.5" />
+                <input type="color" aria-label="Pick primary color" value={/^#[0-9a-f]{6}$/i.test(f.primary_color) ? f.primary_color : "#4169F5"} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} className="h-8 w-10 cursor-pointer rounded-md border bg-transparent p-0.5" />
                 <Input id="s-color" className="font-mono" value={f.primary_color} onChange={(e) => set("primary_color", e.target.value)} disabled={ro} />
               </div>
             </Field>

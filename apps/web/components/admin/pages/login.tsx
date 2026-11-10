@@ -66,12 +66,12 @@ export function AdminLogin() {
 
   return (
     <div className="relative flex min-h-svh items-center justify-center overflow-hidden px-4 py-10">
-      <div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_right,rgba(69,229,234,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(69,229,234,0.05)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+      <div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_right,rgba(65,105,245,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(65,105,245,0.05)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
       <div className="relative w-full max-w-sm">
         <div className="mb-6 flex flex-col items-center text-center">
           <LogoMark className="size-10" />
           <p className="mt-5 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">Command centre · restricted</p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">Admin console</h1>
+          <h1 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-foreground">Admin console</h1>
           <p className="mt-1 text-sm text-muted-foreground">All access is audit-logged.</p>
         </div>
         <div className="hud-corners rounded-lg border border-border-strong bg-card/70 p-6 surface-lit">
@@ -129,7 +129,7 @@ export function AdminLogin() {
                   <ShieldCheck className="size-4" />
                 </span>
                 <div>
-                  <h2 className="text-sm font-semibold text-white">Two-factor authentication</h2>
+                  <h2 className="text-sm font-semibold text-foreground">Two-factor authentication</h2>
                   <p className="text-xs text-muted-foreground">Enter the 6-digit code for {email.trim()}.</p>
                 </div>
               </div>

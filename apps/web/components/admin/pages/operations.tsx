@@ -63,13 +63,13 @@ export function AdminIntegrations() {
                   {q.data.providers.map((p) => (
                     <TableRow key={p.provider}>
                       <TableCell>
-                        <div className="font-medium text-white">{p.name}</div>
+                        <div className="font-medium text-foreground">{p.name}</div>
                         <div className="font-mono text-[10px] text-muted-foreground">{p.provider}</div>
                       </TableCell>
                       <TableCell className="text-xs">{p.category}</TableCell>
                       <TableCell><Pill color={p.availability === "builtin" || p.availability === "available" ? "green" : "gray"}>{titleCase(p.availability)}</Pill></TableCell>
                       <TableCell className="text-right tabular-nums">{formatNumber(p.connected)}</TableCell>
-                      <TableCell className={cn("text-right tabular-nums", p.errored > 0 && "text-rose-300")}>{formatNumber(p.errored)}</TableCell>
+                      <TableCell className={cn("text-right tabular-nums", p.errored > 0 && "text-rose-700")}>{formatNumber(p.errored)}</TableCell>
                       <TableCell className="text-right">
                         <Switch
                           checked={p.enabled}
@@ -187,7 +187,7 @@ export function AdminJobs() {
           <Switch id="dead" size="sm" checked={dead} onCheckedChange={(v) => { setDead(v); setPage(1) }} />
           <Label htmlFor="dead" className="text-xs font-normal text-muted-foreground">Dead-letter only</Label>
         </div>
-        {live && <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-signal-300"><span className="size-1.5 animate-pulse rounded-full bg-signal-400" /> Live</span>}
+        {live && <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-signal-700"><span className="size-1.5 animate-pulse rounded-full bg-signal-400" /> Live</span>}
       </FilterBar>
       {q.isError ? (
         <ErrorState error={q.error} onRetry={() => q.refetch()} />
@@ -216,14 +216,14 @@ export function AdminJobs() {
                   const expanded = open === j.id
                   return (
                     <Fragment key={j.id}>
-                      <TableRow className="hover:bg-white/[0.03]">
+                      <TableRow className="hover:bg-surface-hover">
                         <TableCell>
                           <Button variant="ghost" size="icon-xs" onClick={() => setOpen(expanded ? null : j.id)} aria-label={expanded ? "Collapse" : "Expand"} aria-expanded={expanded}>
                             {expanded ? <ChevronDown /> : <ChevronRight />}
                           </Button>
                         </TableCell>
                         <TableCell>
-                          <div className="text-sm text-white">{titleCase(j.job_type)}</div>
+                          <div className="text-sm text-foreground">{titleCase(j.job_type)}</div>
                           <div className="font-mono text-[10px] text-muted-foreground">{j.id.slice(0, 8)}</div>
                         </TableCell>
                         <TableCell className="max-w-[180px] truncate text-xs">{j.workspace_name || "—"}</TableCell>
@@ -260,14 +260,14 @@ export function AdminJobs() {
                         )}
                       </TableRow>
                       {expanded && (
-                        <TableRow className="bg-black/20 hover:bg-black/20">
+                        <TableRow className="bg-muted hover:bg-muted">
                           <TableCell colSpan={manage ? 8 : 7} className="whitespace-normal">
                             <div className="grid gap-3 py-2 lg:grid-cols-3">
                               <div className="space-y-1 text-xs">
                                 <div><span className="text-muted-foreground">Started:</span> {formatDateTime(j.started_at)}</div>
                                 <div><span className="text-muted-foreground">Completed:</span> {formatDateTime(j.completed_at)}</div>
                                 <div><span className="text-muted-foreground">Project:</span> <span className="font-mono">{j.project_id || "—"}</span></div>
-                                {j.error && <div className="mt-2 rounded-md border border-rose-500/20 bg-rose-500/10 p-2 font-mono text-[11px] whitespace-pre-wrap text-rose-200">{j.error}</div>}
+                                {j.error && <div className="mt-2 rounded-md border border-rose-500/20 bg-rose-500/10 p-2 font-mono text-[11px] whitespace-pre-wrap text-rose-700">{j.error}</div>}
                               </div>
                               <div><div className="mb-1 text-[11px] text-muted-foreground">Params</div><JsonBlock value={j.params} className="max-h-48" /></div>
                               <div><div className="mb-1 text-[11px] text-muted-foreground">Result</div><JsonBlock value={j.result_summary} className="max-h-48" /></div>

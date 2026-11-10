@@ -41,15 +41,15 @@ export function SentimentChart({ className, gradientId = "dp-pos" }: { className
     <svg viewBox={`0 0 ${w} ${h + 22}`} className={cn("h-auto w-full", className)} role="img" aria-label="Sample sentiment trend over 12 weeks: positive share rising from 54% to 61%, negative share easing from 26% to 23%">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#45e5ea" stopOpacity="0.22" />
-          <stop offset="1" stopColor="#45e5ea" stopOpacity="0" />
+          <stop offset="0" stopColor="#4169F5" stopOpacity="0.22" />
+          <stop offset="1" stopColor="#4169F5" stopOpacity="0" />
         </linearGradient>
       </defs>
       {[0, 1, 2, 3].map((i) => (
         <line key={i} x1="0" x2={w} y1={(h / 3) * i} y2={(h / 3) * i} stroke="currentColor" strokeOpacity="0.08" />
       ))}
       <path d={`${pos} L${w},${h} L0,${h} Z`} fill={`url(#${gradientId})`} />
-      <path d={pos} fill="none" stroke="#45e5ea" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+      <path d={pos} fill="none" stroke="#4169F5" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
       <path d={neg} fill="none" stroke="#d14b46" strokeWidth="1.8" strokeDasharray="4 4" strokeLinecap="round" />
       {["W1", "W3", "W5", "W7", "W9", "W12"].map((l, i) => (
         <text key={l} x={(w / 5) * i} y={h + 16} fontSize="10" fill="currentColor" fillOpacity="0.45" textAnchor={i === 0 ? "start" : i === 5 ? "end" : "middle"}>

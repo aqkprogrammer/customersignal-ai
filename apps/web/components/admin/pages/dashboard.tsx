@@ -16,7 +16,7 @@ import {
   Activity,
 } from "lucide-react"
 import Link from "next/link"
-import { ReputationIntelligenceCore, StatusDot, TechnicalLabel } from "@/components/signal"
+import { SignalEmblem, StatusDot } from "@/components/aurora"
 import { CardSkeleton, EmptyState, ErrorState } from "@/components/shared/states"
 import { Button } from "@/components/ui/button"
 import { useCan } from "@/hooks/use-admin"
@@ -79,39 +79,43 @@ function DashboardBody({ data }: { data: DashboardData }) {
   const signupDelta = pctChange(signups)
   const revDelta = pctChange(rev)
 
-  const processing = m.failed_jobs_7d > 0 ? { tone: "ember" as const, label: `${formatNumber(m.failed_jobs_7d)} failed jobs · 7d` } : { tone: "mint" as const, label: "No failed jobs · 7d" }
+  const processing = m.failed_jobs_7d > 0 ? { tone: "orange" as const, label: `${formatNumber(m.failed_jobs_7d)} failed jobs · 7d` } : { tone: "lime" as const, label: "No failed jobs · 7d" }
   const readouts = [
-    { k: "Users", v: formatNumber(m.total_users), s: `${formatNumber(m.active_users)} active · 30d`, tone: "signal" as const },
-    { k: "Revenue", v: formatCurrency(m.mrr_cents), s: `MRR · churn ${m.churn_rate.toFixed(1)}%`, tone: m.churn_rate > 5 ? ("ember" as const) : ("mint" as const) },
-    { k: "AI processing", v: formatCompact(m.ai_tokens_30d), s: `tokens · ${formatUsd(m.ai_cost_30d)} · 30d`, tone: "ice" as const },
+    { k: "Users", v: formatNumber(m.total_users), s: `${formatNumber(m.active_users)} active · 30d`, tone: "cobalt" as const },
+    { k: "Revenue (MRR)", v: formatCurrency(m.mrr_cents), s: `Churn ${m.churn_rate.toFixed(1)}% · 30d`, tone: m.churn_rate > 5 ? ("orange" as const) : ("lime" as const) },
+    { k: "AI processing", v: formatCompact(m.ai_tokens_30d), s: `tokens · ${formatUsd(m.ai_cost_30d)} · 30d`, tone: "sky" as const },
     { k: "Review pipeline", v: formatCompact(m.reviews_processed), s: processing.label, tone: processing.tone },
   ]
 
   return (
     <div className="space-y-4">
-      <section aria-label="Command centre status" className="relative overflow-hidden rounded-lg border bg-card/60 surface-lit">
-        <div aria-hidden className="bg-tech-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_50%_100%_at_8%_50%,#000,transparent)]" />
-        <div className="relative grid items-center gap-5 p-4 md:grid-cols-[160px_1fr] lg:p-5">
-          <div className="mx-auto w-[140px] md:w-full">
-            <ReputationIntelligenceCore detail="lite" pedestal={false} centerValue={formatCompact(m.reviews_processed)} centerLabel="Processed" title={`${m.reviews_processed} reviews processed platform-wide`} />
+      <section aria-label="Platform status" className="dark relative overflow-hidden rounded-2xl bg-background text-foreground">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="bg-dots absolute inset-0 opacity-70" />
+          <div className="absolute -top-28 -left-10 size-80 rounded-full bg-[radial-gradient(closest-side,rgb(65_105_245/0.45),transparent)]" />
+          <div className="absolute -right-16 -bottom-36 size-80 rounded-full bg-[radial-gradient(closest-side,rgb(255_135_87/0.22),transparent)]" />
+        </div>
+        <div className="relative grid items-center gap-6 p-5 md:grid-cols-[140px_1fr] lg:p-6">
+          <div className="mx-auto w-[130px] text-white md:w-full">
+            <SignalEmblem className="w-full" />
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3">
-              <TechnicalLabel tone="signal">
-                <span className="inline-flex items-center gap-2">
-                  <StatusDot tone={processing.tone} pulse /> Command centre · live from the database
-                </span>
-              </TechnicalLabel>
-              <TechnicalLabel>{formatNumber(m.total_workspaces)} workspaces · {formatNumber(m.active_subscriptions)} paid</TechnicalLabel>
+              <span className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-white">
+                <StatusDot tone={processing.tone} pulse /> Live from the database
+              </span>
+              <span className="text-[13px] text-muted-foreground">
+                {formatNumber(m.total_workspaces)} workspaces · {formatNumber(m.active_subscriptions)} paid
+              </span>
             </div>
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4 pt-4 lg:grid-cols-4">
               {readouts.map((r, i) => (
                 <div key={r.k} className={i > 0 ? "lg:border-l lg:border-border lg:pl-6" : undefined}>
-                  <dt className="flex items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-subtle-foreground uppercase">
+                  <dt className="flex items-center gap-2 text-[12.5px] text-muted-foreground">
                     <StatusDot tone={r.tone} /> {r.k}
                   </dt>
-                  <dd className="mt-2 text-[22px] leading-none font-semibold tracking-[-0.035em] text-white tabular-nums">{r.v}</dd>
-                  <dd className="mt-1.5 truncate text-[11px] text-muted-foreground">{r.s}</dd>
+                  <dd className="mt-1.5 text-[24px] leading-none font-semibold tracking-[-0.035em] text-white tabular-nums">{r.v}</dd>
+                  <dd className="mt-1.5 truncate text-[12px] text-muted-foreground">{r.s}</dd>
                 </div>
               ))}
             </dl>
@@ -150,7 +154,7 @@ function DashboardBody({ data }: { data: DashboardData }) {
           value={formatNumber(m.failed_jobs_7d)}
           icon={AlertTriangle}
           tone={m.failed_jobs_7d > 0 ? "rose" : "emerald"}
-          hint={can("jobs.read") ? <Link href="/admin/jobs" className="text-signal-300 hover:underline">View jobs →</Link> : "Analysis, import & report jobs"}
+          hint={can("jobs.read") ? <Link href="/admin/jobs" className="text-signal-700 hover:underline">View jobs →</Link> : "Analysis, import & report jobs"}
         />
       </KpiGrid>
 
@@ -172,7 +176,7 @@ function DashboardBody({ data }: { data: DashboardData }) {
 
       <div className="grid gap-4 xl:grid-cols-3">
         <Panel title="Revenue" description="Net collected revenue by month" className="xl:col-span-2">
-          <BarsChart data={c.revenue} xKey="month" series={[{ key: "revenue_cents", label: "Net revenue", color: "#76f0c1" }]} format={(n) => formatCurrency(n)} />
+          <BarsChart data={c.revenue} xKey="month" series={[{ key: "revenue_cents", label: "Net revenue", color: "#8FCB3F" }]} format={(n) => formatCurrency(n)} />
         </Panel>
         <Panel title="Subscription status" description="All subscriptions">
           <DonutChart data={c.subscription_status.map((r) => ({ name: r.status, value: r.count }))} format={formatNumber} />
@@ -181,13 +185,13 @@ function DashboardBody({ data }: { data: DashboardData }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Panel title="AI usage" description="Tokens per day (30 days)">
-          <TrendChart data={c.ai_usage} xKey="date" series={[{ key: "tokens", label: "Tokens", color: "#80bdff" }]} height={220} />
+          <TrendChart data={c.ai_usage} xKey="date" series={[{ key: "tokens", label: "Tokens", color: "#5FA8F0" }]} height={220} />
         </Panel>
         <Panel title="Review volume" description="Reviews analyzed per day (30 days)">
-          <BarsChart data={c.review_volume} xKey="date" series={[{ key: "reviews", label: "Reviews", color: "#80bdff" }]} height={220} />
+          <BarsChart data={c.review_volume} xKey="date" series={[{ key: "reviews", label: "Reviews", color: "#5FA8F0" }]} height={220} />
         </Panel>
         <Panel title="Churn" description="Cancellations per month">
-          <BarsChart data={c.churn} xKey="month" series={[{ key: "cancellations", label: "Cancellations", color: "#f2706b" }]} format={formatNumber} height={220} />
+          <BarsChart data={c.churn} xKey="month" series={[{ key: "cancellations", label: "Cancellations", color: "#E5534B" }]} format={formatNumber} height={220} />
         </Panel>
         <Panel title="Signup → onboarding conversion" description="Signups vs completed onboarding (6 months)">
           <BarsChart
@@ -195,7 +199,7 @@ function DashboardBody({ data }: { data: DashboardData }) {
             xKey="month"
             series={[
               { key: "signups", label: "Signups" },
-              { key: "onboarded", label: "Onboarded", color: "#76f0c1" },
+              { key: "onboarded", label: "Onboarded", color: "#8FCB3F" },
             ]}
             format={formatNumber}
             height={220}
@@ -204,7 +208,7 @@ function DashboardBody({ data }: { data: DashboardData }) {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Panel title="Recent admin activity" actions={can("audit.read") && <Link href="/admin/audit-logs" className="text-xs text-signal-300 hover:underline">Audit logs →</Link>} bodyClassName="p-0">
+        <Panel title="Recent admin activity" actions={can("audit.read") && <Link href="/admin/audit-logs" className="text-xs text-signal-700 hover:underline">Audit logs →</Link>} bodyClassName="p-0">
           {data.recent_admin_activity.length === 0 ? (
             <div className="p-4"><EmptyState title="No admin activity yet" className="py-8" /></div>
           ) : (
@@ -225,7 +229,7 @@ function DashboardBody({ data }: { data: DashboardData }) {
             </ul>
           )}
         </Panel>
-        <Panel title="Recent signups" actions={can("users.read") && <Link href="/admin/users" className="text-xs text-signal-300 hover:underline">All users →</Link>} bodyClassName="p-0">
+        <Panel title="Recent signups" actions={can("users.read") && <Link href="/admin/users" className="text-xs text-signal-700 hover:underline">All users →</Link>} bodyClassName="p-0">
           {data.recent_signups.length === 0 ? (
             <div className="p-4"><EmptyState title="No signups yet" className="py-8" /></div>
           ) : (

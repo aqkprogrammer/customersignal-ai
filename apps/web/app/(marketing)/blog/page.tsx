@@ -45,7 +45,7 @@ export default function BlogIndexPage() {
         >
           <div aria-hidden className="relative min-h-48 bg-navy">
             <div className="bg-grid absolute inset-0 opacity-40" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(128,189,255,0.5),transparent_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(146,201,255,0.5),transparent_60%)]" />
             <p className="absolute bottom-5 left-6 font-mono text-[11px] tracking-[0.18em] text-signal-200/80 uppercase">Latest · {featured.category}</p>
           </div>
           <div className="p-6 sm:p-10">

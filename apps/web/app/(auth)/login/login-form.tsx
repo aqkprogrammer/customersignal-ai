@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 import { AuthHeading, Divider, Field, GoogleButton, PasswordInput, TerminalPanel } from "@/components/forms/auth-fields"
-import { StatusDot } from "@/components/signal"
+import { StatusDot } from "@/components/aurora"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -73,7 +73,7 @@ export function LoginForm() {
 
   const banner = errors.root?.message || (oauthError ? OAUTH_ERRORS[oauthError] || "Sign-in failed. Please try again." : null)
   const status = granted ? "Access granted" : isSubmitting ? "Verifying" : banner ? "Access denied" : "Ready"
-  const tone = granted ? "mint" : isSubmitting ? "signal" : banner ? "danger" : "signal"
+  const tone = granted ? "lime" : !isSubmitting && banner ? "danger" : "cobalt"
 
   return (
     <div>
@@ -133,7 +133,7 @@ export function LoginForm() {
             <Checkbox checked={form.watch("remember")} onCheckedChange={(v) => form.setValue("remember", v === true)} />
             Keep me signed in
           </label>
-          <Button type="submit" variant="signal" className="h-11 w-full rounded-lg text-[15px]" disabled={isSubmitting || granted}>
+          <Button type="submit" variant="signal" className="h-12 w-full rounded-full text-[15.5px]" disabled={isSubmitting || granted}>
             {granted ? (
               <>
                 <Check /> Access granted

@@ -21,23 +21,23 @@ import {
 import { shortPeriod } from "@/lib/admin-api"
 import { cn, formatCompact, titleCase } from "@/lib/utils"
 
-export const CHART_COLORS = ["#45e5ea", "#80bdff", "#80bdff", "#eab56d", "#eab56d", "#76f0c1", "#f2706b", "#647583"]
+export const CHART_COLORS = ["#4169F5", "#FF8757", "#8FCB3F", "#5FA8F0", "#FFB48F", "#101B35", "#E5534B", "#929AAA"]
 
-const GRID = "rgba(180,205,220,0.08)"
-const AXIS = { fontSize: 11, fill: "#647583" }
+const GRID = "rgba(23,32,51,0.08)"
+const AXIS = { fontSize: 11, fill: "#929AAA" }
 
 const tooltipProps = {
   contentStyle: {
-    background: "rgba(12,19,26,0.96)",
-    border: "1px solid rgba(180,205,220,0.18)",
+    background: "rgba(255,255,255,0.96)",
+    border: "1px solid rgba(23,32,51,0.18)",
     borderRadius: 10,
     boxShadow: "0 12px 32px -12px rgba(0,0,0,0.7)",
     fontSize: 12,
     padding: "8px 10px",
   },
-  labelStyle: { color: "#f4f7fa", fontWeight: 600, marginBottom: 4 },
-  itemStyle: { color: "#a6b4c0", padding: 0 },
-  cursor: { fill: "rgba(69,229,234,0.08)", stroke: "rgba(69,229,234,0.25)" },
+  labelStyle: { color: "#F7F6F2", fontWeight: 600, marginBottom: 4 },
+  itemStyle: { color: "#657084", padding: 0 },
+  cursor: { fill: "rgba(65,105,245,0.08)", stroke: "rgba(65,105,245,0.25)" },
 }
 
 export type Series = { key: string; label: string; color?: string }
@@ -55,7 +55,7 @@ function ChartFrame({ height, children, className }: { height: number; children:
 
 export function ChartEmpty({ height = 220, label = "No data yet" }: { height?: number; label?: string }) {
   return (
-    <div className="flex items-center justify-center rounded-lg border border-dashed border-white/10 text-xs text-muted-foreground" style={{ height }}>
+    <div className="flex items-center justify-center rounded-lg border border-dashed border-border text-xs text-muted-foreground" style={{ height }}>
       {label}
     </div>
   )
@@ -89,7 +89,7 @@ export function TrendChart({
       <XAxis dataKey={xKey} tick={AXIS} tickLine={false} axisLine={false} tickFormatter={xf} minTickGap={16} />
       <YAxis tick={AXIS} tickLine={false} axisLine={false} width={48} tickFormatter={(v) => format(Number(v))} />
       <Tooltip {...tooltipProps} labelFormatter={(l) => xf(l)} formatter={(v, n) => [format(Number(v)), n]} />
-      {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#a6b4c0" }} />}
+      {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#657084" }} />}
     </>
   )
   if (type === "line") {
@@ -173,7 +173,7 @@ export function BarsChart({
           </>
         )}
         <Tooltip {...tooltipProps} labelFormatter={(l) => xf(l)} formatter={(v, n) => [format(Number(v)), n]} />
-        {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#a6b4c0" }} />}
+        {series.length > 1 && <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: 11, color: "#657084" }} />}
         {series.map((s, i) => (
           <Bar
             key={s.key}
@@ -218,7 +218,7 @@ export function DonutChart({
           </PieChart>
         </ResponsiveContainer>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-lg font-semibold text-white tabular-nums">{format(total)}</span>
+          <span className="text-lg font-semibold text-foreground tabular-nums">{format(total)}</span>
           <span className="text-[10px] tracking-wide text-muted-foreground uppercase">Total</span>
         </div>
       </div>
@@ -239,7 +239,7 @@ export function DonutChart({
   )
 }
 
-export function Sparkline({ data, color = "#45e5ea", className }: { data: number[]; color?: string; className?: string }) {
+export function Sparkline({ data, color = "#4169F5", className }: { data: number[]; color?: string; className?: string }) {
   const uid = useId().replace(/:/g, "")
   const rows = data.map((v, i) => ({ i, v }))
   return (

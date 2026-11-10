@@ -91,7 +91,7 @@ export function AdminAIUsage() {
                       <TableCell className="text-right tabular-nums">{formatCompact(a.input_tokens)}</TableCell>
                       <TableCell className="text-right tabular-nums">{formatCompact(a.output_tokens)}</TableCell>
                       <TableCell className="text-right tabular-nums">{formatUsd(a.cost_usd)}</TableCell>
-                      <TableCell className={a.errors ? "text-right text-rose-300 tabular-nums" : "text-right tabular-nums"}>{formatNumber(a.errors)}</TableCell>
+                      <TableCell className={a.errors ? "text-right text-rose-700 tabular-nums" : "text-right tabular-nums"}>{formatNumber(a.errors)}</TableCell>
                       <TableCell className="text-right tabular-nums">{formatNumber(a.avg_duration_ms)}</TableCell>
                     </TableRow>
                   ))}
@@ -126,7 +126,7 @@ export function AdminAIUsage() {
               xKey="workspace"
               horizontal
               periodLabels={false}
-              series={[{ key: "cost_usd", label: "Cost", color: "#eab56d" }]}
+              series={[{ key: "cost_usd", label: "Cost", color: "#FF8757" }]}
               format={(n) => formatUsd(n)}
               height={Math.max(160, d.top_workspaces_30d.length * 30)}
             />

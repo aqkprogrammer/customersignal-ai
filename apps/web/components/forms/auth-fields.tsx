@@ -40,15 +40,15 @@ export function Field({
       className={cn(
         "group/field relative space-y-1.5",
         rail && [
-          "pl-4 before:absolute before:inset-y-0 before:left-0 before:w-px before:bg-border-strong",
-          "after:absolute after:inset-y-0 after:left-0 after:w-px after:origin-top after:scale-y-0 after:bg-signal after:opacity-0 after:shadow-[0_0_8px_var(--signal)] after:transition-[transform,opacity] after:duration-300 focus-within:after:scale-y-100 focus-within:after:opacity-100",
+          "pl-4 before:absolute before:inset-y-1 before:left-0 before:w-[3px] before:rounded-full before:bg-foreground/[0.07]",
+          "after:absolute after:inset-y-1 after:left-0 after:w-[3px] after:origin-top after:scale-y-0 after:rounded-full after:bg-[#4169F5] after:transition-transform after:duration-300 focus-within:after:scale-y-100",
           error && "before:bg-destructive/70",
         ],
         className,
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <Label htmlFor={id} className="text-[13px] text-foreground/90 transition-colors group-focus-within/field:text-foreground">
+        <Label htmlFor={id} className="text-[14px] font-medium text-foreground/90 transition-colors group-focus-within/field:text-foreground">
           {label}
         </Label>
         {action}
@@ -64,12 +64,12 @@ export function Field({
             animate={{ opacity: 1, height: "auto", y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, height: 0 }}
             transition={{ duration: 0.18 }}
-            className="overflow-hidden text-xs font-medium text-destructive"
+            className="overflow-hidden text-[13px] font-medium text-destructive"
           >
             {error}
           </motion.p>
         ) : hint ? (
-          <motion.p key="hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-xs text-muted-foreground">
+          <motion.p key="hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-[13px] text-muted-foreground">
             {hint}
           </motion.p>
         ) : null}
@@ -78,15 +78,15 @@ export function Field({
   )
 }
 
-/** Framed terminal panel with a mono status strip and HUD corner brackets. */
+/** Elevated form card with a status strip. */
 export function TerminalPanel({ label, status, children, className }: { label: React.ReactNode; status?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("hud-corners relative rounded-lg border border-border-strong bg-card/55 backdrop-blur-[2px] dark:surface-lit", className)}>
-      <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-2.5 font-mono text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">
-        <span className="truncate">{label}</span>
+    <div className={cn("relative rounded-3xl border border-border bg-card shadow-[0_2px_4px_rgb(23_32_51/0.03),0_30px_60px_-36px_rgb(23_32_51/0.35)]", className)}>
+      <div className="flex items-center justify-between gap-3 border-b border-border px-6 py-3 text-[13px] text-muted-foreground">
+        <span className="truncate font-medium">{label}</span>
         {status}
       </div>
-      <div className="p-5 sm:p-6">{children}</div>
+      <div className="p-6 sm:p-7">{children}</div>
     </div>
   )
 }
@@ -125,7 +125,7 @@ function GoogleIcon() {
 }
 
 const googleCls =
-  "group relative flex h-11 w-full items-center gap-3 rounded-lg border border-border-strong bg-card/70 pr-4 pl-1.5 text-[14px] font-medium text-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.04)] transition-[background-color,border-color] duration-200 hover:border-[color-mix(in_oklab,var(--signal)_40%,var(--border-strong))] hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none active:scale-[0.99]"
+  "group relative flex h-12 w-full items-center gap-3 rounded-full border border-border-strong bg-white pr-4 pl-1.5 text-[15px] font-medium text-foreground shadow-[0_1px_2px_rgb(23_32_51/0.05)] transition-[background-color,border-color,box-shadow] duration-200 hover:border-[#4169F5]/40 hover:shadow-[0_8px_20px_-12px_rgb(65_105_245/0.5)] focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none active:scale-[0.99]"
 
 export function GoogleButton({ next, label = "Continue with Google" }: { next?: string; label?: string }) {
   const { data, isLoading } = useQuery({
@@ -137,11 +137,11 @@ export function GoogleButton({ next, label = "Continue with Google" }: { next?: 
   const href = `/api/v1/auth/google/start${next ? `?next=${encodeURIComponent(next)}` : ""}`
   const content = (
     <>
-      <span className="flex size-8 items-center justify-center rounded-md border border-border bg-background">
+      <span className="flex size-9 items-center justify-center rounded-full bg-[#F7F6F2]">
         <GoogleIcon />
       </span>
       <span className="flex-1 text-center">{label}</span>
-      <ArrowUpRight aria-hidden className="size-4 text-subtle-foreground transition-[color,transform] group-hover:translate-x-px group-hover:-translate-y-px group-hover:text-signal" />
+      <ArrowUpRight aria-hidden className="size-4 text-subtle-foreground transition-[color,transform] group-hover:translate-x-px group-hover:-translate-y-px group-hover:text-[#4169F5]" />
     </>
   )
   if (enabled) {
@@ -154,7 +154,7 @@ export function GoogleButton({ next, label = "Continue with Google" }: { next?: 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span tabIndex={0} role="button" aria-disabled="true" className={cn(googleCls, "cursor-not-allowed opacity-55 hover:border-border-strong hover:bg-card/70", isLoading && "animate-pulse")}>
+        <span tabIndex={0} role="button" aria-disabled="true" className={cn(googleCls, "cursor-not-allowed opacity-55 hover:border-border-strong hover:shadow-none", isLoading && "animate-pulse")}>
           {content}
         </span>
       </TooltipTrigger>
@@ -165,7 +165,7 @@ export function GoogleButton({ next, label = "Continue with Google" }: { next?: 
 
 export function Divider({ label = "or" }: { label?: string }) {
   return (
-    <div className="relative my-6 flex items-center gap-3 font-mono text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">
+    <div className="relative my-6 flex items-center gap-3 text-[13px] text-subtle-foreground">
       <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,var(--border-strong))]" />
       {label}
       <span className="h-px flex-1 bg-[linear-gradient(90deg,var(--border-strong),transparent)]" />
@@ -173,16 +173,16 @@ export function Divider({ label = "or" }: { label?: string }) {
   )
 }
 
-/** Auth page heading with a mono eyebrow. */
+/** Auth page heading. */
 export function AuthHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description?: React.ReactNode }) {
   return (
-    <div className="mb-7">
-      <p className="mb-4 inline-flex items-center gap-2.5 font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">
-        <span aria-hidden className="size-1.5 rounded-full bg-signal shadow-[0_0_10px_var(--signal)]" />
+    <div className="mb-8">
+      <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#eef2ff] px-3 py-1 text-[13px] font-semibold text-[#2f52dd]">
+        <span aria-hidden className="size-1.5 rounded-full bg-[#FF8757]" />
         {eyebrow}
       </p>
-      <h1 className="text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.04em] text-balance">{title}</h1>
-      {description && <p className="mt-2.5 text-[14.5px] leading-relaxed text-muted-foreground">{description}</p>}
+      <h1 className="text-[2.3rem] leading-[1.05] font-semibold tracking-[-0.045em] text-balance">{title}</h1>
+      {description && <p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">{description}</p>}
     </div>
   )
 }

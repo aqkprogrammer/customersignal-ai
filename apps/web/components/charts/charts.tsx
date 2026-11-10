@@ -26,13 +26,14 @@ import { formatDate, titleCase } from "@/lib/utils"
 import type { TimePoint } from "@/types/api"
 
 export const COLORS = {
-  positive: "var(--positive)",
-  neutral: "var(--neutral-sentiment)",
-  negative: "var(--negative)",
+  // Aurora sentiment encoding: lime = positive, sky = neutral, orange = negative.
+  positive: "#8FCB3F",
+  neutral: "#92C9FF",
+  negative: "#FF8757",
   series: ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"],
 }
 
-const axis = { fontSize: 11, fill: "var(--muted-foreground)" }
+const axis = { fontSize: 12, fill: "var(--muted-foreground)" }
 const tooltipStyle = {
   contentStyle: {
     background: "var(--popover)",
@@ -70,7 +71,7 @@ export function SentimentTrendChart({ data, height = 260 }: { data: TimePoint[];
             </linearGradient>
           ))}
         </defs>
-        <CartesianGrid vertical={false} stroke="var(--border)" />
+        <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5" />
         <XAxis dataKey="label" tick={axis} tickLine={false} axisLine={false} minTickGap={18} />
         <YAxis tick={axis} tickLine={false} axisLine={false} allowDecimals={false} />
         <Tooltip {...tooltipStyle} />
@@ -89,7 +90,7 @@ export function RatingTrendChart({ data, height = 220 }: { data: TimePoint[]; he
   return (
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={rows} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid vertical={false} stroke="var(--border)" />
+        <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5" />
         <XAxis dataKey="label" tick={axis} tickLine={false} axisLine={false} minTickGap={18} />
         <YAxis domain={[1, 5]} tick={axis} tickLine={false} axisLine={false} />
         <Tooltip {...tooltipStyle} />
@@ -140,11 +141,11 @@ export function SentimentDonut({ positive, neutral, negative, height = 200 }: { 
 export function RatingBars({ data, height = 200 }: { data: { rating: number; count: number }[]; height?: number }) {
   if (!data.some((d) => d.count)) return <NoData height={height} label="No ratings" />
   const rows = data.map((d) => ({ label: `${d.rating}★`, count: d.count, rating: d.rating }))
-  const color = (r: number) => (r <= 2 ? COLORS.negative : r === 3 ? "var(--warning)" : COLORS.positive)
+  const color = (r: number) => (r <= 2 ? COLORS.negative : r === 3 ? "#92C9FF" : COLORS.positive)
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={rows} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid vertical={false} stroke="var(--border)" />
+        <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5" />
         <XAxis dataKey="label" tick={axis} tickLine={false} axisLine={false} />
         <YAxis tick={axis} tickLine={false} axisLine={false} allowDecimals={false} />
         <Tooltip {...tooltipStyle} />
@@ -200,7 +201,7 @@ export function CompetitorBars({ data, height = 240 }: { data: { name: string; p
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={rows} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid vertical={false} stroke="var(--border)" />
+        <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5" />
         <XAxis dataKey="name" tick={axis} tickLine={false} axisLine={false} interval={0} />
         <YAxis tick={axis} tickLine={false} axisLine={false} unit="%" />
         <Tooltip {...tooltipStyle} formatter={(v) => `${v}%`} />
@@ -228,7 +229,7 @@ export function MultiLineChart({ series, height = 240, yUnit, domain }: {
   return (
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={rows} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid vertical={false} stroke="var(--border)" />
+        <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5" />
         <XAxis dataKey="label" tick={axis} tickLine={false} axisLine={false} minTickGap={18} />
         <YAxis tick={axis} tickLine={false} axisLine={false} unit={yUnit} domain={domain} />
         <Tooltip {...tooltipStyle} />

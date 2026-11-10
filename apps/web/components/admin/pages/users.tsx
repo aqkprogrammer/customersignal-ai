@@ -99,10 +99,10 @@ export function AdminUsers() {
               </TableHeader>
               <TableBody>
                 {query.data.items.map((u) => (
-                  <TableRow key={u.id} className="hover:bg-white/[0.03]">
+                  <TableRow key={u.id} className="hover:bg-surface-hover">
                     <TableCell className="max-w-[280px]">
                       <Link href={`/admin/users/${u.id}`} className="block min-w-0">
-                        <div className="truncate font-medium text-white hover:text-signal-300">{u.full_name || u.email}</div>
+                        <div className="truncate font-medium text-foreground hover:text-signal-600">{u.full_name || u.email}</div>
                         <div className="truncate text-xs text-muted-foreground">
                           {u.email}
                           {u.company_name && ` · ${u.company_name}`}

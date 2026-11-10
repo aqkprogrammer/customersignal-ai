@@ -6,29 +6,33 @@ import { COPYRIGHT_YEAR, FOOTER_COLUMNS } from "./site-data"
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-background-subtle text-muted-foreground" aria-labelledby="footer-heading">
+    <footer className="dark relative overflow-hidden bg-background text-muted-foreground" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-signal/40 to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,#000,transparent_70%)]" />
+        <div className="absolute -top-40 right-[-10%] size-[520px] rounded-full bg-[radial-gradient(closest-side,rgb(65_105_245/0.28),transparent)]" />
+        <div className="absolute -bottom-48 left-[-8%] size-[440px] rounded-full bg-[radial-gradient(closest-side,rgb(255_135_87/0.16),transparent)]" />
+      </div>
       <Container className="relative py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div className="max-w-sm">
             <Logo inverted />
-            <p className="mt-5 text-sm leading-relaxed">
-              AI-powered review analysis, competitor intelligence and product opportunity discovery — built in the UAE for
-              businesses across the GCC and beyond.
+            <p className="mt-5 text-[15px] leading-relaxed">
+              Customer intelligence for teams that decide from evidence — review analysis, competitor insight and product
+              opportunities. Built in the UAE for the GCC and beyond.
             </p>
-            <div className="mt-6 space-y-1.5 text-sm">
+            <div className="mt-6 space-y-1.5 text-[15px]">
               <p>
                 Sales:{" "}
-                <a className="text-foreground underline-offset-4 hover:underline" href={`mailto:${SITE.salesEmail}`}>
+                <a className="text-white underline-offset-4 hover:underline" href={`mailto:${SITE.salesEmail}`}>
                   {SITE.salesEmail}
                 </a>
               </p>
               <p>
                 Support:{" "}
-                <a className="text-foreground underline-offset-4 hover:underline" href={`mailto:${SITE.supportEmail}`}>
+                <a className="text-white underline-offset-4 hover:underline" href={`mailto:${SITE.supportEmail}`}>
                   {SITE.supportEmail}
                 </a>
               </p>
@@ -37,14 +41,11 @@ export function SiteFooter() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {FOOTER_COLUMNS.map((col) => (
               <nav key={col.title} aria-label={col.title}>
-                <h3 className="font-mono text-[11px] font-medium tracking-[0.16em] text-subtle-foreground uppercase">{col.title}</h3>
+                <h3 className="text-[13px] font-semibold text-white">{col.title}</h3>
                 <ul className="mt-4 space-y-2.5">
                   {col.links.map((l) => (
                     <li key={l.href}>
-                      <Link
-                        href={l.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:underline focus-visible:outline-none"
-                      >
+                      <Link href={l.href} className="text-[14.5px] transition-colors hover:text-white focus-visible:text-white focus-visible:underline focus-visible:outline-none">
                         {l.label}
                       </Link>
                     </li>
@@ -54,7 +55,7 @@ export function SiteFooter() {
             ))}
           </div>
         </div>
-        <div className="mt-14 flex flex-col gap-3 border-t border-border pt-6 font-mono text-[10.5px] tracking-[0.08em] text-subtle-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-border pt-6 text-[13px] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {COPYRIGHT_YEAR} {SITE.name}. All rights reserved.
           </p>

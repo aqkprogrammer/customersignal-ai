@@ -2,17 +2,24 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* `.light` re-scopes light tokens inside a dark section (e.g. a white product canvas on navy). */
+/* Nearest scope wins: navy sections inside light pages get dark: styles; light canvases inside navy don't. */
+@custom-variant dark (&:is(.dark *):not(:is(.dark .light, .dark .light *)));
 
 /*
- * CustomerSignal AI — "Signal" design tokens.
+ * CustomerSignal AI — "Aurora Intelligence" design tokens.
  *
- * Dark-first instrument language: graphite surfaces, hairline borders, Geist Mono metadata and a
- * restrained cyan signal. No purple, violet or lavender anywhere; gradients only for light & depth.
- *   Backgrounds  #05080B #080D12 #0C131A
- *   Surfaces     #101922 #141F29 #192631
- *   Accents      cyan #45E5EA · ice #80BDFF · mint #76F0C1 · amber #EAB56D
- *   Text         #F4F7FA #A6B4C0 #647583
+ * Light-first editorial system: warm ivory paper, deep navy type, and four accents with distinct jobs:
+ *   cobalt  #4169F5  primary actions, links, selection, the "signal" itself
+ *   orange  #FF8757  opportunities, emphasis, things to act on
+ *   lime    #B7E66B  positive sentiment, success, healthy states
+ *   sky     #92C9FF  neutral data, secondary series, information
+ *   peach   #FFD5BE  warm tint surfaces only (never text)
+ * Navy (#10182B / #17243B) is the dark surface: product demos, data sections, the auth showcase, the
+ * admin sidebar. No purple, no black-and-cyan, gradients only as soft light.
+ *
+ * Raw brand colours (--cobalt, --orange …) are for fills. Semantic text tokens (--signal, --ember, --mint,
+ * --ice) are tuned per theme so text stays readable on ivory and on navy.
  */
 
 @theme inline {
@@ -56,9 +63,18 @@
   --color-card-elevated: var(--card-elevated);
   --color-surface-hover: var(--surface-hover);
 
-  /* Brand */
-  --color-navy: #05080b;
-  --color-navy-900: #030507;
+  /* Brand fills */
+  --color-cobalt: #4169f5;
+  --color-orange: #ff8757;
+  --color-lime: #b7e66b;
+  --color-sky: #92c9ff;
+  --color-peach: #ffd5be;
+  --color-ivory: #f7f6f2;
+  --color-navy: #10182b;
+  --color-navy-900: #0b1222;
+  --color-navy-800: #17243b;
+
+  /* Semantic (theme-tuned) */
   --color-signal: var(--signal);
   --color-ice: var(--ice);
   --color-mint: var(--mint);
@@ -68,29 +84,29 @@
   --color-neutral-sentiment: var(--neutral-sentiment);
   --color-warning: var(--warning);
 
-  /* Signal (cyan) and Ice (blue) scales — used where a stepped tint is needed. */
-  --color-signal-50: #e9fdfd;
-  --color-signal-100: #c8f8f9;
-  --color-signal-200: #9df1f3;
-  --color-signal-300: #6febee;
-  --color-signal-400: #45e5ea;
-  --color-signal-500: #1fc8cf;
-  --color-signal-600: #13a1a9;
-  --color-signal-700: #0f7e86;
-  --color-signal-800: #0d5f66;
-  --color-signal-900: #0b444a;
-  --color-signal-950: #062a2f;
-  --color-ice-50: #eef6ff;
-  --color-ice-100: #dcebff;
-  --color-ice-200: #bfdcff;
-  --color-ice-300: #a0ccff;
-  --color-ice-400: #80bdff;
-  --color-ice-500: #5d9eea;
-  --color-ice-600: #4180cc;
-  --color-ice-700: #3164a3;
-  --color-ice-800: #254b7a;
-  --color-ice-900: #1b3657;
-  --color-ice-950: #0f2036;
+  /* Stepped scales. "signal" is the cobalt scale, "ice" the sky scale (names kept for existing markup). */
+  --color-signal-50: #eef2ff;
+  --color-signal-100: #dce4fe;
+  --color-signal-200: #bccbfd;
+  --color-signal-300: #94abfb;
+  --color-signal-400: #6c8bf8;
+  --color-signal-500: #4169f5;
+  --color-signal-600: #2f52dd;
+  --color-signal-700: #2641b5;
+  --color-signal-800: #21378f;
+  --color-signal-900: #1e3170;
+  --color-signal-950: #141e45;
+  --color-ice-50: #f0f7ff;
+  --color-ice-100: #e0efff;
+  --color-ice-200: #c4e1ff;
+  --color-ice-300: #a9d4ff;
+  --color-ice-400: #92c9ff;
+  --color-ice-500: #5fa8f0;
+  --color-ice-600: #3e88d6;
+  --color-ice-700: #2e6cb0;
+  --color-ice-800: #275a8f;
+  --color-ice-900: #234b74;
+  --color-ice-950: #16304d;
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -103,106 +119,118 @@
   --ease-signal: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Daylight (optional, app only) — teal signal on cool paper. */
-:root {
-  --background: #f3f6f7;
-  --background-subtle: #eaeff1;
-  --foreground: #0b1218;
+/* Aurora light — the default everywhere. */
+:root,
+.light {
+  color-scheme: light;
+  --radius: 0.75rem;
+  --background: #f7f6f2;
+  --background-subtle: #efeee9;
+  --foreground: #172033;
   --card: #ffffff;
   --card-elevated: #ffffff;
-  --card-foreground: #0b1218;
+  --card-foreground: #172033;
   --popover: #ffffff;
-  --popover-foreground: #0b1218;
-  --primary: #0e8f99;
+  --popover-foreground: #172033;
+  --primary: #4169f5;
   --primary-foreground: #ffffff;
-  --secondary: #e8eef1;
-  --secondary-foreground: #14212b;
-  --muted: #edf2f4;
-  --muted-foreground: #52616c;
-  --subtle-foreground: #7d8b95;
-  --accent: #e3f3f4;
-  --accent-foreground: #0a5f66;
-  --surface-hover: #eef3f5;
-  --destructive: #d14b46;
-  --border: rgb(16 40 56 / 0.11);
-  --border-strong: rgb(16 40 56 / 0.2);
-  --input: rgb(16 40 56 / 0.16);
-  --ring: #0e8f99;
-  --signal: #0e8f99;
-  --ice: #2f72c4;
-  --mint: #148a5f;
-  --ember: #a8691a;
-  --positive: #148a5f;
-  --negative: #d14b46;
-  --neutral-sentiment: #7d8b95;
-  --warning: #b9771f;
-  --chart-1: #0e8f99;
-  --chart-2: #2f72c4;
-  --chart-3: #148a5f;
-  --chart-4: #c98a2b;
-  --chart-5: #5b7a92;
-  --radius: 0.625rem;
-  --sidebar: #fbfcfc;
-  --sidebar-foreground: #3b4a55;
-  --sidebar-primary: #0e8f99;
+  --secondary: #efeee9;
+  --secondary-foreground: #172033;
+  --muted: #efeee9;
+  --muted-foreground: #556074;
+  --subtle-foreground: #6b7486;
+  --accent: #eaefff;
+  --accent-foreground: #2641b5;
+  --surface-hover: #f2f1ec;
+  --destructive: #d8463f;
+  --border: rgb(23 32 51 / 0.11);
+  --border-strong: rgb(23 32 51 / 0.2);
+  --input: rgb(23 32 51 / 0.16);
+  --ring: #4169f5;
+
+  --signal: #3558e8;
+  --ice: #2e7fd0;
+  --mint: #4f8a12;
+  --ember: #d9561f;
+  --positive: #4f8a12;
+  --negative: #d8463f;
+  --neutral-sentiment: #92a0b5;
+  --warning: #c26a14;
+
+  --chart-1: #4169f5;
+  --chart-2: #ff8757;
+  --chart-3: #8fca3e;
+  --chart-4: #92c9ff;
+  --chart-5: #ffb48f;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #4a5468;
+  --sidebar-primary: #4169f5;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgb(14 143 153 / 0.09);
-  --sidebar-accent-foreground: #0a5f66;
-  --sidebar-border: rgb(16 40 56 / 0.08);
-  --sidebar-ring: #0e8f99;
-  --grid-line: rgb(16 40 56 / 0.06);
-  --glow: 0 0 0 1px rgb(14 143 153 / 0.3), 0 8px 24px -10px rgb(14 143 153 / 0.45);
+  --sidebar-accent: #eef2ff;
+  --sidebar-accent-foreground: #172033;
+  --sidebar-border: rgb(23 32 51 / 0.08);
+  --sidebar-ring: #4169f5;
+
+  --grid-line: rgb(23 32 51 / 0.055);
+  --glow: 0 0 0 1px rgb(65 105 245 / 0.25), 0 10px 28px -12px rgb(65 105 245 / 0.55);
+  --shadow-card: 0 1px 2px rgb(23 32 51 / 0.04), 0 8px 24px -14px rgb(23 32 51 / 0.14);
 }
 
-/* Default experience: graphite instrument panel. */
+/* Navy — dark sections, auth showcase, admin sidebar and the optional dark app theme. */
 .dark {
   color-scheme: dark;
-  --background: #05080b;
-  --background-subtle: #080d12;
-  --foreground: #f4f7fa;
-  --card: #101922;
-  --card-elevated: #141f29;
-  --card-foreground: #f4f7fa;
-  --popover: #0c131a;
-  --popover-foreground: #f4f7fa;
-  --primary: #45e5ea;
-  --primary-foreground: #031417;
-  --secondary: #141f29;
-  --secondary-foreground: #dce5eb;
-  --muted: #0c131a;
-  --muted-foreground: #a6b4c0;
-  --subtle-foreground: #647583;
-  --accent: #192631;
-  --accent-foreground: #f4f7fa;
-  --surface-hover: #192631;
-  --destructive: #f2706b;
-  --border: rgb(180 205 220 / 0.1);
-  --border-strong: rgb(180 205 220 / 0.18);
-  --input: rgb(180 205 220 / 0.14);
-  --ring: #45e5ea;
-  --signal: #45e5ea;
-  --ice: #80bdff;
-  --mint: #76f0c1;
-  --ember: #eab56d;
-  --positive: #76f0c1;
-  --negative: #f2706b;
-  --neutral-sentiment: #647583;
-  --warning: #eab56d;
-  --chart-1: #45e5ea;
-  --chart-2: #80bdff;
-  --chart-3: #76f0c1;
-  --chart-4: #eab56d;
-  --chart-5: #5d7487;
-  --sidebar: #070b0f;
-  --sidebar-foreground: #a6b4c0;
-  --sidebar-primary: #45e5ea;
-  --sidebar-primary-foreground: #031417;
-  --sidebar-accent: rgb(69 229 234 / 0.07);
-  --sidebar-accent-foreground: #f4f7fa;
-  --sidebar-border: rgb(180 205 220 / 0.08);
-  --sidebar-ring: #45e5ea;
-  --grid-line: rgb(180 205 220 / 0.045);
-  --glow: 0 0 0 1px rgb(69 229 234 / 0.42), 0 0 26px -6px rgb(69 229 234 / 0.5);
+  --background: #10182b;
+  --background-subtle: #0c1322;
+  --foreground: #f3f5fa;
+  --card: #17243b;
+  --card-elevated: #1c2b45;
+  --card-foreground: #f3f5fa;
+  --popover: #17243b;
+  --popover-foreground: #f3f5fa;
+  --primary: #5b7fff;
+  --primary-foreground: #ffffff;
+  --secondary: #1c2b45;
+  --secondary-foreground: #e6eaf3;
+  --muted: #142036;
+  --muted-foreground: #b6bfd1;
+  --subtle-foreground: #919cb2;
+  --accent: #1f2f52;
+  --accent-foreground: #f3f5fa;
+  --surface-hover: #1c2b45;
+  --destructive: #ff7469;
+  --border: rgb(169 179 199 / 0.14);
+  --border-strong: rgb(169 179 199 / 0.24);
+  --input: rgb(169 179 199 / 0.2);
+  --ring: #7d9bff;
+
+  --signal: #8aa5ff;
+  --ice: #92c9ff;
+  --mint: #b7e66b;
+  --ember: #ff8757;
+  --positive: #b7e66b;
+  --negative: #ff7469;
+  --neutral-sentiment: #7f8aa0;
+  --warning: #ffb36b;
+
+  --chart-1: #6c8bf8;
+  --chart-2: #ff8757;
+  --chart-3: #b7e66b;
+  --chart-4: #92c9ff;
+  --chart-5: #ffd5be;
+
+  --sidebar: #10182b;
+  --sidebar-foreground: #b4bdcf;
+  --sidebar-primary: #5b7fff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgb(91 127 255 / 0.16);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgb(169 179 199 / 0.12);
+  --sidebar-ring: #7d9bff;
+
+  --grid-line: rgb(169 179 199 / 0.07);
+  --glow: 0 0 0 1px rgb(91 127 255 / 0.4), 0 10px 30px -10px rgb(91 127 255 / 0.55);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 16px 36px -20px rgb(0 0 0 / 0.6);
 }
 
 @layer base {
@@ -223,11 +251,10 @@
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 {
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
   ::selection {
-    background: color-mix(in oklab, var(--primary) 28%, transparent);
-    color: var(--foreground);
+    background: color-mix(in oklab, var(--cobalt, #4169f5) 22%, transparent);
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -240,9 +267,9 @@
 }
 
 @layer utilities {
-  /* Restrained cyan → ice text treatment for one phrase per view. */
+  /* Cobalt → orange highlight for one phrase per view. */
   .text-gradient {
-    background: linear-gradient(100deg, var(--signal) 8%, color-mix(in oklab, var(--signal) 40%, var(--ice)) 55%, var(--ice) 100%);
+    background: linear-gradient(100deg, #4169f5 0%, #6a6ff0 38%, #ff8757 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -257,55 +284,43 @@
       linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 64px 64px;
   }
-  /* Film grain for large dark surfaces (static, very low opacity). */
+  /* Dot lattice — the Aurora geometric texture. */
+  .bg-dots {
+    background-image: radial-gradient(var(--grid-line) 1.2px, transparent 1.3px);
+    background-size: 22px 22px;
+  }
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-    opacity: 0.04;
-    mix-blend-mode: overlay;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
     pointer-events: none;
   }
   .surface {
-    @apply rounded-xl border bg-card shadow-[0_1px_0_rgb(255_255_255/0.03)_inset,0_12px_32px_-16px_rgb(0_0_0/0.55)];
+    @apply rounded-xl border bg-card;
+    box-shadow: var(--shadow-card);
   }
   .glow {
     box-shadow: var(--glow);
   }
-  /* Uppercase technical micro-label. */
+  /* Small uppercase label for metadata. */
   .micro-label {
     font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.14em;
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--subtle-foreground);
   }
-  /* HUD corner brackets on a positioned element. */
   .hud-corners {
     position: relative;
   }
-  .hud-corners::before,
-  .hud-corners::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    pointer-events: none;
-    border-color: color-mix(in oklab, var(--signal) 65%, transparent);
-  }
-  .hud-corners::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
-  .hud-corners::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
   .tabular { font-variant-numeric: tabular-nums; }
   .scrollbar-thin { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
 }
 
-@keyframes cs-rotate { to { transform: rotate(360deg); } }
-@keyframes cs-rotate-rev { to { transform: rotate(-360deg); } }
-@keyframes cs-scanline { from { transform: translateY(-15%); } to { transform: translateY(115%); } }
-@keyframes cs-breathe { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
-@keyframes cs-dash { to { stroke-dashoffset: -400; } }
-@keyframes cs-blink { 50% { opacity: 0.35; } }
-
-/* Edge-lit surface: hairline top light + faint vertical falloff (variant-able, e.g. dark:surface-lit). */
+/* Raised card: soft layered shadow (light) or inset edge light (navy). Variant-able. */
 @utility surface-lit {
-  background-image: linear-gradient(180deg, color-mix(in oklab, var(--foreground) 2.5%, transparent), transparent 40%);
-  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent), 0 18px 40px -24px rgb(0 0 0 / 0.7);
+  box-shadow: var(--shadow-card);
 }
+
+@keyframes cs-dash { to { stroke-dashoffset: -400; } }
+@keyframes cs-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }

@@ -183,7 +183,7 @@ export function AdminUserDetailPage() {
       />
 
       {u.status_reason && (
-        <div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
+        <div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-700">
           <span className="font-medium">Status reason:</span> {u.status_reason}
         </div>
       )}
@@ -215,7 +215,7 @@ export function AdminUserDetailPage() {
                   {u.workspaces.map((w) => (
                     <TableRow key={w.id}>
                       <TableCell>
-                        <Link href={`/admin/workspaces/${w.id}`} className="font-medium text-white hover:text-signal-300">{w.name}</Link>
+                        <Link href={`/admin/workspaces/${w.id}`} className="font-medium text-foreground hover:text-signal-600">{w.name}</Link>
                         {w.is_demo && <Pill color="amber" className="ml-2">Demo</Pill>}
                       </TableCell>
                       <TableCell className="text-xs">{titleCase(w.role)}</TableCell>
@@ -237,7 +237,7 @@ export function AdminUserDetailPage() {
                 {u.activity.map((a, i) => (
                   <li key={i} className="flex items-start justify-between gap-3 px-4 py-2.5 text-sm">
                     <div className="min-w-0">
-                      <div className="font-mono text-xs text-signal-200">{a.action}</div>
+                      <div className="font-mono text-xs text-signal-700">{a.action}</div>
                       {a.summary && <div className="truncate text-xs text-muted-foreground">{a.summary}</div>}
                     </div>
                     <span className="shrink-0 text-xs text-muted-foreground" title={formatDateTime(a.created_at)}>{timeAgo(a.created_at)}</span>

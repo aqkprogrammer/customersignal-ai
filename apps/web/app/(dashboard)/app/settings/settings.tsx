@@ -42,7 +42,7 @@ export function SettingsPage() {
   const [profile, setProfile] = useState({ full_name: "", company_name: "", job_title: "", timezone: "" })
   const [pw, setPw] = useState({ current_password: "", new_password: "" })
   const [ws, setWs] = useState({ name: "", industry: "", country: "", city: "", website: "", data_retention_days: "" })
-  const [brand, setBrand] = useState({ primary_color: "#45e5ea", logo_url: "" })
+  const [brand, setBrand] = useState({ primary_color: "#4169F5", logo_url: "" })
   const [newWs, setNewWs] = useState<string | null>(params.get("tab") === "workspaces" ? "" : null)
   const [cat, setCat] = useState({ name: "", keywords: "" })
   const [delAccount, setDelAccount] = useState(false)
@@ -61,7 +61,7 @@ export function SettingsPage() {
     {
       setWs({ name: workspace.name, industry: workspace.industry || "", country: workspace.country || "", city: workspace.city || "", website: workspace.website || "",
         data_retention_days: workspace.data_retention_days ? String(workspace.data_retention_days) : "" })
-      setBrand({ primary_color: workspace.branding?.primary_color || "#45e5ea", logo_url: workspace.branding?.logo_url || "" })
+      setBrand({ primary_color: workspace.branding?.primary_color || "#4169F5", logo_url: workspace.branding?.logo_url || "" })
     }
   }
 
