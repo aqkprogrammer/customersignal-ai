@@ -358,7 +358,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return (
       <ConnectingScreen
         error={isLoading || unauthorized ? undefined : sessionError ?? new Error("No session")}
-        attempts={failureCount}
+        signingIn={!isLoading && unauthorized}
+        attempts={isLoading ? failureCount : 0}
         onRetry={() => void refetchSession()}
         loginHref={`/login?next=${encodeURIComponent(typeof window === "undefined" ? "/app" : window.location.pathname)}`}
       />

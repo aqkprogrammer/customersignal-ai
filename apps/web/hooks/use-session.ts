@@ -20,8 +20,18 @@ export function useSession() {
   })
 
   useEffect(() => {
-    if (query.error instanceof ApiError && query.error.status === 401) {
-      router.replace(`/login?next=${encodeURIComponent(window.location.pathname)}`)
+    if (!(query.error instanceof ApiError && query.error.status === 401)) return
+    // The session is really over (refresh failed). Clear any stale auth cookies first — otherwise the route
+    // guard still sees them and bounces /login straight back here.
+    let cancelled = false
+    const next = encodeURIComponent(window.location.pathname)
+    api("/auth/logout", { method: "POST", noWorkspace: true, noRefresh: true })
+      .catch(() => null)
+      .finally(() => {
+        if (!cancelled) router.replace(`/login?next=${next}`)
+      })
+    return () => {
+      cancelled = true
     }
   }, [query.error, router])
 

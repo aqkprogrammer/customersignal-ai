@@ -16,26 +16,31 @@ export function ConnectingScreen({
   attempts = 0,
   onRetry,
   loginHref = "/login",
+  signingIn,
 }: {
   error?: unknown
   attempts?: number
   onRetry?: () => void
   loginHref?: string
+  /** The session ended; we're redirecting to sign-in. */
+  signingIn?: boolean
 }) {
-  const waking = !error && attempts > 0
+  const waking = !error && !signingIn && attempts > 0
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center" role="status" aria-live="polite">
       <LogoMark className={error ? "size-9" : "size-9 animate-pulse"} />
       <div className="max-w-sm">
         <p className="font-mono text-[10.5px] tracking-[0.16em] text-signal uppercase">
-          {error ? "Connection failed" : waking ? "Waking up the server" : "Connecting"}
+          {error ? "Connection failed" : signingIn ? "Session ended" : waking ? "Waking up the server" : "Connecting"}
         </p>
         <p className="mt-2 text-sm text-muted-foreground">
           {error
             ? `We couldn't reach CustomerSignal (${errorMessage(error)}). Your data is safe — try again in a moment.`
-            : waking
-              ? "The service was idle and is starting up. This can take up to a minute — we'll keep trying."
-              : "Loading your workspace…"}
+            : signingIn
+              ? "Your session has ended. Taking you to sign in…"
+              : waking
+                ? "The service was idle and is starting up. This can take up to a minute — we'll keep trying."
+                : "Loading your workspace…"}
         </p>
       </div>
       {error ? (
@@ -49,6 +54,10 @@ export function ConnectingScreen({
             <Link href={loginHref}>Sign in again</Link>
           </Button>
         </div>
+      ) : signingIn ? (
+        <Button asChild variant="outline">
+          <Link href={loginHref}>Sign in</Link>
+        </Button>
       ) : null}
     </div>
   )

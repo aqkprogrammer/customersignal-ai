@@ -179,7 +179,10 @@ export function OnboardingWizard() {
   }
 
   if (isLoading || !hydrated) {
-    return <ConnectingScreen attempts={failureCount} />
+    return <ConnectingScreen attempts={isLoading ? failureCount : 0} />
+  }
+  if (!session && sessionError instanceof ApiError && sessionError.status === 401) {
+    return <ConnectingScreen signingIn loginHref="/login?next=%2Fonboarding" />
   }
   if (!session && sessionError && !(sessionError instanceof ApiError && sessionError.status === 401)) {
     return <ConnectingScreen error={sessionError} attempts={failureCount} onRetry={() => void refetchSession()} loginHref="/login?next=%2Fonboarding" />

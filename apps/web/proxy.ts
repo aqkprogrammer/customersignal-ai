@@ -15,7 +15,9 @@ export function proxy(request: NextRequest) {
     url.search = `?next=${encodeURIComponent(pathname + search)}`
     return NextResponse.redirect(url)
   }
-  if ((pathname === "/login" || pathname === "/signup") && hasSession) {
+  // Only skip the sign-in pages when a live access token exists. The session-hint cookie outlives the 15-minute
+  // access token; bouncing on it alone trapped people whose session had really ended between /app and /login.
+  if ((pathname === "/login" || pathname === "/signup") && request.cookies.has("cs_access")) {
     const url = request.nextUrl.clone()
     url.pathname = "/app"
     url.search = ""

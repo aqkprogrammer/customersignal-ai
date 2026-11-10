@@ -109,7 +109,10 @@ export async function api<T = unknown>(path: string, opts: Options = {}): Promis
     })
 
   let res = await doFetch()
-  if (res.status === 401 && !noRefresh && !path.startsWith("/auth/") && !path.startsWith("/admin")) {
+  // The 15-minute access cookie expires long before the refresh cookie. Session checks (/auth/me) must be able
+  // to renew it; other /auth/* calls establish or end sessions themselves and must not.
+  const canRefresh = !path.startsWith("/admin") && (!path.startsWith("/auth/") || path === "/auth/me")
+  if (res.status === 401 && !noRefresh && canRefresh) {
     if (await refresh()) res = await doFetch()
   }
   if (!res.ok) {
